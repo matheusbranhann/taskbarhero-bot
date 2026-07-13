@@ -1,0 +1,4851 @@
+{
+ "updated": "2026-07-11 10:38:24 (reconstruido do item_prices)",
+ "appid": "3678970",
+ "count": 692,
+ "items": {
+  "Minor Ruby": {
+   "name": "Minor Ruby",
+   "hash_name": "Minor Ruby",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Minor Sapphire": {
+   "name": "Minor Sapphire",
+   "hash_name": "Minor Sapphire",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Minor Topaz": {
+   "name": "Minor Topaz",
+   "hash_name": "Minor Topaz",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Minor Emerald": {
+   "name": "Minor Emerald",
+   "hash_name": "Minor Emerald",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Minor Amethyst": {
+   "name": "Minor Amethyst",
+   "hash_name": "Minor Amethyst",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Obsidian Shard": {
+   "name": "Obsidian Shard",
+   "hash_name": "Obsidian Shard",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Coral Piece": {
+   "name": "Coral Piece",
+   "hash_name": "Coral Piece",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Jade Stone": {
+   "name": "Jade Stone",
+   "hash_name": "Jade Stone",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Amber Gem": {
+   "name": "Amber Gem",
+   "hash_name": "Amber Gem",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Ruby": {
+   "name": "Ruby",
+   "hash_name": "Ruby",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Sapphire": {
+   "name": "Sapphire",
+   "hash_name": "Sapphire",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Topaz": {
+   "name": "Topaz",
+   "hash_name": "Topaz",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Emerald": {
+   "name": "Emerald",
+   "hash_name": "Emerald",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Amethyst": {
+   "name": "Amethyst",
+   "hash_name": "Amethyst",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Crystal Quartz": {
+   "name": "Crystal Quartz",
+   "hash_name": "Crystal Quartz",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Pearl": {
+   "name": "Pearl",
+   "hash_name": "Pearl",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Turquoise": {
+   "name": "Turquoise",
+   "hash_name": "Turquoise",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Garnet": {
+   "name": "Garnet",
+   "hash_name": "Garnet",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Diamond": {
+   "name": "Diamond",
+   "hash_name": "Diamond",
+   "price_usd": 0.04,
+   "price_text": "$0.04",
+   "listings": null
+  },
+  "Opal": {
+   "name": "Opal",
+   "hash_name": "Opal",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Lapis Lazuli": {
+   "name": "Lapis Lazuli",
+   "hash_name": "Lapis Lazuli",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Black Pearl": {
+   "name": "Black Pearl",
+   "hash_name": "Black Pearl",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Arcane Crystal": {
+   "name": "Arcane Crystal",
+   "hash_name": "Arcane Crystal",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Mystic Topaz": {
+   "name": "Mystic Topaz",
+   "hash_name": "Mystic Topaz",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Enchanted Ruby": {
+   "name": "Enchanted Ruby",
+   "hash_name": "Enchanted Ruby",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Starlight Sapphire": {
+   "name": "Starlight Sapphire",
+   "hash_name": "Starlight Sapphire",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Void Opal": {
+   "name": "Void Opal",
+   "hash_name": "Void Opal",
+   "price_usd": 0.1,
+   "price_text": "$0.10",
+   "listings": null
+  },
+  "Astral Diamond": {
+   "name": "Astral Diamond",
+   "hash_name": "Astral Diamond",
+   "price_usd": 0.2,
+   "price_text": "$0.20",
+   "listings": null
+  },
+  "Phantom Emerald": {
+   "name": "Phantom Emerald",
+   "hash_name": "Phantom Emerald",
+   "price_usd": 0.25,
+   "price_text": "$0.25",
+   "listings": null
+  },
+  "Twilight Amethyst": {
+   "name": "Twilight Amethyst",
+   "hash_name": "Twilight Amethyst",
+   "price_usd": 0.48,
+   "price_text": "$0.48",
+   "listings": null
+  },
+  "Celestial Pearl": {
+   "name": "Celestial Pearl",
+   "hash_name": "Celestial Pearl",
+   "price_usd": 43.59,
+   "price_text": "$43.59",
+   "listings": null
+  },
+  "Goblin Hide": {
+   "name": "Goblin Hide",
+   "hash_name": "Goblin Hide",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Skeleton Bone": {
+   "name": "Skeleton Bone",
+   "hash_name": "Skeleton Bone",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Slime Jelly": {
+   "name": "Slime Jelly",
+   "hash_name": "Slime Jelly",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Wolf Fang": {
+   "name": "Wolf Fang",
+   "hash_name": "Wolf Fang",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Spider Silk": {
+   "name": "Spider Silk",
+   "hash_name": "Spider Silk",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Poisonous Herb": {
+   "name": "Poisonous Herb",
+   "hash_name": "Poisonous Herb",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Healing Herb": {
+   "name": "Healing Herb",
+   "hash_name": "Healing Herb",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Bat Wing Membrane": {
+   "name": "Bat Wing Membrane",
+   "hash_name": "Bat Wing Membrane",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Ogre Blood": {
+   "name": "Ogre Blood",
+   "hash_name": "Ogre Blood",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Mushroom Spore": {
+   "name": "Mushroom Spore",
+   "hash_name": "Mushroom Spore",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Ancient Tree Sap": {
+   "name": "Ancient Tree Sap",
+   "hash_name": "Ancient Tree Sap",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Skull": {
+   "name": "Skull",
+   "hash_name": "Skull",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Harpy Feather": {
+   "name": "Harpy Feather",
+   "hash_name": "Harpy Feather",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Mandrake Root": {
+   "name": "Mandrake Root",
+   "hash_name": "Mandrake Root",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Nightshade Extract": {
+   "name": "Nightshade Extract",
+   "hash_name": "Nightshade Extract",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Basilisk Scale": {
+   "name": "Basilisk Scale",
+   "hash_name": "Basilisk Scale",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Wyvern Claw": {
+   "name": "Wyvern Claw",
+   "hash_name": "Wyvern Claw",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Dice": {
+   "name": "Dice",
+   "hash_name": "Dice",
+   "price_usd": 0.05,
+   "price_text": "$0.05",
+   "listings": null
+  },
+  "Demon Blood": {
+   "name": "Demon Blood",
+   "hash_name": "Demon Blood",
+   "price_usd": 0.04,
+   "price_text": "$0.04",
+   "listings": null
+  },
+  "Minotaur Horn": {
+   "name": "Minotaur Horn",
+   "hash_name": "Minotaur Horn",
+   "price_usd": 0.06,
+   "price_text": "$0.06",
+   "listings": null
+  },
+  "Griffin Beak": {
+   "name": "Griffin Beak",
+   "hash_name": "Griffin Beak",
+   "price_usd": 0.04,
+   "price_text": "$0.04",
+   "listings": null
+  },
+  "Phoenix Ash": {
+   "name": "Phoenix Ash",
+   "hash_name": "Phoenix Ash",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Dragon Bile": {
+   "name": "Dragon Bile",
+   "hash_name": "Dragon Bile",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Wraith Essence": {
+   "name": "Wraith Essence",
+   "hash_name": "Wraith Essence",
+   "price_usd": 0.07,
+   "price_text": "$0.07",
+   "listings": null
+  },
+  "Kraken Ink": {
+   "name": "Kraken Ink",
+   "hash_name": "Kraken Ink",
+   "price_usd": 0.23,
+   "price_text": "$0.23",
+   "listings": null
+  },
+  "Titan Marrow": {
+   "name": "Titan Marrow",
+   "hash_name": "Titan Marrow",
+   "price_usd": 0.21,
+   "price_text": "$0.21",
+   "listings": null
+  },
+  "Void Ichor": {
+   "name": "Void Ichor",
+   "hash_name": "Void Ichor",
+   "price_usd": 0.18,
+   "price_text": "$0.18",
+   "listings": null
+  },
+  "Scroll of Common Inscription": {
+   "name": "Scroll of Common Inscription",
+   "hash_name": "Scroll of Common Inscription",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Scroll of Uncommon Inscription": {
+   "name": "Scroll of Uncommon Inscription",
+   "hash_name": "Scroll of Uncommon Inscription",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Scroll of Rare Inscription": {
+   "name": "Scroll of Rare Inscription",
+   "hash_name": "Scroll of Rare Inscription",
+   "price_usd": 0.05,
+   "price_text": "$0.05",
+   "listings": null
+  },
+  "Scroll of Legendary Inscription": {
+   "name": "Scroll of Legendary Inscription",
+   "hash_name": "Scroll of Legendary Inscription",
+   "price_usd": 0.08,
+   "price_text": "$0.08",
+   "listings": null
+  },
+  "Scroll of Immortal Inscription": {
+   "name": "Scroll of Immortal Inscription",
+   "hash_name": "Scroll of Immortal Inscription",
+   "price_usd": 0.18,
+   "price_text": "$0.18",
+   "listings": null
+  },
+  "Scroll of Arcana Inscription": {
+   "name": "Scroll of Arcana Inscription",
+   "hash_name": "Scroll of Arcana Inscription",
+   "price_usd": 0.39,
+   "price_text": "$0.39",
+   "listings": null
+  },
+  "Scroll of Beyond Inscription": {
+   "name": "Scroll of Beyond Inscription",
+   "hash_name": "Scroll of Beyond Inscription",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Wood": {
+   "name": "Wood",
+   "hash_name": "Wood",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Stone": {
+   "name": "Stone",
+   "hash_name": "Stone",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Leather": {
+   "name": "Leather",
+   "hash_name": "Leather",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Copper Nugget": {
+   "name": "Copper Nugget",
+   "hash_name": "Copper Nugget",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Bronze Ingot": {
+   "name": "Bronze Ingot",
+   "hash_name": "Bronze Ingot",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Iron Ingot": {
+   "name": "Iron Ingot",
+   "hash_name": "Iron Ingot",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Silver Ingot": {
+   "name": "Silver Ingot",
+   "hash_name": "Silver Ingot",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Gold Ingot": {
+   "name": "Gold Ingot",
+   "hash_name": "Gold Ingot",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Stardust Ingot": {
+   "name": "Stardust Ingot",
+   "hash_name": "Stardust Ingot",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Void Iron": {
+   "name": "Void Iron",
+   "hash_name": "Void Iron",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Bloodstone": {
+   "name": "Bloodstone",
+   "hash_name": "Bloodstone",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Thunderstone": {
+   "name": "Thunderstone",
+   "hash_name": "Thunderstone",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Chaos Shard": {
+   "name": "Chaos Shard",
+   "hash_name": "Chaos Shard",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Arcane Ore": {
+   "name": "Arcane Ore",
+   "hash_name": "Arcane Ore",
+   "price_usd": 0.04,
+   "price_text": "$0.04",
+   "listings": null
+  },
+  "Darksteel Ingot": {
+   "name": "Darksteel Ingot",
+   "hash_name": "Darksteel Ingot",
+   "price_usd": 0.05,
+   "price_text": "$0.05",
+   "listings": null
+  },
+  "Orichalcum Ore": {
+   "name": "Orichalcum Ore",
+   "hash_name": "Orichalcum Ore",
+   "price_usd": 0.07,
+   "price_text": "$0.07",
+   "listings": null
+  },
+  "Moonstone": {
+   "name": "Moonstone",
+   "hash_name": "Moonstone",
+   "price_usd": 10.94,
+   "price_text": "$10.94",
+   "listings": null
+  },
+  "Kingdom 1st Anniversary Coin": {
+   "name": "Kingdom 1st Anniversary Coin",
+   "hash_name": "Kingdom 1st Anniversary Coin",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Empire 1st Anniversary Coin": {
+   "name": "Empire 1st Anniversary Coin",
+   "hash_name": "Empire 1st Anniversary Coin",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Kingdom 10th Anniversary Coin": {
+   "name": "Kingdom 10th Anniversary Coin",
+   "hash_name": "Kingdom 10th Anniversary Coin",
+   "price_usd": 0.04,
+   "price_text": "$0.04",
+   "listings": null
+  },
+  "Empire 10th Anniversary Coin": {
+   "name": "Empire 10th Anniversary Coin",
+   "hash_name": "Empire 10th Anniversary Coin",
+   "price_usd": 0.1,
+   "price_text": "$0.10",
+   "listings": null
+  },
+  "Kingdom 50th Anniversary Coin": {
+   "name": "Kingdom 50th Anniversary Coin",
+   "hash_name": "Kingdom 50th Anniversary Coin",
+   "price_usd": 0.4,
+   "price_text": "$0.40",
+   "listings": null
+  },
+  "Empire 50th Anniversary Coin": {
+   "name": "Empire 50th Anniversary Coin",
+   "hash_name": "Empire 50th Anniversary Coin",
+   "price_usd": 1.03,
+   "price_text": "$1.03",
+   "listings": null
+  },
+  "Soulstone - Normal": {
+   "name": "Soulstone - Normal",
+   "hash_name": "Soulstone - Normal",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Soulstone - Nightmare": {
+   "name": "Soulstone - Nightmare",
+   "hash_name": "Soulstone - Nightmare",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Soulstone - Hell": {
+   "name": "Soulstone - Hell",
+   "hash_name": "Soulstone - Hell",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Soulstone - Torment": {
+   "name": "Soulstone - Torment",
+   "hash_name": "Soulstone - Torment",
+   "price_usd": 0.04,
+   "price_text": "$0.04",
+   "listings": null
+  },
+  "Cutlas (Legendary) A": {
+   "name": "Cutlas (Legendary) A",
+   "hash_name": "Cutlas (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Rapier (Legendary) A": {
+   "name": "Rapier (Legendary) A",
+   "hash_name": "Rapier (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Bastard Sword (Legendary) A": {
+   "name": "Bastard Sword (Legendary) A",
+   "hash_name": "Bastard Sword (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Knight Sword (Legendary) A": {
+   "name": "Knight Sword (Legendary) A",
+   "hash_name": "Knight Sword (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Rune Sword (Legendary) A": {
+   "name": "Rune Sword (Legendary) A",
+   "hash_name": "Rune Sword (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Fate Sword (Legendary) A": {
+   "name": "Fate Sword (Legendary) A",
+   "hash_name": "Fate Sword (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Vengeance Sword (Legendary) A": {
+   "name": "Vengeance Sword (Legendary) A",
+   "hash_name": "Vengeance Sword (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Dimensional Sword (Legendary) A": {
+   "name": "Dimensional Sword (Legendary) A",
+   "hash_name": "Dimensional Sword (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Long Sword (Immortal) A": {
+   "name": "Long Sword (Immortal) A",
+   "hash_name": "Long Sword (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Cutlas (Immortal) A": {
+   "name": "Cutlas (Immortal) A",
+   "hash_name": "Cutlas (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Rapier (Immortal) A": {
+   "name": "Rapier (Immortal) A",
+   "hash_name": "Rapier (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Bastard Sword (Immortal) A": {
+   "name": "Bastard Sword (Immortal) A",
+   "hash_name": "Bastard Sword (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Great Sword (Immortal) A": {
+   "name": "Great Sword (Immortal) A",
+   "hash_name": "Great Sword (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Rune Sword (Immortal) A": {
+   "name": "Rune Sword (Immortal) A",
+   "hash_name": "Rune Sword (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Fate Sword (Immortal) A": {
+   "name": "Fate Sword (Immortal) A",
+   "hash_name": "Fate Sword (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Vengeance Sword (Immortal) A": {
+   "name": "Vengeance Sword (Immortal) A",
+   "hash_name": "Vengeance Sword (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Dimensional Sword (Immortal) A": {
+   "name": "Dimensional Sword (Immortal) A",
+   "hash_name": "Dimensional Sword (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Bastard Sword (Arcana) A": {
+   "name": "Bastard Sword (Arcana) A",
+   "hash_name": "Bastard Sword (Arcana) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Great Sword (Arcana) A": {
+   "name": "Great Sword (Arcana) A",
+   "hash_name": "Great Sword (Arcana) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Knight Sword (Arcana) A": {
+   "name": "Knight Sword (Arcana) A",
+   "hash_name": "Knight Sword (Arcana) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Rune Sword (Arcana) A": {
+   "name": "Rune Sword (Arcana) A",
+   "hash_name": "Rune Sword (Arcana) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Fate Sword (Arcana) A": {
+   "name": "Fate Sword (Arcana) A",
+   "hash_name": "Fate Sword (Arcana) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Vengeance Sword (Arcana) A": {
+   "name": "Vengeance Sword (Arcana) A",
+   "hash_name": "Vengeance Sword (Arcana) A",
+   "price_usd": 0.04,
+   "price_text": "$0.04",
+   "listings": null
+  },
+  "Dimensional Sword (Arcana) A": {
+   "name": "Dimensional Sword (Arcana) A",
+   "hash_name": "Dimensional Sword (Arcana) A",
+   "price_usd": 0.06,
+   "price_text": "$0.06",
+   "listings": null
+  },
+  "Knight Sword (Beyond) A": {
+   "name": "Knight Sword (Beyond) A",
+   "hash_name": "Knight Sword (Beyond) A",
+   "price_usd": 0.05,
+   "price_text": "$0.05",
+   "listings": null
+  },
+  "Rune Sword (Beyond) A": {
+   "name": "Rune Sword (Beyond) A",
+   "hash_name": "Rune Sword (Beyond) A",
+   "price_usd": 0.05,
+   "price_text": "$0.05",
+   "listings": null
+  },
+  "Fate Sword (Beyond) A": {
+   "name": "Fate Sword (Beyond) A",
+   "hash_name": "Fate Sword (Beyond) A",
+   "price_usd": 0.06,
+   "price_text": "$0.06",
+   "listings": null
+  },
+  "Dimensional Sword (Beyond) A": {
+   "name": "Dimensional Sword (Beyond) A",
+   "hash_name": "Dimensional Sword (Beyond) A",
+   "price_usd": 0.2,
+   "price_text": "$0.20",
+   "listings": null
+  },
+  "Short Bow (Legendary) A": {
+   "name": "Short Bow (Legendary) A",
+   "hash_name": "Short Bow (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Hunting Bow (Legendary) A": {
+   "name": "Hunting Bow (Legendary) A",
+   "hash_name": "Hunting Bow (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Long Bow (Legendary) A": {
+   "name": "Long Bow (Legendary) A",
+   "hash_name": "Long Bow (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Composite Bow (Legendary) A": {
+   "name": "Composite Bow (Legendary) A",
+   "hash_name": "Composite Bow (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "War Bow (Legendary) A": {
+   "name": "War Bow (Legendary) A",
+   "hash_name": "War Bow (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Dusk Bow (Legendary) A": {
+   "name": "Dusk Bow (Legendary) A",
+   "hash_name": "Dusk Bow (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Elite Bow (Legendary) A": {
+   "name": "Elite Bow (Legendary) A",
+   "hash_name": "Elite Bow (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Limitless Bow (Legendary) A": {
+   "name": "Limitless Bow (Legendary) A",
+   "hash_name": "Limitless Bow (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Shadow Bow (Legendary) A": {
+   "name": "Shadow Bow (Legendary) A",
+   "hash_name": "Shadow Bow (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Short Bow (Immortal) A": {
+   "name": "Short Bow (Immortal) A",
+   "hash_name": "Short Bow (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Hunting Bow (Immortal) A": {
+   "name": "Hunting Bow (Immortal) A",
+   "hash_name": "Hunting Bow (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Long Bow (Immortal) A": {
+   "name": "Long Bow (Immortal) A",
+   "hash_name": "Long Bow (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Composite Bow (Immortal) A": {
+   "name": "Composite Bow (Immortal) A",
+   "hash_name": "Composite Bow (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "War Bow (Immortal) A": {
+   "name": "War Bow (Immortal) A",
+   "hash_name": "War Bow (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Dusk Bow (Immortal) A": {
+   "name": "Dusk Bow (Immortal) A",
+   "hash_name": "Dusk Bow (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Elite Bow (Immortal) A": {
+   "name": "Elite Bow (Immortal) A",
+   "hash_name": "Elite Bow (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Mystic Bow (Immortal) A": {
+   "name": "Mystic Bow (Immortal) A",
+   "hash_name": "Mystic Bow (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Limitless Bow (Immortal) A": {
+   "name": "Limitless Bow (Immortal) A",
+   "hash_name": "Limitless Bow (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Shadow Bow (Immortal) A": {
+   "name": "Shadow Bow (Immortal) A",
+   "hash_name": "Shadow Bow (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Composite Bow (Arcana) A": {
+   "name": "Composite Bow (Arcana) A",
+   "hash_name": "Composite Bow (Arcana) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "War Bow (Arcana) A": {
+   "name": "War Bow (Arcana) A",
+   "hash_name": "War Bow (Arcana) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Dusk Bow (Arcana) A": {
+   "name": "Dusk Bow (Arcana) A",
+   "hash_name": "Dusk Bow (Arcana) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Elite Bow (Arcana) A": {
+   "name": "Elite Bow (Arcana) A",
+   "hash_name": "Elite Bow (Arcana) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Mystic Bow (Arcana) A": {
+   "name": "Mystic Bow (Arcana) A",
+   "hash_name": "Mystic Bow (Arcana) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Limitless Bow (Arcana) A": {
+   "name": "Limitless Bow (Arcana) A",
+   "hash_name": "Limitless Bow (Arcana) A",
+   "price_usd": 0.07,
+   "price_text": "$0.07",
+   "listings": null
+  },
+  "Shadow Bow (Arcana) A": {
+   "name": "Shadow Bow (Arcana) A",
+   "hash_name": "Shadow Bow (Arcana) A",
+   "price_usd": 0.07,
+   "price_text": "$0.07",
+   "listings": null
+  },
+  "Dusk Bow (Beyond) A": {
+   "name": "Dusk Bow (Beyond) A",
+   "hash_name": "Dusk Bow (Beyond) A",
+   "price_usd": 0.11,
+   "price_text": "$0.11",
+   "listings": null
+  },
+  "Elite Bow (Beyond) A": {
+   "name": "Elite Bow (Beyond) A",
+   "hash_name": "Elite Bow (Beyond) A",
+   "price_usd": 0.08,
+   "price_text": "$0.08",
+   "listings": null
+  },
+  "Mystic Bow (Beyond) A": {
+   "name": "Mystic Bow (Beyond) A",
+   "hash_name": "Mystic Bow (Beyond) A",
+   "price_usd": 0.12,
+   "price_text": "$0.12",
+   "listings": null
+  },
+  "Shadow Bow (Beyond) A": {
+   "name": "Shadow Bow (Beyond) A",
+   "hash_name": "Shadow Bow (Beyond) A",
+   "price_usd": 0.87,
+   "price_text": "$0.87",
+   "listings": null
+  },
+  "Herald Staff (Legendary) A": {
+   "name": "Herald Staff (Legendary) A",
+   "hash_name": "Herald Staff (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Long Staff (Legendary) A": {
+   "name": "Long Staff (Legendary) A",
+   "hash_name": "Long Staff (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Witch Staff (Legendary) A": {
+   "name": "Witch Staff (Legendary) A",
+   "hash_name": "Witch Staff (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Azure Staff (Legendary) A": {
+   "name": "Azure Staff (Legendary) A",
+   "hash_name": "Azure Staff (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Comet Staff (Legendary) A": {
+   "name": "Comet Staff (Legendary) A",
+   "hash_name": "Comet Staff (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Void Staff (Legendary) A": {
+   "name": "Void Staff (Legendary) A",
+   "hash_name": "Void Staff (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Sacred Staff (Legendary) A": {
+   "name": "Sacred Staff (Legendary) A",
+   "hash_name": "Sacred Staff (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Tempest Staff (Legendary) A": {
+   "name": "Tempest Staff (Legendary) A",
+   "hash_name": "Tempest Staff (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Wooden Staff (Immortal) A": {
+   "name": "Wooden Staff (Immortal) A",
+   "hash_name": "Wooden Staff (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Herald Staff (Immortal) A": {
+   "name": "Herald Staff (Immortal) A",
+   "hash_name": "Herald Staff (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Long Staff (Immortal) A": {
+   "name": "Long Staff (Immortal) A",
+   "hash_name": "Long Staff (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Witch Staff (Immortal) A": {
+   "name": "Witch Staff (Immortal) A",
+   "hash_name": "Witch Staff (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Azure Staff (Immortal) A": {
+   "name": "Azure Staff (Immortal) A",
+   "hash_name": "Azure Staff (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Sage Staff (Immortal) A": {
+   "name": "Sage Staff (Immortal) A",
+   "hash_name": "Sage Staff (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Comet Staff (Immortal) A": {
+   "name": "Comet Staff (Immortal) A",
+   "hash_name": "Comet Staff (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Void Staff (Immortal) A": {
+   "name": "Void Staff (Immortal) A",
+   "hash_name": "Void Staff (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Sacred Staff (Immortal) A": {
+   "name": "Sacred Staff (Immortal) A",
+   "hash_name": "Sacred Staff (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Tempest Staff (Immortal) A": {
+   "name": "Tempest Staff (Immortal) A",
+   "hash_name": "Tempest Staff (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Witch Staff (Arcana) A": {
+   "name": "Witch Staff (Arcana) A",
+   "hash_name": "Witch Staff (Arcana) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Azure Staff (Arcana) A": {
+   "name": "Azure Staff (Arcana) A",
+   "hash_name": "Azure Staff (Arcana) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Sage Staff (Arcana) A": {
+   "name": "Sage Staff (Arcana) A",
+   "hash_name": "Sage Staff (Arcana) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Comet Staff (Arcana) A": {
+   "name": "Comet Staff (Arcana) A",
+   "hash_name": "Comet Staff (Arcana) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Void Staff (Arcana) A": {
+   "name": "Void Staff (Arcana) A",
+   "hash_name": "Void Staff (Arcana) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Sacred Staff (Arcana) A": {
+   "name": "Sacred Staff (Arcana) A",
+   "hash_name": "Sacred Staff (Arcana) A",
+   "price_usd": 0.04,
+   "price_text": "$0.04",
+   "listings": null
+  },
+  "Tempest Staff (Arcana) A": {
+   "name": "Tempest Staff (Arcana) A",
+   "hash_name": "Tempest Staff (Arcana) A",
+   "price_usd": 0.05,
+   "price_text": "$0.05",
+   "listings": null
+  },
+  "Sage Staff (Beyond) A": {
+   "name": "Sage Staff (Beyond) A",
+   "hash_name": "Sage Staff (Beyond) A",
+   "price_usd": 0.07,
+   "price_text": "$0.07",
+   "listings": null
+  },
+  "Comet Staff (Beyond) A": {
+   "name": "Comet Staff (Beyond) A",
+   "hash_name": "Comet Staff (Beyond) A",
+   "price_usd": 0.05,
+   "price_text": "$0.05",
+   "listings": null
+  },
+  "Void Staff (Beyond) A": {
+   "name": "Void Staff (Beyond) A",
+   "hash_name": "Void Staff (Beyond) A",
+   "price_usd": 0.06,
+   "price_text": "$0.06",
+   "listings": null
+  },
+  "Sacred Staff (Beyond) A": {
+   "name": "Sacred Staff (Beyond) A",
+   "hash_name": "Sacred Staff (Beyond) A",
+   "price_usd": 0.14,
+   "price_text": "$0.14",
+   "listings": null
+  },
+  "Tempest Staff (Beyond) A": {
+   "name": "Tempest Staff (Beyond) A",
+   "hash_name": "Tempest Staff (Beyond) A",
+   "price_usd": 0.59,
+   "price_text": "$0.59",
+   "listings": null
+  },
+  "Sacred Staff (Celestial) A": {
+   "name": "Sacred Staff (Celestial) A",
+   "hash_name": "Sacred Staff (Celestial) A",
+   "price_usd": 40.37,
+   "price_text": "$40.37",
+   "listings": null
+  },
+  "Novice Scepter (Legendary) A": {
+   "name": "Novice Scepter (Legendary) A",
+   "hash_name": "Novice Scepter (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Iron Scepter (Legendary) A": {
+   "name": "Iron Scepter (Legendary) A",
+   "hash_name": "Iron Scepter (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Blessed Scepter (Legendary) A": {
+   "name": "Blessed Scepter (Legendary) A",
+   "hash_name": "Blessed Scepter (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Steel Scepter (Legendary) A": {
+   "name": "Steel Scepter (Legendary) A",
+   "hash_name": "Steel Scepter (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Devout Scepter (Legendary) A": {
+   "name": "Devout Scepter (Legendary) A",
+   "hash_name": "Devout Scepter (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Rune Scepter (Legendary) A": {
+   "name": "Rune Scepter (Legendary) A",
+   "hash_name": "Rune Scepter (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Fate Scepter (Legendary) A": {
+   "name": "Fate Scepter (Legendary) A",
+   "hash_name": "Fate Scepter (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Limitless Scepter (Legendary) A": {
+   "name": "Limitless Scepter (Legendary) A",
+   "hash_name": "Limitless Scepter (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Dimensional Scepter (Legendary) A": {
+   "name": "Dimensional Scepter (Legendary) A",
+   "hash_name": "Dimensional Scepter (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Novice Scepter (Immortal) A": {
+   "name": "Novice Scepter (Immortal) A",
+   "hash_name": "Novice Scepter (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Iron Scepter (Immortal) A": {
+   "name": "Iron Scepter (Immortal) A",
+   "hash_name": "Iron Scepter (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Blessed Scepter (Immortal) A": {
+   "name": "Blessed Scepter (Immortal) A",
+   "hash_name": "Blessed Scepter (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Steel Scepter (Immortal) A": {
+   "name": "Steel Scepter (Immortal) A",
+   "hash_name": "Steel Scepter (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Sacred Scepter (Immortal) A": {
+   "name": "Sacred Scepter (Immortal) A",
+   "hash_name": "Sacred Scepter (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Devout Scepter (Immortal) A": {
+   "name": "Devout Scepter (Immortal) A",
+   "hash_name": "Devout Scepter (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Rune Scepter (Immortal) A": {
+   "name": "Rune Scepter (Immortal) A",
+   "hash_name": "Rune Scepter (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Limitless Scepter (Immortal) A": {
+   "name": "Limitless Scepter (Immortal) A",
+   "hash_name": "Limitless Scepter (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Dimensional Scepter (Immortal) A": {
+   "name": "Dimensional Scepter (Immortal) A",
+   "hash_name": "Dimensional Scepter (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Steel Scepter (Arcana) A": {
+   "name": "Steel Scepter (Arcana) A",
+   "hash_name": "Steel Scepter (Arcana) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Sacred Scepter (Arcana) A": {
+   "name": "Sacred Scepter (Arcana) A",
+   "hash_name": "Sacred Scepter (Arcana) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Devout Scepter (Arcana) A": {
+   "name": "Devout Scepter (Arcana) A",
+   "hash_name": "Devout Scepter (Arcana) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Rune Scepter (Arcana) A": {
+   "name": "Rune Scepter (Arcana) A",
+   "hash_name": "Rune Scepter (Arcana) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Fate Scepter (Arcana) A": {
+   "name": "Fate Scepter (Arcana) A",
+   "hash_name": "Fate Scepter (Arcana) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Limitless Scepter (Arcana) A": {
+   "name": "Limitless Scepter (Arcana) A",
+   "hash_name": "Limitless Scepter (Arcana) A",
+   "price_usd": 0.04,
+   "price_text": "$0.04",
+   "listings": null
+  },
+  "Dimensional Scepter (Arcana) A": {
+   "name": "Dimensional Scepter (Arcana) A",
+   "hash_name": "Dimensional Scepter (Arcana) A",
+   "price_usd": 0.06,
+   "price_text": "$0.06",
+   "listings": null
+  },
+  "Devout Scepter (Beyond) A": {
+   "name": "Devout Scepter (Beyond) A",
+   "hash_name": "Devout Scepter (Beyond) A",
+   "price_usd": 0.05,
+   "price_text": "$0.05",
+   "listings": null
+  },
+  "Rune Scepter (Beyond) A": {
+   "name": "Rune Scepter (Beyond) A",
+   "hash_name": "Rune Scepter (Beyond) A",
+   "price_usd": 0.05,
+   "price_text": "$0.05",
+   "listings": null
+  },
+  "Fate Scepter (Beyond) A": {
+   "name": "Fate Scepter (Beyond) A",
+   "hash_name": "Fate Scepter (Beyond) A",
+   "price_usd": 0.06,
+   "price_text": "$0.06",
+   "listings": null
+  },
+  "Limitless Scepter (Beyond) A": {
+   "name": "Limitless Scepter (Beyond) A",
+   "hash_name": "Limitless Scepter (Beyond) A",
+   "price_usd": 0.14,
+   "price_text": "$0.14",
+   "listings": null
+  },
+  "Dimensional Scepter (Beyond) A": {
+   "name": "Dimensional Scepter (Beyond) A",
+   "hash_name": "Dimensional Scepter (Beyond) A",
+   "price_usd": 0.2,
+   "price_text": "$0.20",
+   "listings": null
+  },
+  "Short Crossbow (Legendary) A": {
+   "name": "Short Crossbow (Legendary) A",
+   "hash_name": "Short Crossbow (Legendary) A",
+   "price_usd": 0.04,
+   "price_text": "$0.04",
+   "listings": null
+  },
+  "Leather Crossbow (Legendary) A": {
+   "name": "Leather Crossbow (Legendary) A",
+   "hash_name": "Leather Crossbow (Legendary) A",
+   "price_usd": 0.04,
+   "price_text": "$0.04",
+   "listings": null
+  },
+  "Long Crossbow (Legendary) A": {
+   "name": "Long Crossbow (Legendary) A",
+   "hash_name": "Long Crossbow (Legendary) A",
+   "price_usd": 0.05,
+   "price_text": "$0.05",
+   "listings": null
+  },
+  "Complete Crossbow (Legendary) A": {
+   "name": "Complete Crossbow (Legendary) A",
+   "hash_name": "Complete Crossbow (Legendary) A",
+   "price_usd": 0.04,
+   "price_text": "$0.04",
+   "listings": null
+  },
+  "Exceptional Crossbow (Legendary) A": {
+   "name": "Exceptional Crossbow (Legendary) A",
+   "hash_name": "Exceptional Crossbow (Legendary) A",
+   "price_usd": 0.04,
+   "price_text": "$0.04",
+   "listings": null
+  },
+  "Iron Crossbow (Legendary) A": {
+   "name": "Iron Crossbow (Legendary) A",
+   "hash_name": "Iron Crossbow (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Mystic Crossbow (Legendary) A": {
+   "name": "Mystic Crossbow (Legendary) A",
+   "hash_name": "Mystic Crossbow (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Limitless Crossbow (Legendary) A": {
+   "name": "Limitless Crossbow (Legendary) A",
+   "hash_name": "Limitless Crossbow (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Dimensional Crossbow (Legendary) A": {
+   "name": "Dimensional Crossbow (Legendary) A",
+   "hash_name": "Dimensional Crossbow (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Short Crossbow (Immortal) A": {
+   "name": "Short Crossbow (Immortal) A",
+   "hash_name": "Short Crossbow (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Long Crossbow (Immortal) A": {
+   "name": "Long Crossbow (Immortal) A",
+   "hash_name": "Long Crossbow (Immortal) A",
+   "price_usd": 0.15,
+   "price_text": "$0.15",
+   "listings": null
+  },
+  "Complete Crossbow (Immortal) A": {
+   "name": "Complete Crossbow (Immortal) A",
+   "hash_name": "Complete Crossbow (Immortal) A",
+   "price_usd": 0.04,
+   "price_text": "$0.04",
+   "listings": null
+  },
+  "Exceptional Crossbow (Immortal) A": {
+   "name": "Exceptional Crossbow (Immortal) A",
+   "hash_name": "Exceptional Crossbow (Immortal) A",
+   "price_usd": 0.04,
+   "price_text": "$0.04",
+   "listings": null
+  },
+  "Iron Crossbow (Immortal) A": {
+   "name": "Iron Crossbow (Immortal) A",
+   "hash_name": "Iron Crossbow (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Elite Crossbow (Immortal) A": {
+   "name": "Elite Crossbow (Immortal) A",
+   "hash_name": "Elite Crossbow (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Mystic Crossbow (Immortal) A": {
+   "name": "Mystic Crossbow (Immortal) A",
+   "hash_name": "Mystic Crossbow (Immortal) A",
+   "price_usd": 0.04,
+   "price_text": "$0.04",
+   "listings": null
+  },
+  "Limitless Crossbow (Immortal) A": {
+   "name": "Limitless Crossbow (Immortal) A",
+   "hash_name": "Limitless Crossbow (Immortal) A",
+   "price_usd": 0.04,
+   "price_text": "$0.04",
+   "listings": null
+  },
+  "Dimensional Crossbow (Immortal) A": {
+   "name": "Dimensional Crossbow (Immortal) A",
+   "hash_name": "Dimensional Crossbow (Immortal) A",
+   "price_usd": 0.04,
+   "price_text": "$0.04",
+   "listings": null
+  },
+  "Complete Crossbow (Arcana) A": {
+   "name": "Complete Crossbow (Arcana) A",
+   "hash_name": "Complete Crossbow (Arcana) A",
+   "price_usd": 0.08,
+   "price_text": "$0.08",
+   "listings": null
+  },
+  "Exceptional Crossbow (Arcana) A": {
+   "name": "Exceptional Crossbow (Arcana) A",
+   "hash_name": "Exceptional Crossbow (Arcana) A",
+   "price_usd": 0.06,
+   "price_text": "$0.06",
+   "listings": null
+  },
+  "Iron Crossbow (Arcana) A": {
+   "name": "Iron Crossbow (Arcana) A",
+   "hash_name": "Iron Crossbow (Arcana) A",
+   "price_usd": 0.05,
+   "price_text": "$0.05",
+   "listings": null
+  },
+  "Elite Crossbow (Arcana) A": {
+   "name": "Elite Crossbow (Arcana) A",
+   "hash_name": "Elite Crossbow (Arcana) A",
+   "price_usd": 0.04,
+   "price_text": "$0.04",
+   "listings": null
+  },
+  "Mystic Crossbow (Arcana) A": {
+   "name": "Mystic Crossbow (Arcana) A",
+   "hash_name": "Mystic Crossbow (Arcana) A",
+   "price_usd": 0.04,
+   "price_text": "$0.04",
+   "listings": null
+  },
+  "Dimensional Crossbow (Arcana) A": {
+   "name": "Dimensional Crossbow (Arcana) A",
+   "hash_name": "Dimensional Crossbow (Arcana) A",
+   "price_usd": 0.08,
+   "price_text": "$0.08",
+   "listings": null
+  },
+  "Iron Crossbow (Beyond) A": {
+   "name": "Iron Crossbow (Beyond) A",
+   "hash_name": "Iron Crossbow (Beyond) A",
+   "price_usd": 0.61,
+   "price_text": "$0.61",
+   "listings": null
+  },
+  "Elite Crossbow (Beyond) A": {
+   "name": "Elite Crossbow (Beyond) A",
+   "hash_name": "Elite Crossbow (Beyond) A",
+   "price_usd": 0.17,
+   "price_text": "$0.17",
+   "listings": null
+  },
+  "Mystic Crossbow (Beyond) A": {
+   "name": "Mystic Crossbow (Beyond) A",
+   "hash_name": "Mystic Crossbow (Beyond) A",
+   "price_usd": 0.28,
+   "price_text": "$0.28",
+   "listings": null
+  },
+  "Dimensional Crossbow (Beyond) A": {
+   "name": "Dimensional Crossbow (Beyond) A",
+   "hash_name": "Dimensional Crossbow (Beyond) A",
+   "price_usd": 0.72,
+   "price_text": "$0.72",
+   "listings": null
+  },
+  "Wooden Axe (Legendary) A": {
+   "name": "Wooden Axe (Legendary) A",
+   "hash_name": "Wooden Axe (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Iron Axe (Legendary) A": {
+   "name": "Iron Axe (Legendary) A",
+   "hash_name": "Iron Axe (Legendary) A",
+   "price_usd": 0.04,
+   "price_text": "$0.04",
+   "listings": null
+  },
+  "Battle Axe (Legendary) A": {
+   "name": "Battle Axe (Legendary) A",
+   "hash_name": "Battle Axe (Legendary) A",
+   "price_usd": 0.05,
+   "price_text": "$0.05",
+   "listings": null
+  },
+  "Steel Axe (Legendary) A": {
+   "name": "Steel Axe (Legendary) A",
+   "hash_name": "Steel Axe (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Rune Axe (Legendary) A": {
+   "name": "Rune Axe (Legendary) A",
+   "hash_name": "Rune Axe (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Fate Axe (Legendary) A": {
+   "name": "Fate Axe (Legendary) A",
+   "hash_name": "Fate Axe (Legendary) A",
+   "price_usd": 0.04,
+   "price_text": "$0.04",
+   "listings": null
+  },
+  "Limitless Axe (Legendary) A": {
+   "name": "Limitless Axe (Legendary) A",
+   "hash_name": "Limitless Axe (Legendary) A",
+   "price_usd": 0.04,
+   "price_text": "$0.04",
+   "listings": null
+  },
+  "Dimensional Axe (Legendary) A": {
+   "name": "Dimensional Axe (Legendary) A",
+   "hash_name": "Dimensional Axe (Legendary) A",
+   "price_usd": 0.04,
+   "price_text": "$0.04",
+   "listings": null
+  },
+  "Battle Axe (Immortal) A": {
+   "name": "Battle Axe (Immortal) A",
+   "hash_name": "Battle Axe (Immortal) A",
+   "price_usd": 0.05,
+   "price_text": "$0.05",
+   "listings": null
+  },
+  "Steel Axe (Immortal) A": {
+   "name": "Steel Axe (Immortal) A",
+   "hash_name": "Steel Axe (Immortal) A",
+   "price_usd": 0.04,
+   "price_text": "$0.04",
+   "listings": null
+  },
+  "War Axe (Immortal) A": {
+   "name": "War Axe (Immortal) A",
+   "hash_name": "War Axe (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Great Axe (Immortal) A": {
+   "name": "Great Axe (Immortal) A",
+   "hash_name": "Great Axe (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Rune Axe (Immortal) A": {
+   "name": "Rune Axe (Immortal) A",
+   "hash_name": "Rune Axe (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Fate Axe (Immortal) A": {
+   "name": "Fate Axe (Immortal) A",
+   "hash_name": "Fate Axe (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Limitless Axe (Immortal) A": {
+   "name": "Limitless Axe (Immortal) A",
+   "hash_name": "Limitless Axe (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Dimensional Axe (Immortal) A": {
+   "name": "Dimensional Axe (Immortal) A",
+   "hash_name": "Dimensional Axe (Immortal) A",
+   "price_usd": 0.04,
+   "price_text": "$0.04",
+   "listings": null
+  },
+  "Steel Axe (Arcana) A": {
+   "name": "Steel Axe (Arcana) A",
+   "hash_name": "Steel Axe (Arcana) A",
+   "price_usd": 0.04,
+   "price_text": "$0.04",
+   "listings": null
+  },
+  "War Axe (Arcana) A": {
+   "name": "War Axe (Arcana) A",
+   "hash_name": "War Axe (Arcana) A",
+   "price_usd": 0.05,
+   "price_text": "$0.05",
+   "listings": null
+  },
+  "Great Axe (Arcana) A": {
+   "name": "Great Axe (Arcana) A",
+   "hash_name": "Great Axe (Arcana) A",
+   "price_usd": 0.04,
+   "price_text": "$0.04",
+   "listings": null
+  },
+  "Rune Axe (Arcana) A": {
+   "name": "Rune Axe (Arcana) A",
+   "hash_name": "Rune Axe (Arcana) A",
+   "price_usd": 0.04,
+   "price_text": "$0.04",
+   "listings": null
+  },
+  "Fate Axe (Arcana) A": {
+   "name": "Fate Axe (Arcana) A",
+   "hash_name": "Fate Axe (Arcana) A",
+   "price_usd": 0.05,
+   "price_text": "$0.05",
+   "listings": null
+  },
+  "Limitless Axe (Arcana) A": {
+   "name": "Limitless Axe (Arcana) A",
+   "hash_name": "Limitless Axe (Arcana) A",
+   "price_usd": 0.05,
+   "price_text": "$0.05",
+   "listings": null
+  },
+  "Dimensional Axe (Arcana) A": {
+   "name": "Dimensional Axe (Arcana) A",
+   "hash_name": "Dimensional Axe (Arcana) A",
+   "price_usd": 0.07,
+   "price_text": "$0.07",
+   "listings": null
+  },
+  "Rune Axe (Beyond) A": {
+   "name": "Rune Axe (Beyond) A",
+   "hash_name": "Rune Axe (Beyond) A",
+   "price_usd": 0.1,
+   "price_text": "$0.10",
+   "listings": null
+  },
+  "Fate Axe (Beyond) A": {
+   "name": "Fate Axe (Beyond) A",
+   "hash_name": "Fate Axe (Beyond) A",
+   "price_usd": 0.08,
+   "price_text": "$0.08",
+   "listings": null
+  },
+  "Limitless Axe (Beyond) A": {
+   "name": "Limitless Axe (Beyond) A",
+   "hash_name": "Limitless Axe (Beyond) A",
+   "price_usd": 0.17,
+   "price_text": "$0.17",
+   "listings": null
+  },
+  "Dimensional Axe (Beyond) A": {
+   "name": "Dimensional Axe (Beyond) A",
+   "hash_name": "Dimensional Axe (Beyond) A",
+   "price_usd": 0.5,
+   "price_text": "$0.50",
+   "listings": null
+  },
+  "Buckler (Legendary) A": {
+   "name": "Buckler (Legendary) A",
+   "hash_name": "Buckler (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Wooden Shield (Legendary) A": {
+   "name": "Wooden Shield (Legendary) A",
+   "hash_name": "Wooden Shield (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Iron Shield (Legendary) A": {
+   "name": "Iron Shield (Legendary) A",
+   "hash_name": "Iron Shield (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Heater Shield (Legendary) A": {
+   "name": "Heater Shield (Legendary) A",
+   "hash_name": "Heater Shield (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Heavy Shield (Legendary) A": {
+   "name": "Heavy Shield (Legendary) A",
+   "hash_name": "Heavy Shield (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "War Shield (Legendary) A": {
+   "name": "War Shield (Legendary) A",
+   "hash_name": "War Shield (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Elite Shield (Legendary) A": {
+   "name": "Elite Shield (Legendary) A",
+   "hash_name": "Elite Shield (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Mystic Shield (Legendary) A": {
+   "name": "Mystic Shield (Legendary) A",
+   "hash_name": "Mystic Shield (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Radiant Shield (Legendary) A": {
+   "name": "Radiant Shield (Legendary) A",
+   "hash_name": "Radiant Shield (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Dimensional Shield (Legendary) A": {
+   "name": "Dimensional Shield (Legendary) A",
+   "hash_name": "Dimensional Shield (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Wooden Shield (Immortal) A": {
+   "name": "Wooden Shield (Immortal) A",
+   "hash_name": "Wooden Shield (Immortal) A",
+   "price_usd": 0.04,
+   "price_text": "$0.04",
+   "listings": null
+  },
+  "Iron Shield (Immortal) A": {
+   "name": "Iron Shield (Immortal) A",
+   "hash_name": "Iron Shield (Immortal) A",
+   "price_usd": 0.04,
+   "price_text": "$0.04",
+   "listings": null
+  },
+  "Heater Shield (Immortal) A": {
+   "name": "Heater Shield (Immortal) A",
+   "hash_name": "Heater Shield (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Heavy Shield (Immortal) A": {
+   "name": "Heavy Shield (Immortal) A",
+   "hash_name": "Heavy Shield (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "War Shield (Immortal) A": {
+   "name": "War Shield (Immortal) A",
+   "hash_name": "War Shield (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Mystic Shield (Immortal) A": {
+   "name": "Mystic Shield (Immortal) A",
+   "hash_name": "Mystic Shield (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Radiant Shield (Immortal) A": {
+   "name": "Radiant Shield (Immortal) A",
+   "hash_name": "Radiant Shield (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Dimensional Shield (Immortal) A": {
+   "name": "Dimensional Shield (Immortal) A",
+   "hash_name": "Dimensional Shield (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Heater Shield (Arcana) A": {
+   "name": "Heater Shield (Arcana) A",
+   "hash_name": "Heater Shield (Arcana) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Heavy Shield (Arcana) A": {
+   "name": "Heavy Shield (Arcana) A",
+   "hash_name": "Heavy Shield (Arcana) A",
+   "price_usd": 0.04,
+   "price_text": "$0.04",
+   "listings": null
+  },
+  "War Shield (Arcana) A": {
+   "name": "War Shield (Arcana) A",
+   "hash_name": "War Shield (Arcana) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Elite Shield (Arcana) A": {
+   "name": "Elite Shield (Arcana) A",
+   "hash_name": "Elite Shield (Arcana) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Mystic Shield (Arcana) A": {
+   "name": "Mystic Shield (Arcana) A",
+   "hash_name": "Mystic Shield (Arcana) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Radiant Shield (Arcana) A": {
+   "name": "Radiant Shield (Arcana) A",
+   "hash_name": "Radiant Shield (Arcana) A",
+   "price_usd": 0.05,
+   "price_text": "$0.05",
+   "listings": null
+  },
+  "Dimensional Shield (Arcana) A": {
+   "name": "Dimensional Shield (Arcana) A",
+   "hash_name": "Dimensional Shield (Arcana) A",
+   "price_usd": 0.07,
+   "price_text": "$0.07",
+   "listings": null
+  },
+  "War Shield (Beyond) A": {
+   "name": "War Shield (Beyond) A",
+   "hash_name": "War Shield (Beyond) A",
+   "price_usd": 0.11,
+   "price_text": "$0.11",
+   "listings": null
+  },
+  "Elite Shield (Beyond) A": {
+   "name": "Elite Shield (Beyond) A",
+   "hash_name": "Elite Shield (Beyond) A",
+   "price_usd": 0.08,
+   "price_text": "$0.08",
+   "listings": null
+  },
+  "Mystic Shield (Beyond) A": {
+   "name": "Mystic Shield (Beyond) A",
+   "hash_name": "Mystic Shield (Beyond) A",
+   "price_usd": 0.1,
+   "price_text": "$0.10",
+   "listings": null
+  },
+  "Radiant Shield (Beyond) A": {
+   "name": "Radiant Shield (Beyond) A",
+   "hash_name": "Radiant Shield (Beyond) A",
+   "price_usd": 0.17,
+   "price_text": "$0.17",
+   "listings": null
+  },
+  "Dimensional Shield (Beyond) A": {
+   "name": "Dimensional Shield (Beyond) A",
+   "hash_name": "Dimensional Shield (Beyond) A",
+   "price_usd": 0.24,
+   "price_text": "$0.24",
+   "listings": null
+  },
+  "Dimensional Shield (Celestial) A": {
+   "name": "Dimensional Shield (Celestial) A",
+   "hash_name": "Dimensional Shield (Celestial) A",
+   "price_usd": 22.42,
+   "price_text": "$22.42",
+   "listings": null
+  },
+  "Radiant Shield (Divine) A": {
+   "name": "Radiant Shield (Divine) A",
+   "hash_name": "Radiant Shield (Divine) A",
+   "price_usd": 224.29,
+   "price_text": "$224.29",
+   "listings": null
+  },
+  "Wooden Arrow (Legendary) A": {
+   "name": "Wooden Arrow (Legendary) A",
+   "hash_name": "Wooden Arrow (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Iron Arrow (Legendary) A": {
+   "name": "Iron Arrow (Legendary) A",
+   "hash_name": "Iron Arrow (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Hunter's Arrow (Legendary) A": {
+   "name": "Hunter's Arrow (Legendary) A",
+   "hash_name": "Hunter's Arrow (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Barbed Arrow (Legendary) A": {
+   "name": "Barbed Arrow (Legendary) A",
+   "hash_name": "Barbed Arrow (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Azure Arrow (Legendary) A": {
+   "name": "Azure Arrow (Legendary) A",
+   "hash_name": "Azure Arrow (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Gale Arrow (Legendary) A": {
+   "name": "Gale Arrow (Legendary) A",
+   "hash_name": "Gale Arrow (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Rune Arrow (Legendary) A": {
+   "name": "Rune Arrow (Legendary) A",
+   "hash_name": "Rune Arrow (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Fate Arrow (Legendary) A": {
+   "name": "Fate Arrow (Legendary) A",
+   "hash_name": "Fate Arrow (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Haste Arrow (Legendary) A": {
+   "name": "Haste Arrow (Legendary) A",
+   "hash_name": "Haste Arrow (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Dimensional Arrow (Legendary) A": {
+   "name": "Dimensional Arrow (Legendary) A",
+   "hash_name": "Dimensional Arrow (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Wooden Arrow (Immortal) A": {
+   "name": "Wooden Arrow (Immortal) A",
+   "hash_name": "Wooden Arrow (Immortal) A",
+   "price_usd": 0.04,
+   "price_text": "$0.04",
+   "listings": null
+  },
+  "Iron Arrow (Immortal) A": {
+   "name": "Iron Arrow (Immortal) A",
+   "hash_name": "Iron Arrow (Immortal) A",
+   "price_usd": 0.05,
+   "price_text": "$0.05",
+   "listings": null
+  },
+  "Hunter's Arrow (Immortal) A": {
+   "name": "Hunter's Arrow (Immortal) A",
+   "hash_name": "Hunter's Arrow (Immortal) A",
+   "price_usd": 0.04,
+   "price_text": "$0.04",
+   "listings": null
+  },
+  "Barbed Arrow (Immortal) A": {
+   "name": "Barbed Arrow (Immortal) A",
+   "hash_name": "Barbed Arrow (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Azure Arrow (Immortal) A": {
+   "name": "Azure Arrow (Immortal) A",
+   "hash_name": "Azure Arrow (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Gale Arrow (Immortal) A": {
+   "name": "Gale Arrow (Immortal) A",
+   "hash_name": "Gale Arrow (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Rune Arrow (Immortal) A": {
+   "name": "Rune Arrow (Immortal) A",
+   "hash_name": "Rune Arrow (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Fate Arrow (Immortal) A": {
+   "name": "Fate Arrow (Immortal) A",
+   "hash_name": "Fate Arrow (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Haste Arrow (Immortal) A": {
+   "name": "Haste Arrow (Immortal) A",
+   "hash_name": "Haste Arrow (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Dimensional Arrow (Immortal) A": {
+   "name": "Dimensional Arrow (Immortal) A",
+   "hash_name": "Dimensional Arrow (Immortal) A",
+   "price_usd": 0.04,
+   "price_text": "$0.04",
+   "listings": null
+  },
+  "Barbed Arrow (Arcana) A": {
+   "name": "Barbed Arrow (Arcana) A",
+   "hash_name": "Barbed Arrow (Arcana) A",
+   "price_usd": 0.08,
+   "price_text": "$0.08",
+   "listings": null
+  },
+  "Azure Arrow (Arcana) A": {
+   "name": "Azure Arrow (Arcana) A",
+   "hash_name": "Azure Arrow (Arcana) A",
+   "price_usd": 0.08,
+   "price_text": "$0.08",
+   "listings": null
+  },
+  "Gale Arrow (Arcana) A": {
+   "name": "Gale Arrow (Arcana) A",
+   "hash_name": "Gale Arrow (Arcana) A",
+   "price_usd": 0.05,
+   "price_text": "$0.05",
+   "listings": null
+  },
+  "Rune Arrow (Arcana) A": {
+   "name": "Rune Arrow (Arcana) A",
+   "hash_name": "Rune Arrow (Arcana) A",
+   "price_usd": 0.04,
+   "price_text": "$0.04",
+   "listings": null
+  },
+  "Fate Arrow (Arcana) A": {
+   "name": "Fate Arrow (Arcana) A",
+   "hash_name": "Fate Arrow (Arcana) A",
+   "price_usd": 0.08,
+   "price_text": "$0.08",
+   "listings": null
+  },
+  "Haste Arrow (Arcana) A": {
+   "name": "Haste Arrow (Arcana) A",
+   "hash_name": "Haste Arrow (Arcana) A",
+   "price_usd": 0.15,
+   "price_text": "$0.15",
+   "listings": null
+  },
+  "Dimensional Arrow (Arcana) A": {
+   "name": "Dimensional Arrow (Arcana) A",
+   "hash_name": "Dimensional Arrow (Arcana) A",
+   "price_usd": 0.42,
+   "price_text": "$0.42",
+   "listings": null
+  },
+  "Gale Arrow (Beyond) A": {
+   "name": "Gale Arrow (Beyond) A",
+   "hash_name": "Gale Arrow (Beyond) A",
+   "price_usd": 0.41,
+   "price_text": "$0.41",
+   "listings": null
+  },
+  "Rune Arrow (Beyond) A": {
+   "name": "Rune Arrow (Beyond) A",
+   "hash_name": "Rune Arrow (Beyond) A",
+   "price_usd": 0.3,
+   "price_text": "$0.30",
+   "listings": null
+  },
+  "Fate Arrow (Beyond) A": {
+   "name": "Fate Arrow (Beyond) A",
+   "hash_name": "Fate Arrow (Beyond) A",
+   "price_usd": 0.41,
+   "price_text": "$0.41",
+   "listings": null
+  },
+  "Haste Arrow (Beyond) A": {
+   "name": "Haste Arrow (Beyond) A",
+   "hash_name": "Haste Arrow (Beyond) A",
+   "price_usd": 0.77,
+   "price_text": "$0.77",
+   "listings": null
+  },
+  "Dimensional Arrow (Beyond) A": {
+   "name": "Dimensional Arrow (Beyond) A",
+   "hash_name": "Dimensional Arrow (Beyond) A",
+   "price_usd": 2.32,
+   "price_text": "$2.32",
+   "listings": null
+  },
+  "Dimensional Arrow (Celestial) A": {
+   "name": "Dimensional Arrow (Celestial) A",
+   "hash_name": "Dimensional Arrow (Celestial) A",
+   "price_usd": 111.02,
+   "price_text": "$111.02",
+   "listings": null
+  },
+  "Brilliant Orb (Legendary) A": {
+   "name": "Brilliant Orb (Legendary) A",
+   "hash_name": "Brilliant Orb (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Frozen Orb (Legendary) A": {
+   "name": "Frozen Orb (Legendary) A",
+   "hash_name": "Frozen Orb (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Prophecy Orb (Legendary) A": {
+   "name": "Prophecy Orb (Legendary) A",
+   "hash_name": "Prophecy Orb (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Rune Orb (Legendary) A": {
+   "name": "Rune Orb (Legendary) A",
+   "hash_name": "Rune Orb (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Arcane Orb (Legendary) A": {
+   "name": "Arcane Orb (Legendary) A",
+   "hash_name": "Arcane Orb (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Mystic Orb (Legendary) A": {
+   "name": "Mystic Orb (Legendary) A",
+   "hash_name": "Mystic Orb (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Ancient Orb (Legendary) A": {
+   "name": "Ancient Orb (Legendary) A",
+   "hash_name": "Ancient Orb (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Dimensional Orb (Legendary) A": {
+   "name": "Dimensional Orb (Legendary) A",
+   "hash_name": "Dimensional Orb (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Magic Orb (Immortal) A": {
+   "name": "Magic Orb (Immortal) A",
+   "hash_name": "Magic Orb (Immortal) A",
+   "price_usd": 0.04,
+   "price_text": "$0.04",
+   "listings": null
+  },
+  "Elder Orb (Immortal) A": {
+   "name": "Elder Orb (Immortal) A",
+   "hash_name": "Elder Orb (Immortal) A",
+   "price_usd": 0.04,
+   "price_text": "$0.04",
+   "listings": null
+  },
+  "Brilliant Orb (Immortal) A": {
+   "name": "Brilliant Orb (Immortal) A",
+   "hash_name": "Brilliant Orb (Immortal) A",
+   "price_usd": 0.04,
+   "price_text": "$0.04",
+   "listings": null
+  },
+  "Frozen Orb (Immortal) A": {
+   "name": "Frozen Orb (Immortal) A",
+   "hash_name": "Frozen Orb (Immortal) A",
+   "price_usd": 0.04,
+   "price_text": "$0.04",
+   "listings": null
+  },
+  "Prophecy Orb (Immortal) A": {
+   "name": "Prophecy Orb (Immortal) A",
+   "hash_name": "Prophecy Orb (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Rune Orb (Immortal) A": {
+   "name": "Rune Orb (Immortal) A",
+   "hash_name": "Rune Orb (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Arcane Orb (Immortal) A": {
+   "name": "Arcane Orb (Immortal) A",
+   "hash_name": "Arcane Orb (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Mystic Orb (Immortal) A": {
+   "name": "Mystic Orb (Immortal) A",
+   "hash_name": "Mystic Orb (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Ancient Orb (Immortal) A": {
+   "name": "Ancient Orb (Immortal) A",
+   "hash_name": "Ancient Orb (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Dimensional Orb (Immortal) A": {
+   "name": "Dimensional Orb (Immortal) A",
+   "hash_name": "Dimensional Orb (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Frozen Orb (Arcana) A": {
+   "name": "Frozen Orb (Arcana) A",
+   "hash_name": "Frozen Orb (Arcana) A",
+   "price_usd": 3.41,
+   "price_text": "$3.41",
+   "listings": null
+  },
+  "Prophecy Orb (Arcana) A": {
+   "name": "Prophecy Orb (Arcana) A",
+   "hash_name": "Prophecy Orb (Arcana) A",
+   "price_usd": 0.06,
+   "price_text": "$0.06",
+   "listings": null
+  },
+  "Rune Orb (Arcana) A": {
+   "name": "Rune Orb (Arcana) A",
+   "hash_name": "Rune Orb (Arcana) A",
+   "price_usd": 0.04,
+   "price_text": "$0.04",
+   "listings": null
+  },
+  "Arcane Orb (Arcana) A": {
+   "name": "Arcane Orb (Arcana) A",
+   "hash_name": "Arcane Orb (Arcana) A",
+   "price_usd": 0.04,
+   "price_text": "$0.04",
+   "listings": null
+  },
+  "Mystic Orb (Arcana) A": {
+   "name": "Mystic Orb (Arcana) A",
+   "hash_name": "Mystic Orb (Arcana) A",
+   "price_usd": 0.04,
+   "price_text": "$0.04",
+   "listings": null
+  },
+  "Ancient Orb (Arcana) A": {
+   "name": "Ancient Orb (Arcana) A",
+   "hash_name": "Ancient Orb (Arcana) A",
+   "price_usd": 0.05,
+   "price_text": "$0.05",
+   "listings": null
+  },
+  "Dimensional Orb (Arcana) A": {
+   "name": "Dimensional Orb (Arcana) A",
+   "hash_name": "Dimensional Orb (Arcana) A",
+   "price_usd": 0.09,
+   "price_text": "$0.09",
+   "listings": null
+  },
+  "Rune Orb (Beyond) A": {
+   "name": "Rune Orb (Beyond) A",
+   "hash_name": "Rune Orb (Beyond) A",
+   "price_usd": 0.32,
+   "price_text": "$0.32",
+   "listings": null
+  },
+  "Arcane Orb (Beyond) A": {
+   "name": "Arcane Orb (Beyond) A",
+   "hash_name": "Arcane Orb (Beyond) A",
+   "price_usd": 0.42,
+   "price_text": "$0.42",
+   "listings": null
+  },
+  "Ancient Orb (Beyond) A": {
+   "name": "Ancient Orb (Beyond) A",
+   "hash_name": "Ancient Orb (Beyond) A",
+   "price_usd": 0.23,
+   "price_text": "$0.23",
+   "listings": null
+  },
+  "Dimensional Orb (Beyond) A": {
+   "name": "Dimensional Orb (Beyond) A",
+   "hash_name": "Dimensional Orb (Beyond) A",
+   "price_usd": 0.54,
+   "price_text": "$0.54",
+   "listings": null
+  },
+  "Prayer Tome (Legendary) A": {
+   "name": "Prayer Tome (Legendary) A",
+   "hash_name": "Prayer Tome (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Iron Tome (Legendary) A": {
+   "name": "Iron Tome (Legendary) A",
+   "hash_name": "Iron Tome (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Knight's Tome (Legendary) A": {
+   "name": "Knight's Tome (Legendary) A",
+   "hash_name": "Knight's Tome (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "War Tome (Legendary) A": {
+   "name": "War Tome (Legendary) A",
+   "hash_name": "War Tome (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Rune Tome (Legendary) A": {
+   "name": "Rune Tome (Legendary) A",
+   "hash_name": "Rune Tome (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Fate Tome (Legendary) A": {
+   "name": "Fate Tome (Legendary) A",
+   "hash_name": "Fate Tome (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Warrior's Tome (Legendary) A": {
+   "name": "Warrior's Tome (Legendary) A",
+   "hash_name": "Warrior's Tome (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Dimensional Tome (Legendary) A": {
+   "name": "Dimensional Tome (Legendary) A",
+   "hash_name": "Dimensional Tome (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Empire Tome (Immortal) A": {
+   "name": "Empire Tome (Immortal) A",
+   "hash_name": "Empire Tome (Immortal) A",
+   "price_usd": 0.04,
+   "price_text": "$0.04",
+   "listings": null
+  },
+  "Iron Tome (Immortal) A": {
+   "name": "Iron Tome (Immortal) A",
+   "hash_name": "Iron Tome (Immortal) A",
+   "price_usd": 0.04,
+   "price_text": "$0.04",
+   "listings": null
+  },
+  "Knight's Tome (Immortal) A": {
+   "name": "Knight's Tome (Immortal) A",
+   "hash_name": "Knight's Tome (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Blessed Tome (Immortal) A": {
+   "name": "Blessed Tome (Immortal) A",
+   "hash_name": "Blessed Tome (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "War Tome (Immortal) A": {
+   "name": "War Tome (Immortal) A",
+   "hash_name": "War Tome (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Rune Tome (Immortal) A": {
+   "name": "Rune Tome (Immortal) A",
+   "hash_name": "Rune Tome (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Fate Tome (Immortal) A": {
+   "name": "Fate Tome (Immortal) A",
+   "hash_name": "Fate Tome (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Warrior's Tome (Immortal) A": {
+   "name": "Warrior's Tome (Immortal) A",
+   "hash_name": "Warrior's Tome (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Dimensional Tome (Immortal) A": {
+   "name": "Dimensional Tome (Immortal) A",
+   "hash_name": "Dimensional Tome (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Knight's Tome (Arcana) A": {
+   "name": "Knight's Tome (Arcana) A",
+   "hash_name": "Knight's Tome (Arcana) A",
+   "price_usd": 0.05,
+   "price_text": "$0.05",
+   "listings": null
+  },
+  "Blessed Tome (Arcana) A": {
+   "name": "Blessed Tome (Arcana) A",
+   "hash_name": "Blessed Tome (Arcana) A",
+   "price_usd": 0.07,
+   "price_text": "$0.07",
+   "listings": null
+  },
+  "War Tome (Arcana) A": {
+   "name": "War Tome (Arcana) A",
+   "hash_name": "War Tome (Arcana) A",
+   "price_usd": 0.04,
+   "price_text": "$0.04",
+   "listings": null
+  },
+  "Rune Tome (Arcana) A": {
+   "name": "Rune Tome (Arcana) A",
+   "hash_name": "Rune Tome (Arcana) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Fate Tome (Arcana) A": {
+   "name": "Fate Tome (Arcana) A",
+   "hash_name": "Fate Tome (Arcana) A",
+   "price_usd": 0.06,
+   "price_text": "$0.06",
+   "listings": null
+  },
+  "Warrior's Tome (Arcana) A": {
+   "name": "Warrior's Tome (Arcana) A",
+   "hash_name": "Warrior's Tome (Arcana) A",
+   "price_usd": 0.06,
+   "price_text": "$0.06",
+   "listings": null
+  },
+  "Dimensional Tome (Arcana) A": {
+   "name": "Dimensional Tome (Arcana) A",
+   "hash_name": "Dimensional Tome (Arcana) A",
+   "price_usd": 0.1,
+   "price_text": "$0.10",
+   "listings": null
+  },
+  "War Tome (Beyond) A": {
+   "name": "War Tome (Beyond) A",
+   "hash_name": "War Tome (Beyond) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Rune Tome (Beyond) A": {
+   "name": "Rune Tome (Beyond) A",
+   "hash_name": "Rune Tome (Beyond) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Warrior's Tome (Beyond) A": {
+   "name": "Warrior's Tome (Beyond) A",
+   "hash_name": "Warrior's Tome (Beyond) A",
+   "price_usd": 0.41,
+   "price_text": "$0.41",
+   "listings": null
+  },
+  "Dimensional Tome (Beyond) A": {
+   "name": "Dimensional Tome (Beyond) A",
+   "hash_name": "Dimensional Tome (Beyond) A",
+   "price_usd": 0.75,
+   "price_text": "$0.75",
+   "listings": null
+  },
+  "Short Bolt (Legendary) A": {
+   "name": "Short Bolt (Legendary) A",
+   "hash_name": "Short Bolt (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Hunter's Bolt (Legendary) A": {
+   "name": "Hunter's Bolt (Legendary) A",
+   "hash_name": "Hunter's Bolt (Legendary) A",
+   "price_usd": 0.12,
+   "price_text": "$0.12",
+   "listings": null
+  },
+  "Barbed Bolt (Legendary) A": {
+   "name": "Barbed Bolt (Legendary) A",
+   "hash_name": "Barbed Bolt (Legendary) A",
+   "price_usd": 0.05,
+   "price_text": "$0.05",
+   "listings": null
+  },
+  "Beast Bolt (Legendary) A": {
+   "name": "Beast Bolt (Legendary) A",
+   "hash_name": "Beast Bolt (Legendary) A",
+   "price_usd": 0.09,
+   "price_text": "$0.09",
+   "listings": null
+  },
+  "Iron Bolt (Legendary) A": {
+   "name": "Iron Bolt (Legendary) A",
+   "hash_name": "Iron Bolt (Legendary) A",
+   "price_usd": 0.04,
+   "price_text": "$0.04",
+   "listings": null
+  },
+  "Rune Bolt (Legendary) A": {
+   "name": "Rune Bolt (Legendary) A",
+   "hash_name": "Rune Bolt (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Fate Bolt (Legendary) A": {
+   "name": "Fate Bolt (Legendary) A",
+   "hash_name": "Fate Bolt (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Haste Bolt (Legendary) A": {
+   "name": "Haste Bolt (Legendary) A",
+   "hash_name": "Haste Bolt (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Dimensional Bolt (Legendary) A": {
+   "name": "Dimensional Bolt (Legendary) A",
+   "hash_name": "Dimensional Bolt (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Short Bolt (Immortal) A": {
+   "name": "Short Bolt (Immortal) A",
+   "hash_name": "Short Bolt (Immortal) A",
+   "price_usd": 0.04,
+   "price_text": "$0.04",
+   "listings": null
+  },
+  "Fear Bolt (Immortal) A": {
+   "name": "Fear Bolt (Immortal) A",
+   "hash_name": "Fear Bolt (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Hunter's Bolt (Immortal) A": {
+   "name": "Hunter's Bolt (Immortal) A",
+   "hash_name": "Hunter's Bolt (Immortal) A",
+   "price_usd": 0.51,
+   "price_text": "$0.51",
+   "listings": null
+  },
+  "Barbed Bolt (Immortal) A": {
+   "name": "Barbed Bolt (Immortal) A",
+   "hash_name": "Barbed Bolt (Immortal) A",
+   "price_usd": 0.12,
+   "price_text": "$0.12",
+   "listings": null
+  },
+  "Beast Bolt (Immortal) A": {
+   "name": "Beast Bolt (Immortal) A",
+   "hash_name": "Beast Bolt (Immortal) A",
+   "price_usd": 0.27,
+   "price_text": "$0.27",
+   "listings": null
+  },
+  "Rune Bolt (Immortal) A": {
+   "name": "Rune Bolt (Immortal) A",
+   "hash_name": "Rune Bolt (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Fate Bolt (Immortal) A": {
+   "name": "Fate Bolt (Immortal) A",
+   "hash_name": "Fate Bolt (Immortal) A",
+   "price_usd": 0.04,
+   "price_text": "$0.04",
+   "listings": null
+  },
+  "Haste Bolt (Immortal) A": {
+   "name": "Haste Bolt (Immortal) A",
+   "hash_name": "Haste Bolt (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Dimensional Bolt (Immortal) A": {
+   "name": "Dimensional Bolt (Immortal) A",
+   "hash_name": "Dimensional Bolt (Immortal) A",
+   "price_usd": 0.04,
+   "price_text": "$0.04",
+   "listings": null
+  },
+  "Barbed Bolt (Arcana) A": {
+   "name": "Barbed Bolt (Arcana) A",
+   "hash_name": "Barbed Bolt (Arcana) A",
+   "price_usd": 0.47,
+   "price_text": "$0.47",
+   "listings": null
+  },
+  "Beast Bolt (Arcana) A": {
+   "name": "Beast Bolt (Arcana) A",
+   "hash_name": "Beast Bolt (Arcana) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Iron Bolt (Arcana) A": {
+   "name": "Iron Bolt (Arcana) A",
+   "hash_name": "Iron Bolt (Arcana) A",
+   "price_usd": 0.31,
+   "price_text": "$0.31",
+   "listings": null
+  },
+  "Rune Bolt (Arcana) A": {
+   "name": "Rune Bolt (Arcana) A",
+   "hash_name": "Rune Bolt (Arcana) A",
+   "price_usd": 0.05,
+   "price_text": "$0.05",
+   "listings": null
+  },
+  "Fate Bolt (Arcana) A": {
+   "name": "Fate Bolt (Arcana) A",
+   "hash_name": "Fate Bolt (Arcana) A",
+   "price_usd": 0.16,
+   "price_text": "$0.16",
+   "listings": null
+  },
+  "Haste Bolt (Arcana) A": {
+   "name": "Haste Bolt (Arcana) A",
+   "hash_name": "Haste Bolt (Arcana) A",
+   "price_usd": 0.09,
+   "price_text": "$0.09",
+   "listings": null
+  },
+  "Dimensional Bolt (Arcana) A": {
+   "name": "Dimensional Bolt (Arcana) A",
+   "hash_name": "Dimensional Bolt (Arcana) A",
+   "price_usd": 0.27,
+   "price_text": "$0.27",
+   "listings": null
+  },
+  "Iron Bolt (Beyond) A": {
+   "name": "Iron Bolt (Beyond) A",
+   "hash_name": "Iron Bolt (Beyond) A",
+   "price_usd": 2.0,
+   "price_text": "$2.00",
+   "listings": null
+  },
+  "Rune Bolt (Beyond) A": {
+   "name": "Rune Bolt (Beyond) A",
+   "hash_name": "Rune Bolt (Beyond) A",
+   "price_usd": 0.93,
+   "price_text": "$0.93",
+   "listings": null
+  },
+  "Fate Bolt (Beyond) A": {
+   "name": "Fate Bolt (Beyond) A",
+   "hash_name": "Fate Bolt (Beyond) A",
+   "price_usd": 1.1,
+   "price_text": "$1.10",
+   "listings": null
+  },
+  "Haste Bolt (Beyond) A": {
+   "name": "Haste Bolt (Beyond) A",
+   "hash_name": "Haste Bolt (Beyond) A",
+   "price_usd": 1.11,
+   "price_text": "$1.11",
+   "listings": null
+  },
+  "Dimensional Bolt (Beyond) A": {
+   "name": "Dimensional Bolt (Beyond) A",
+   "hash_name": "Dimensional Bolt (Beyond) A",
+   "price_usd": 5.68,
+   "price_text": "$5.68",
+   "listings": null
+  },
+  "Leather Hatchet (Legendary) A": {
+   "name": "Leather Hatchet (Legendary) A",
+   "hash_name": "Leather Hatchet (Legendary) A",
+   "price_usd": 0.05,
+   "price_text": "$0.05",
+   "listings": null
+  },
+  "Long Hatchet (Legendary) A": {
+   "name": "Long Hatchet (Legendary) A",
+   "hash_name": "Long Hatchet (Legendary) A",
+   "price_usd": 0.05,
+   "price_text": "$0.05",
+   "listings": null
+  },
+  "Steel Hatchet (Legendary) A": {
+   "name": "Steel Hatchet (Legendary) A",
+   "hash_name": "Steel Hatchet (Legendary) A",
+   "price_usd": 0.04,
+   "price_text": "$0.04",
+   "listings": null
+  },
+  "War Hatchet (Legendary) A": {
+   "name": "War Hatchet (Legendary) A",
+   "hash_name": "War Hatchet (Legendary) A",
+   "price_usd": 0.04,
+   "price_text": "$0.04",
+   "listings": null
+  },
+  "Battle Hatchet (Legendary) A": {
+   "name": "Battle Hatchet (Legendary) A",
+   "hash_name": "Battle Hatchet (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Elite Hatchet (Legendary) A": {
+   "name": "Elite Hatchet (Legendary) A",
+   "hash_name": "Elite Hatchet (Legendary) A",
+   "price_usd": 0.04,
+   "price_text": "$0.04",
+   "listings": null
+  },
+  "Limitless Hatchet (Legendary) A": {
+   "name": "Limitless Hatchet (Legendary) A",
+   "hash_name": "Limitless Hatchet (Legendary) A",
+   "price_usd": 0.04,
+   "price_text": "$0.04",
+   "listings": null
+  },
+  "Dimensional Hatchet (Legendary) A": {
+   "name": "Dimensional Hatchet (Legendary) A",
+   "hash_name": "Dimensional Hatchet (Legendary) A",
+   "price_usd": 0.04,
+   "price_text": "$0.04",
+   "listings": null
+  },
+  "Short Hatchet (Immortal) A": {
+   "name": "Short Hatchet (Immortal) A",
+   "hash_name": "Short Hatchet (Immortal) A",
+   "price_usd": 0.04,
+   "price_text": "$0.04",
+   "listings": null
+  },
+  "Long Hatchet (Immortal) A": {
+   "name": "Long Hatchet (Immortal) A",
+   "hash_name": "Long Hatchet (Immortal) A",
+   "price_usd": 0.25,
+   "price_text": "$0.25",
+   "listings": null
+  },
+  "Elite Hatchet (Immortal) A": {
+   "name": "Elite Hatchet (Immortal) A",
+   "hash_name": "Elite Hatchet (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Mystic Hatchet (Immortal) A": {
+   "name": "Mystic Hatchet (Immortal) A",
+   "hash_name": "Mystic Hatchet (Immortal) A",
+   "price_usd": 0.04,
+   "price_text": "$0.04",
+   "listings": null
+  },
+  "Limitless Hatchet (Immortal) A": {
+   "name": "Limitless Hatchet (Immortal) A",
+   "hash_name": "Limitless Hatchet (Immortal) A",
+   "price_usd": 0.04,
+   "price_text": "$0.04",
+   "listings": null
+  },
+  "Dimensional Hatchet (Immortal) A": {
+   "name": "Dimensional Hatchet (Immortal) A",
+   "hash_name": "Dimensional Hatchet (Immortal) A",
+   "price_usd": 0.04,
+   "price_text": "$0.04",
+   "listings": null
+  },
+  "Steel Hatchet (Arcana) A": {
+   "name": "Steel Hatchet (Arcana) A",
+   "hash_name": "Steel Hatchet (Arcana) A",
+   "price_usd": 0.23,
+   "price_text": "$0.23",
+   "listings": null
+  },
+  "War Hatchet (Arcana) A": {
+   "name": "War Hatchet (Arcana) A",
+   "hash_name": "War Hatchet (Arcana) A",
+   "price_usd": 0.43,
+   "price_text": "$0.43",
+   "listings": null
+  },
+  "Battle Hatchet (Arcana) A": {
+   "name": "Battle Hatchet (Arcana) A",
+   "hash_name": "Battle Hatchet (Arcana) A",
+   "price_usd": 0.21,
+   "price_text": "$0.21",
+   "listings": null
+  },
+  "Elite Hatchet (Arcana) A": {
+   "name": "Elite Hatchet (Arcana) A",
+   "hash_name": "Elite Hatchet (Arcana) A",
+   "price_usd": 0.04,
+   "price_text": "$0.04",
+   "listings": null
+  },
+  "Mystic Hatchet (Arcana) A": {
+   "name": "Mystic Hatchet (Arcana) A",
+   "hash_name": "Mystic Hatchet (Arcana) A",
+   "price_usd": 0.06,
+   "price_text": "$0.06",
+   "listings": null
+  },
+  "Dimensional Hatchet (Arcana) A": {
+   "name": "Dimensional Hatchet (Arcana) A",
+   "hash_name": "Dimensional Hatchet (Arcana) A",
+   "price_usd": 0.14,
+   "price_text": "$0.14",
+   "listings": null
+  },
+  "Battle Hatchet (Beyond) A": {
+   "name": "Battle Hatchet (Beyond) A",
+   "hash_name": "Battle Hatchet (Beyond) A",
+   "price_usd": 2.16,
+   "price_text": "$2.16",
+   "listings": null
+  },
+  "Elite Hatchet (Beyond) A": {
+   "name": "Elite Hatchet (Beyond) A",
+   "hash_name": "Elite Hatchet (Beyond) A",
+   "price_usd": 0.47,
+   "price_text": "$0.47",
+   "listings": null
+  },
+  "Limitless Hatchet (Beyond) A": {
+   "name": "Limitless Hatchet (Beyond) A",
+   "hash_name": "Limitless Hatchet (Beyond) A",
+   "price_usd": 1.04,
+   "price_text": "$1.04",
+   "listings": null
+  },
+  "Dimensional Hatchet (Beyond) A": {
+   "name": "Dimensional Hatchet (Beyond) A",
+   "hash_name": "Dimensional Hatchet (Beyond) A",
+   "price_usd": 3.59,
+   "price_text": "$3.59",
+   "listings": null
+  },
+  "Wooden Helmet (Legendary) A": {
+   "name": "Wooden Helmet (Legendary) A",
+   "hash_name": "Wooden Helmet (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Empire Helmet (Legendary) A": {
+   "name": "Empire Helmet (Legendary) A",
+   "hash_name": "Empire Helmet (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Iron Helmet (Legendary) A": {
+   "name": "Iron Helmet (Legendary) A",
+   "hash_name": "Iron Helmet (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Knight Helmet (Legendary) A": {
+   "name": "Knight Helmet (Legendary) A",
+   "hash_name": "Knight Helmet (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Chain Helmet (Legendary) A": {
+   "name": "Chain Helmet (Legendary) A",
+   "hash_name": "Chain Helmet (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "War Helmet (Legendary) A": {
+   "name": "War Helmet (Legendary) A",
+   "hash_name": "War Helmet (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Rune Helmet (Legendary) A": {
+   "name": "Rune Helmet (Legendary) A",
+   "hash_name": "Rune Helmet (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Fate Helmet (Legendary) A": {
+   "name": "Fate Helmet (Legendary) A",
+   "hash_name": "Fate Helmet (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Fighter's Helmet (Legendary) A": {
+   "name": "Fighter's Helmet (Legendary) A",
+   "hash_name": "Fighter's Helmet (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Dimensional Helmet (Legendary) A": {
+   "name": "Dimensional Helmet (Legendary) A",
+   "hash_name": "Dimensional Helmet (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Wooden Helmet (Immortal) A": {
+   "name": "Wooden Helmet (Immortal) A",
+   "hash_name": "Wooden Helmet (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Empire Helmet (Immortal) A": {
+   "name": "Empire Helmet (Immortal) A",
+   "hash_name": "Empire Helmet (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Iron Helmet (Immortal) A": {
+   "name": "Iron Helmet (Immortal) A",
+   "hash_name": "Iron Helmet (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Knight Helmet (Immortal) A": {
+   "name": "Knight Helmet (Immortal) A",
+   "hash_name": "Knight Helmet (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Chain Helmet (Immortal) A": {
+   "name": "Chain Helmet (Immortal) A",
+   "hash_name": "Chain Helmet (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "War Helmet (Immortal) A": {
+   "name": "War Helmet (Immortal) A",
+   "hash_name": "War Helmet (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Rune Helmet (Immortal) A": {
+   "name": "Rune Helmet (Immortal) A",
+   "hash_name": "Rune Helmet (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Fate Helmet (Immortal) A": {
+   "name": "Fate Helmet (Immortal) A",
+   "hash_name": "Fate Helmet (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Fighter's Helmet (Immortal) A": {
+   "name": "Fighter's Helmet (Immortal) A",
+   "hash_name": "Fighter's Helmet (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Dimensional Helmet (Immortal) A": {
+   "name": "Dimensional Helmet (Immortal) A",
+   "hash_name": "Dimensional Helmet (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Knight Helmet (Arcana) A": {
+   "name": "Knight Helmet (Arcana) A",
+   "hash_name": "Knight Helmet (Arcana) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Chain Helmet (Arcana) A": {
+   "name": "Chain Helmet (Arcana) A",
+   "hash_name": "Chain Helmet (Arcana) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "War Helmet (Arcana) A": {
+   "name": "War Helmet (Arcana) A",
+   "hash_name": "War Helmet (Arcana) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Rune Helmet (Arcana) A": {
+   "name": "Rune Helmet (Arcana) A",
+   "hash_name": "Rune Helmet (Arcana) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Fate Helmet (Arcana) A": {
+   "name": "Fate Helmet (Arcana) A",
+   "hash_name": "Fate Helmet (Arcana) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Fighter's Helmet (Arcana) A": {
+   "name": "Fighter's Helmet (Arcana) A",
+   "hash_name": "Fighter's Helmet (Arcana) A",
+   "price_usd": 0.04,
+   "price_text": "$0.04",
+   "listings": null
+  },
+  "War Helmet (Beyond) A": {
+   "name": "War Helmet (Beyond) A",
+   "hash_name": "War Helmet (Beyond) A",
+   "price_usd": 0.05,
+   "price_text": "$0.05",
+   "listings": null
+  },
+  "Rune Helmet (Beyond) A": {
+   "name": "Rune Helmet (Beyond) A",
+   "hash_name": "Rune Helmet (Beyond) A",
+   "price_usd": 0.05,
+   "price_text": "$0.05",
+   "listings": null
+  },
+  "Fate Helmet (Beyond) A": {
+   "name": "Fate Helmet (Beyond) A",
+   "hash_name": "Fate Helmet (Beyond) A",
+   "price_usd": 0.05,
+   "price_text": "$0.05",
+   "listings": null
+  },
+  "Fighter's Helmet (Beyond) A": {
+   "name": "Fighter's Helmet (Beyond) A",
+   "hash_name": "Fighter's Helmet (Beyond) A",
+   "price_usd": 0.14,
+   "price_text": "$0.14",
+   "listings": null
+  },
+  "Dimensional Helmet (Beyond) A": {
+   "name": "Dimensional Helmet (Beyond) A",
+   "hash_name": "Dimensional Helmet (Beyond) A",
+   "price_usd": 0.23,
+   "price_text": "$0.23",
+   "listings": null
+  },
+  "Fighter's Helmet (Cosmic) A": {
+   "name": "Fighter's Helmet (Cosmic) A",
+   "hash_name": "Fighter's Helmet (Cosmic) A",
+   "price_usd": 112.15,
+   "price_text": "$112.15",
+   "listings": null
+  },
+  "Wooden Armor (Legendary) A": {
+   "name": "Wooden Armor (Legendary) A",
+   "hash_name": "Wooden Armor (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Iron Plate (Legendary) A": {
+   "name": "Iron Plate (Legendary) A",
+   "hash_name": "Iron Plate (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Chain Mail (Legendary) A": {
+   "name": "Chain Mail (Legendary) A",
+   "hash_name": "Chain Mail (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "War Armor (Legendary) A": {
+   "name": "War Armor (Legendary) A",
+   "hash_name": "War Armor (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Rune Plate (Legendary) A": {
+   "name": "Rune Plate (Legendary) A",
+   "hash_name": "Rune Plate (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Mystic Armor (Legendary) A": {
+   "name": "Mystic Armor (Legendary) A",
+   "hash_name": "Mystic Armor (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Shine Armor (Legendary) A": {
+   "name": "Shine Armor (Legendary) A",
+   "hash_name": "Shine Armor (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Dimensional Armor (Legendary) A": {
+   "name": "Dimensional Armor (Legendary) A",
+   "hash_name": "Dimensional Armor (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Wooden Armor (Immortal) A": {
+   "name": "Wooden Armor (Immortal) A",
+   "hash_name": "Wooden Armor (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Empire Armor (Immortal) A": {
+   "name": "Empire Armor (Immortal) A",
+   "hash_name": "Empire Armor (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Iron Plate (Immortal) A": {
+   "name": "Iron Plate (Immortal) A",
+   "hash_name": "Iron Plate (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Chain Mail (Immortal) A": {
+   "name": "Chain Mail (Immortal) A",
+   "hash_name": "Chain Mail (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Knight's Armor (Immortal) A": {
+   "name": "Knight's Armor (Immortal) A",
+   "hash_name": "Knight's Armor (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "War Armor (Immortal) A": {
+   "name": "War Armor (Immortal) A",
+   "hash_name": "War Armor (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Rune Plate (Immortal) A": {
+   "name": "Rune Plate (Immortal) A",
+   "hash_name": "Rune Plate (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Mystic Armor (Immortal) A": {
+   "name": "Mystic Armor (Immortal) A",
+   "hash_name": "Mystic Armor (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Shine Armor (Immortal) A": {
+   "name": "Shine Armor (Immortal) A",
+   "hash_name": "Shine Armor (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Dimensional Armor (Immortal) A": {
+   "name": "Dimensional Armor (Immortal) A",
+   "hash_name": "Dimensional Armor (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Chain Mail (Arcana) A": {
+   "name": "Chain Mail (Arcana) A",
+   "hash_name": "Chain Mail (Arcana) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Knight's Armor (Arcana) A": {
+   "name": "Knight's Armor (Arcana) A",
+   "hash_name": "Knight's Armor (Arcana) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "War Armor (Arcana) A": {
+   "name": "War Armor (Arcana) A",
+   "hash_name": "War Armor (Arcana) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Rune Plate (Arcana) A": {
+   "name": "Rune Plate (Arcana) A",
+   "hash_name": "Rune Plate (Arcana) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Mystic Armor (Arcana) A": {
+   "name": "Mystic Armor (Arcana) A",
+   "hash_name": "Mystic Armor (Arcana) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Shine Armor (Arcana) A": {
+   "name": "Shine Armor (Arcana) A",
+   "hash_name": "Shine Armor (Arcana) A",
+   "price_usd": 0.04,
+   "price_text": "$0.04",
+   "listings": null
+  },
+  "Dimensional Armor (Arcana) A": {
+   "name": "Dimensional Armor (Arcana) A",
+   "hash_name": "Dimensional Armor (Arcana) A",
+   "price_usd": 0.06,
+   "price_text": "$0.06",
+   "listings": null
+  },
+  "War Armor (Beyond) A": {
+   "name": "War Armor (Beyond) A",
+   "hash_name": "War Armor (Beyond) A",
+   "price_usd": 0.05,
+   "price_text": "$0.05",
+   "listings": null
+  },
+  "Rune Plate (Beyond) A": {
+   "name": "Rune Plate (Beyond) A",
+   "hash_name": "Rune Plate (Beyond) A",
+   "price_usd": 0.05,
+   "price_text": "$0.05",
+   "listings": null
+  },
+  "Mystic Armor (Beyond) A": {
+   "name": "Mystic Armor (Beyond) A",
+   "hash_name": "Mystic Armor (Beyond) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Shine Armor (Beyond) A": {
+   "name": "Shine Armor (Beyond) A",
+   "hash_name": "Shine Armor (Beyond) A",
+   "price_usd": 0.14,
+   "price_text": "$0.14",
+   "listings": null
+  },
+  "Dimensional Armor (Beyond) A": {
+   "name": "Dimensional Armor (Beyond) A",
+   "hash_name": "Dimensional Armor (Beyond) A",
+   "price_usd": 0.24,
+   "price_text": "$0.24",
+   "listings": null
+  },
+  "Dimensional Armor (Divine) A": {
+   "name": "Dimensional Armor (Divine) A",
+   "hash_name": "Dimensional Armor (Divine) A",
+   "price_usd": 223.18,
+   "price_text": "$223.18",
+   "listings": null
+  },
+  "Leather Gloves (Legendary) A": {
+   "name": "Leather Gloves (Legendary) A",
+   "hash_name": "Leather Gloves (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Knight Gloves (Legendary) A": {
+   "name": "Knight Gloves (Legendary) A",
+   "hash_name": "Knight Gloves (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Chain Gloves (Legendary) A": {
+   "name": "Chain Gloves (Legendary) A",
+   "hash_name": "Chain Gloves (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "War Gloves (Legendary) A": {
+   "name": "War Gloves (Legendary) A",
+   "hash_name": "War Gloves (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Rune Gloves (Legendary) A": {
+   "name": "Rune Gloves (Legendary) A",
+   "hash_name": "Rune Gloves (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Mystic Gloves (Legendary) A": {
+   "name": "Mystic Gloves (Legendary) A",
+   "hash_name": "Mystic Gloves (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Shine Gloves (Legendary) A": {
+   "name": "Shine Gloves (Legendary) A",
+   "hash_name": "Shine Gloves (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Dimensional Gloves (Legendary) A": {
+   "name": "Dimensional Gloves (Legendary) A",
+   "hash_name": "Dimensional Gloves (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Leather Gloves (Immortal) A": {
+   "name": "Leather Gloves (Immortal) A",
+   "hash_name": "Leather Gloves (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Empire Gloves (Immortal) A": {
+   "name": "Empire Gloves (Immortal) A",
+   "hash_name": "Empire Gloves (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Iron Gloves (Immortal) A": {
+   "name": "Iron Gloves (Immortal) A",
+   "hash_name": "Iron Gloves (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Knight Gloves (Immortal) A": {
+   "name": "Knight Gloves (Immortal) A",
+   "hash_name": "Knight Gloves (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Chain Gloves (Immortal) A": {
+   "name": "Chain Gloves (Immortal) A",
+   "hash_name": "Chain Gloves (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "War Gloves (Immortal) A": {
+   "name": "War Gloves (Immortal) A",
+   "hash_name": "War Gloves (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Rune Gloves (Immortal) A": {
+   "name": "Rune Gloves (Immortal) A",
+   "hash_name": "Rune Gloves (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Mystic Gloves (Immortal) A": {
+   "name": "Mystic Gloves (Immortal) A",
+   "hash_name": "Mystic Gloves (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Shine Gloves (Immortal) A": {
+   "name": "Shine Gloves (Immortal) A",
+   "hash_name": "Shine Gloves (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Dimensional Gloves (Immortal) A": {
+   "name": "Dimensional Gloves (Immortal) A",
+   "hash_name": "Dimensional Gloves (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Knight Gloves (Arcana) A": {
+   "name": "Knight Gloves (Arcana) A",
+   "hash_name": "Knight Gloves (Arcana) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Chain Gloves (Arcana) A": {
+   "name": "Chain Gloves (Arcana) A",
+   "hash_name": "Chain Gloves (Arcana) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "War Gloves (Arcana) A": {
+   "name": "War Gloves (Arcana) A",
+   "hash_name": "War Gloves (Arcana) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Rune Gloves (Arcana) A": {
+   "name": "Rune Gloves (Arcana) A",
+   "hash_name": "Rune Gloves (Arcana) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Mystic Gloves (Arcana) A": {
+   "name": "Mystic Gloves (Arcana) A",
+   "hash_name": "Mystic Gloves (Arcana) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Shine Gloves (Arcana) A": {
+   "name": "Shine Gloves (Arcana) A",
+   "hash_name": "Shine Gloves (Arcana) A",
+   "price_usd": 0.04,
+   "price_text": "$0.04",
+   "listings": null
+  },
+  "Dimensional Gloves (Arcana) A": {
+   "name": "Dimensional Gloves (Arcana) A",
+   "hash_name": "Dimensional Gloves (Arcana) A",
+   "price_usd": 0.06,
+   "price_text": "$0.06",
+   "listings": null
+  },
+  "War Gloves (Beyond) A": {
+   "name": "War Gloves (Beyond) A",
+   "hash_name": "War Gloves (Beyond) A",
+   "price_usd": 0.06,
+   "price_text": "$0.06",
+   "listings": null
+  },
+  "Rune Gloves (Beyond) A": {
+   "name": "Rune Gloves (Beyond) A",
+   "hash_name": "Rune Gloves (Beyond) A",
+   "price_usd": 0.05,
+   "price_text": "$0.05",
+   "listings": null
+  },
+  "Mystic Gloves (Beyond) A": {
+   "name": "Mystic Gloves (Beyond) A",
+   "hash_name": "Mystic Gloves (Beyond) A",
+   "price_usd": 0.06,
+   "price_text": "$0.06",
+   "listings": null
+  },
+  "Shine Gloves (Beyond) A": {
+   "name": "Shine Gloves (Beyond) A",
+   "hash_name": "Shine Gloves (Beyond) A",
+   "price_usd": 0.14,
+   "price_text": "$0.14",
+   "listings": null
+  },
+  "Dimensional Gloves (Beyond) A": {
+   "name": "Dimensional Gloves (Beyond) A",
+   "hash_name": "Dimensional Gloves (Beyond) A",
+   "price_usd": 0.21,
+   "price_text": "$0.21",
+   "listings": null
+  },
+  "Dimensional Gloves (Celestial) A": {
+   "name": "Dimensional Gloves (Celestial) A",
+   "hash_name": "Dimensional Gloves (Celestial) A",
+   "price_usd": 101.33,
+   "price_text": "$101.33",
+   "listings": null
+  },
+  "Wooden Boots (Legendary) A": {
+   "name": "Wooden Boots (Legendary) A",
+   "hash_name": "Wooden Boots (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Empire Boots (Legendary) A": {
+   "name": "Empire Boots (Legendary) A",
+   "hash_name": "Empire Boots (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Iron Boots (Legendary) A": {
+   "name": "Iron Boots (Legendary) A",
+   "hash_name": "Iron Boots (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Knight Boots (Legendary) A": {
+   "name": "Knight Boots (Legendary) A",
+   "hash_name": "Knight Boots (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Chain Boots (Legendary) A": {
+   "name": "Chain Boots (Legendary) A",
+   "hash_name": "Chain Boots (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "War Boots (Legendary) A": {
+   "name": "War Boots (Legendary) A",
+   "hash_name": "War Boots (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Rune Boots (Legendary) A": {
+   "name": "Rune Boots (Legendary) A",
+   "hash_name": "Rune Boots (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Mystic Boots (Legendary) A": {
+   "name": "Mystic Boots (Legendary) A",
+   "hash_name": "Mystic Boots (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Shine Boots (Legendary) A": {
+   "name": "Shine Boots (Legendary) A",
+   "hash_name": "Shine Boots (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Dimensional Boots (Legendary) A": {
+   "name": "Dimensional Boots (Legendary) A",
+   "hash_name": "Dimensional Boots (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Wooden Boots (Immortal) A": {
+   "name": "Wooden Boots (Immortal) A",
+   "hash_name": "Wooden Boots (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Empire Boots (Immortal) A": {
+   "name": "Empire Boots (Immortal) A",
+   "hash_name": "Empire Boots (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Iron Boots (Immortal) A": {
+   "name": "Iron Boots (Immortal) A",
+   "hash_name": "Iron Boots (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Knight Boots (Immortal) A": {
+   "name": "Knight Boots (Immortal) A",
+   "hash_name": "Knight Boots (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Chain Boots (Immortal) A": {
+   "name": "Chain Boots (Immortal) A",
+   "hash_name": "Chain Boots (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "War Boots (Immortal) A": {
+   "name": "War Boots (Immortal) A",
+   "hash_name": "War Boots (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Rune Boots (Immortal) A": {
+   "name": "Rune Boots (Immortal) A",
+   "hash_name": "Rune Boots (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Mystic Boots (Immortal) A": {
+   "name": "Mystic Boots (Immortal) A",
+   "hash_name": "Mystic Boots (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Shine Boots (Immortal) A": {
+   "name": "Shine Boots (Immortal) A",
+   "hash_name": "Shine Boots (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Dimensional Boots (Immortal) A": {
+   "name": "Dimensional Boots (Immortal) A",
+   "hash_name": "Dimensional Boots (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Knight Boots (Arcana) A": {
+   "name": "Knight Boots (Arcana) A",
+   "hash_name": "Knight Boots (Arcana) A",
+   "price_usd": 0.24,
+   "price_text": "$0.24",
+   "listings": null
+  },
+  "Chain Boots (Arcana) A": {
+   "name": "Chain Boots (Arcana) A",
+   "hash_name": "Chain Boots (Arcana) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "War Boots (Arcana) A": {
+   "name": "War Boots (Arcana) A",
+   "hash_name": "War Boots (Arcana) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Rune Boots (Arcana) A": {
+   "name": "Rune Boots (Arcana) A",
+   "hash_name": "Rune Boots (Arcana) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Mystic Boots (Arcana) A": {
+   "name": "Mystic Boots (Arcana) A",
+   "hash_name": "Mystic Boots (Arcana) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Shine Boots (Arcana) A": {
+   "name": "Shine Boots (Arcana) A",
+   "hash_name": "Shine Boots (Arcana) A",
+   "price_usd": 0.04,
+   "price_text": "$0.04",
+   "listings": null
+  },
+  "Dimensional Boots (Arcana) A": {
+   "name": "Dimensional Boots (Arcana) A",
+   "hash_name": "Dimensional Boots (Arcana) A",
+   "price_usd": 0.06,
+   "price_text": "$0.06",
+   "listings": null
+  },
+  "War Boots (Beyond) A": {
+   "name": "War Boots (Beyond) A",
+   "hash_name": "War Boots (Beyond) A",
+   "price_usd": 0.04,
+   "price_text": "$0.04",
+   "listings": null
+  },
+  "Rune Boots (Beyond) A": {
+   "name": "Rune Boots (Beyond) A",
+   "hash_name": "Rune Boots (Beyond) A",
+   "price_usd": 0.05,
+   "price_text": "$0.05",
+   "listings": null
+  },
+  "Shine Boots (Beyond) A": {
+   "name": "Shine Boots (Beyond) A",
+   "hash_name": "Shine Boots (Beyond) A",
+   "price_usd": 0.14,
+   "price_text": "$0.14",
+   "listings": null
+  },
+  "Dimensional Boots (Beyond) A": {
+   "name": "Dimensional Boots (Beyond) A",
+   "hash_name": "Dimensional Boots (Beyond) A",
+   "price_usd": 0.23,
+   "price_text": "$0.23",
+   "listings": null
+  },
+  "Shine Boots (Celestial) A": {
+   "name": "Shine Boots (Celestial) A",
+   "hash_name": "Shine Boots (Celestial) A",
+   "price_usd": 82.96,
+   "price_text": "$82.96",
+   "listings": null
+  },
+  "Copper Amulet (Legendary) A": {
+   "name": "Copper Amulet (Legendary) A",
+   "hash_name": "Copper Amulet (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Bronze Amulet (Legendary) A": {
+   "name": "Bronze Amulet (Legendary) A",
+   "hash_name": "Bronze Amulet (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Silver Amulet (Legendary) A": {
+   "name": "Silver Amulet (Legendary) A",
+   "hash_name": "Silver Amulet (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Gold Amulet (Legendary) A": {
+   "name": "Gold Amulet (Legendary) A",
+   "hash_name": "Gold Amulet (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Platinum Amulet (Legendary) A": {
+   "name": "Platinum Amulet (Legendary) A",
+   "hash_name": "Platinum Amulet (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Moonstone Pendant (Legendary) A": {
+   "name": "Moonstone Pendant (Legendary) A",
+   "hash_name": "Moonstone Pendant (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Ruby Pendant (Legendary) A": {
+   "name": "Ruby Pendant (Legendary) A",
+   "hash_name": "Ruby Pendant (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Emerald Amulet (Legendary) A": {
+   "name": "Emerald Amulet (Legendary) A",
+   "hash_name": "Emerald Amulet (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Eclipse Amulet (Legendary) A": {
+   "name": "Eclipse Amulet (Legendary) A",
+   "hash_name": "Eclipse Amulet (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Ethereal Amulet (Legendary) A": {
+   "name": "Ethereal Amulet (Legendary) A",
+   "hash_name": "Ethereal Amulet (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Copper Amulet (Immortal) A": {
+   "name": "Copper Amulet (Immortal) A",
+   "hash_name": "Copper Amulet (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Bronze Amulet (Immortal) A": {
+   "name": "Bronze Amulet (Immortal) A",
+   "hash_name": "Bronze Amulet (Immortal) A",
+   "price_usd": 0.05,
+   "price_text": "$0.05",
+   "listings": null
+  },
+  "Silver Amulet (Immortal) A": {
+   "name": "Silver Amulet (Immortal) A",
+   "hash_name": "Silver Amulet (Immortal) A",
+   "price_usd": 0.07,
+   "price_text": "$0.07",
+   "listings": null
+  },
+  "Gold Amulet (Immortal) A": {
+   "name": "Gold Amulet (Immortal) A",
+   "hash_name": "Gold Amulet (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Platinum Amulet (Immortal) A": {
+   "name": "Platinum Amulet (Immortal) A",
+   "hash_name": "Platinum Amulet (Immortal) A",
+   "price_usd": 0.04,
+   "price_text": "$0.04",
+   "listings": null
+  },
+  "Moonstone Pendant (Immortal) A": {
+   "name": "Moonstone Pendant (Immortal) A",
+   "hash_name": "Moonstone Pendant (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Emerald Amulet (Immortal) A": {
+   "name": "Emerald Amulet (Immortal) A",
+   "hash_name": "Emerald Amulet (Immortal) A",
+   "price_usd": 0.04,
+   "price_text": "$0.04",
+   "listings": null
+  },
+  "Eclipse Amulet (Immortal) A": {
+   "name": "Eclipse Amulet (Immortal) A",
+   "hash_name": "Eclipse Amulet (Immortal) A",
+   "price_usd": 0.05,
+   "price_text": "$0.05",
+   "listings": null
+  },
+  "Ethereal Amulet (Immortal) A": {
+   "name": "Ethereal Amulet (Immortal) A",
+   "hash_name": "Ethereal Amulet (Immortal) A",
+   "price_usd": 0.06,
+   "price_text": "$0.06",
+   "listings": null
+  },
+  "Gold Amulet (Arcana) A": {
+   "name": "Gold Amulet (Arcana) A",
+   "hash_name": "Gold Amulet (Arcana) A",
+   "price_usd": 0.34,
+   "price_text": "$0.34",
+   "listings": null
+  },
+  "Platinum Amulet (Arcana) A": {
+   "name": "Platinum Amulet (Arcana) A",
+   "hash_name": "Platinum Amulet (Arcana) A",
+   "price_usd": 0.7,
+   "price_text": "$0.70",
+   "listings": null
+  },
+  "Moonstone Pendant (Arcana) A": {
+   "name": "Moonstone Pendant (Arcana) A",
+   "hash_name": "Moonstone Pendant (Arcana) A",
+   "price_usd": 0.42,
+   "price_text": "$0.42",
+   "listings": null
+  },
+  "Emerald Amulet (Arcana) A": {
+   "name": "Emerald Amulet (Arcana) A",
+   "hash_name": "Emerald Amulet (Arcana) A",
+   "price_usd": 0.55,
+   "price_text": "$0.55",
+   "listings": null
+  },
+  "Ethereal Amulet (Arcana) A": {
+   "name": "Ethereal Amulet (Arcana) A",
+   "hash_name": "Ethereal Amulet (Arcana) A",
+   "price_usd": 1.32,
+   "price_text": "$1.32",
+   "listings": null
+  },
+  "Moonstone Pendant (Beyond) A": {
+   "name": "Moonstone Pendant (Beyond) A",
+   "hash_name": "Moonstone Pendant (Beyond) A",
+   "price_usd": 2.1,
+   "price_text": "$2.10",
+   "listings": null
+  },
+  "Ruby Pendant (Beyond) A": {
+   "name": "Ruby Pendant (Beyond) A",
+   "hash_name": "Ruby Pendant (Beyond) A",
+   "price_usd": 1.95,
+   "price_text": "$1.95",
+   "listings": null
+  },
+  "Emerald Amulet (Beyond) A": {
+   "name": "Emerald Amulet (Beyond) A",
+   "hash_name": "Emerald Amulet (Beyond) A",
+   "price_usd": 1.9,
+   "price_text": "$1.90",
+   "listings": null
+  },
+  "Eclipse Amulet (Beyond) A": {
+   "name": "Eclipse Amulet (Beyond) A",
+   "hash_name": "Eclipse Amulet (Beyond) A",
+   "price_usd": 3.42,
+   "price_text": "$3.42",
+   "listings": null
+  },
+  "Ethereal Amulet (Beyond) A": {
+   "name": "Ethereal Amulet (Beyond) A",
+   "hash_name": "Ethereal Amulet (Beyond) A",
+   "price_usd": 5.84,
+   "price_text": "$5.84",
+   "listings": null
+  },
+  "Copper Earring (Legendary) A": {
+   "name": "Copper Earring (Legendary) A",
+   "hash_name": "Copper Earring (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Bronze Earring (Legendary) A": {
+   "name": "Bronze Earring (Legendary) A",
+   "hash_name": "Bronze Earring (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Silver Earring (Legendary) A": {
+   "name": "Silver Earring (Legendary) A",
+   "hash_name": "Silver Earring (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Gold Earring (Legendary) A": {
+   "name": "Gold Earring (Legendary) A",
+   "hash_name": "Gold Earring (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Platinum Earring (Legendary) A": {
+   "name": "Platinum Earring (Legendary) A",
+   "hash_name": "Platinum Earring (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Emerald Earring (Legendary) A": {
+   "name": "Emerald Earring (Legendary) A",
+   "hash_name": "Emerald Earring (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Tiger Eye Earring (Legendary) A": {
+   "name": "Tiger Eye Earring (Legendary) A",
+   "hash_name": "Tiger Eye Earring (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Sapphire Earring (Legendary) A": {
+   "name": "Sapphire Earring (Legendary) A",
+   "hash_name": "Sapphire Earring (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Celestial Earring (Legendary) A": {
+   "name": "Celestial Earring (Legendary) A",
+   "hash_name": "Celestial Earring (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Ethereal Earring (Legendary) A": {
+   "name": "Ethereal Earring (Legendary) A",
+   "hash_name": "Ethereal Earring (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Copper Earring (Immortal) A": {
+   "name": "Copper Earring (Immortal) A",
+   "hash_name": "Copper Earring (Immortal) A",
+   "price_usd": 0.04,
+   "price_text": "$0.04",
+   "listings": null
+  },
+  "Bronze Earring (Immortal) A": {
+   "name": "Bronze Earring (Immortal) A",
+   "hash_name": "Bronze Earring (Immortal) A",
+   "price_usd": 0.04,
+   "price_text": "$0.04",
+   "listings": null
+  },
+  "Silver Earring (Immortal) A": {
+   "name": "Silver Earring (Immortal) A",
+   "hash_name": "Silver Earring (Immortal) A",
+   "price_usd": 0.04,
+   "price_text": "$0.04",
+   "listings": null
+  },
+  "Gold Earring (Immortal) A": {
+   "name": "Gold Earring (Immortal) A",
+   "hash_name": "Gold Earring (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Platinum Earring (Immortal) A": {
+   "name": "Platinum Earring (Immortal) A",
+   "hash_name": "Platinum Earring (Immortal) A",
+   "price_usd": 0.06,
+   "price_text": "$0.06",
+   "listings": null
+  },
+  "Emerald Earring (Immortal) A": {
+   "name": "Emerald Earring (Immortal) A",
+   "hash_name": "Emerald Earring (Immortal) A",
+   "price_usd": 0.04,
+   "price_text": "$0.04",
+   "listings": null
+  },
+  "Tiger Eye Earring (Immortal) A": {
+   "name": "Tiger Eye Earring (Immortal) A",
+   "hash_name": "Tiger Eye Earring (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Sapphire Earring (Immortal) A": {
+   "name": "Sapphire Earring (Immortal) A",
+   "hash_name": "Sapphire Earring (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Celestial Earring (Immortal) A": {
+   "name": "Celestial Earring (Immortal) A",
+   "hash_name": "Celestial Earring (Immortal) A",
+   "price_usd": 0.04,
+   "price_text": "$0.04",
+   "listings": null
+  },
+  "Ethereal Earring (Immortal) A": {
+   "name": "Ethereal Earring (Immortal) A",
+   "hash_name": "Ethereal Earring (Immortal) A",
+   "price_usd": 0.04,
+   "price_text": "$0.04",
+   "listings": null
+  },
+  "Gold Earring (Arcana) A": {
+   "name": "Gold Earring (Arcana) A",
+   "hash_name": "Gold Earring (Arcana) A",
+   "price_usd": 0.24,
+   "price_text": "$0.24",
+   "listings": null
+  },
+  "Platinum Earring (Arcana) A": {
+   "name": "Platinum Earring (Arcana) A",
+   "hash_name": "Platinum Earring (Arcana) A",
+   "price_usd": 0.31,
+   "price_text": "$0.31",
+   "listings": null
+  },
+  "Emerald Earring (Arcana) A": {
+   "name": "Emerald Earring (Arcana) A",
+   "hash_name": "Emerald Earring (Arcana) A",
+   "price_usd": 0.19,
+   "price_text": "$0.19",
+   "listings": null
+  },
+  "Tiger Eye Earring (Arcana) A": {
+   "name": "Tiger Eye Earring (Arcana) A",
+   "hash_name": "Tiger Eye Earring (Arcana) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Sapphire Earring (Arcana) A": {
+   "name": "Sapphire Earring (Arcana) A",
+   "hash_name": "Sapphire Earring (Arcana) A",
+   "price_usd": 0.35,
+   "price_text": "$0.35",
+   "listings": null
+  },
+  "Celestial Earring (Arcana) A": {
+   "name": "Celestial Earring (Arcana) A",
+   "hash_name": "Celestial Earring (Arcana) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Ethereal Earring (Arcana) A": {
+   "name": "Ethereal Earring (Arcana) A",
+   "hash_name": "Ethereal Earring (Arcana) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Emerald Earring (Beyond) A": {
+   "name": "Emerald Earring (Beyond) A",
+   "hash_name": "Emerald Earring (Beyond) A",
+   "price_usd": 1.21,
+   "price_text": "$1.21",
+   "listings": null
+  },
+  "Tiger Eye Earring (Beyond) A": {
+   "name": "Tiger Eye Earring (Beyond) A",
+   "hash_name": "Tiger Eye Earring (Beyond) A",
+   "price_usd": 1.08,
+   "price_text": "$1.08",
+   "listings": null
+  },
+  "Sapphire Earring (Beyond) A": {
+   "name": "Sapphire Earring (Beyond) A",
+   "hash_name": "Sapphire Earring (Beyond) A",
+   "price_usd": 1.57,
+   "price_text": "$1.57",
+   "listings": null
+  },
+  "Celestial Earring (Beyond) A": {
+   "name": "Celestial Earring (Beyond) A",
+   "hash_name": "Celestial Earring (Beyond) A",
+   "price_usd": 2.26,
+   "price_text": "$2.26",
+   "listings": null
+  },
+  "Ethereal Earring (Beyond) A": {
+   "name": "Ethereal Earring (Beyond) A",
+   "hash_name": "Ethereal Earring (Beyond) A",
+   "price_usd": 6.39,
+   "price_text": "$6.39",
+   "listings": null
+  },
+  "Copper Ring (Legendary) A": {
+   "name": "Copper Ring (Legendary) A",
+   "hash_name": "Copper Ring (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Bronze Ring (Legendary) A": {
+   "name": "Bronze Ring (Legendary) A",
+   "hash_name": "Bronze Ring (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Silver Ring (Legendary) A": {
+   "name": "Silver Ring (Legendary) A",
+   "hash_name": "Silver Ring (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Gold Ring (Legendary) A": {
+   "name": "Gold Ring (Legendary) A",
+   "hash_name": "Gold Ring (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Platinum Ring (Legendary) A": {
+   "name": "Platinum Ring (Legendary) A",
+   "hash_name": "Platinum Ring (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Amber Ring (Legendary) A": {
+   "name": "Amber Ring (Legendary) A",
+   "hash_name": "Amber Ring (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Amethyst Ring (Legendary) A": {
+   "name": "Amethyst Ring (Legendary) A",
+   "hash_name": "Amethyst Ring (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Emerald Ring (Legendary) A": {
+   "name": "Emerald Ring (Legendary) A",
+   "hash_name": "Emerald Ring (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Eclipse Ring (Legendary) A": {
+   "name": "Eclipse Ring (Legendary) A",
+   "hash_name": "Eclipse Ring (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Ethereal Ring (Legendary) A": {
+   "name": "Ethereal Ring (Legendary) A",
+   "hash_name": "Ethereal Ring (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Copper Ring (Immortal) A": {
+   "name": "Copper Ring (Immortal) A",
+   "hash_name": "Copper Ring (Immortal) A",
+   "price_usd": 0.04,
+   "price_text": "$0.04",
+   "listings": null
+  },
+  "Bronze Ring (Immortal) A": {
+   "name": "Bronze Ring (Immortal) A",
+   "hash_name": "Bronze Ring (Immortal) A",
+   "price_usd": 0.05,
+   "price_text": "$0.05",
+   "listings": null
+  },
+  "Silver Ring (Immortal) A": {
+   "name": "Silver Ring (Immortal) A",
+   "hash_name": "Silver Ring (Immortal) A",
+   "price_usd": 0.04,
+   "price_text": "$0.04",
+   "listings": null
+  },
+  "Gold Ring (Immortal) A": {
+   "name": "Gold Ring (Immortal) A",
+   "hash_name": "Gold Ring (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Platinum Ring (Immortal) A": {
+   "name": "Platinum Ring (Immortal) A",
+   "hash_name": "Platinum Ring (Immortal) A",
+   "price_usd": 0.05,
+   "price_text": "$0.05",
+   "listings": null
+  },
+  "Amber Ring (Immortal) A": {
+   "name": "Amber Ring (Immortal) A",
+   "hash_name": "Amber Ring (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Amethyst Ring (Immortal) A": {
+   "name": "Amethyst Ring (Immortal) A",
+   "hash_name": "Amethyst Ring (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Emerald Ring (Immortal) A": {
+   "name": "Emerald Ring (Immortal) A",
+   "hash_name": "Emerald Ring (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Eclipse Ring (Immortal) A": {
+   "name": "Eclipse Ring (Immortal) A",
+   "hash_name": "Eclipse Ring (Immortal) A",
+   "price_usd": 0.04,
+   "price_text": "$0.04",
+   "listings": null
+  },
+  "Ethereal Ring (Immortal) A": {
+   "name": "Ethereal Ring (Immortal) A",
+   "hash_name": "Ethereal Ring (Immortal) A",
+   "price_usd": 0.04,
+   "price_text": "$0.04",
+   "listings": null
+  },
+  "Gold Ring (Arcana) A": {
+   "name": "Gold Ring (Arcana) A",
+   "hash_name": "Gold Ring (Arcana) A",
+   "price_usd": 0.26,
+   "price_text": "$0.26",
+   "listings": null
+  },
+  "Platinum Ring (Arcana) A": {
+   "name": "Platinum Ring (Arcana) A",
+   "hash_name": "Platinum Ring (Arcana) A",
+   "price_usd": 0.3,
+   "price_text": "$0.30",
+   "listings": null
+  },
+  "Amber Ring (Arcana) A": {
+   "name": "Amber Ring (Arcana) A",
+   "hash_name": "Amber Ring (Arcana) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Amethyst Ring (Arcana) A": {
+   "name": "Amethyst Ring (Arcana) A",
+   "hash_name": "Amethyst Ring (Arcana) A",
+   "price_usd": 0.15,
+   "price_text": "$0.15",
+   "listings": null
+  },
+  "Emerald Ring (Arcana) A": {
+   "name": "Emerald Ring (Arcana) A",
+   "hash_name": "Emerald Ring (Arcana) A",
+   "price_usd": 0.21,
+   "price_text": "$0.21",
+   "listings": null
+  },
+  "Eclipse Ring (Arcana) A": {
+   "name": "Eclipse Ring (Arcana) A",
+   "hash_name": "Eclipse Ring (Arcana) A",
+   "price_usd": 0.26,
+   "price_text": "$0.26",
+   "listings": null
+  },
+  "Ethereal Ring (Arcana) A": {
+   "name": "Ethereal Ring (Arcana) A",
+   "hash_name": "Ethereal Ring (Arcana) A",
+   "price_usd": 0.5,
+   "price_text": "$0.50",
+   "listings": null
+  },
+  "Amber Ring (Beyond) A": {
+   "name": "Amber Ring (Beyond) A",
+   "hash_name": "Amber Ring (Beyond) A",
+   "price_usd": 1.15,
+   "price_text": "$1.15",
+   "listings": null
+  },
+  "Amethyst Ring (Beyond) A": {
+   "name": "Amethyst Ring (Beyond) A",
+   "hash_name": "Amethyst Ring (Beyond) A",
+   "price_usd": 1.0,
+   "price_text": "$1.00",
+   "listings": null
+  },
+  "Emerald Ring (Beyond) A": {
+   "name": "Emerald Ring (Beyond) A",
+   "hash_name": "Emerald Ring (Beyond) A",
+   "price_usd": 2.16,
+   "price_text": "$2.16",
+   "listings": null
+  },
+  "Eclipse Ring (Beyond) A": {
+   "name": "Eclipse Ring (Beyond) A",
+   "hash_name": "Eclipse Ring (Beyond) A",
+   "price_usd": 2.23,
+   "price_text": "$2.23",
+   "listings": null
+  },
+  "Ethereal Ring (Beyond) A": {
+   "name": "Ethereal Ring (Beyond) A",
+   "hash_name": "Ethereal Ring (Beyond) A",
+   "price_usd": 4.6,
+   "price_text": "$4.60",
+   "listings": null
+  },
+  "Copper Bracer (Legendary) A": {
+   "name": "Copper Bracer (Legendary) A",
+   "hash_name": "Copper Bracer (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Bronze Bracer (Legendary) A": {
+   "name": "Bronze Bracer (Legendary) A",
+   "hash_name": "Bronze Bracer (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Silver Bracer (Legendary) A": {
+   "name": "Silver Bracer (Legendary) A",
+   "hash_name": "Silver Bracer (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Gold Bracer (Legendary) A": {
+   "name": "Gold Bracer (Legendary) A",
+   "hash_name": "Gold Bracer (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Platinum Bracer (Legendary) A": {
+   "name": "Platinum Bracer (Legendary) A",
+   "hash_name": "Platinum Bracer (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Obsidian Bracer (Legendary) A": {
+   "name": "Obsidian Bracer (Legendary) A",
+   "hash_name": "Obsidian Bracer (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Crimson Bracer (Legendary) A": {
+   "name": "Crimson Bracer (Legendary) A",
+   "hash_name": "Crimson Bracer (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Emerald Bracer (Legendary) A": {
+   "name": "Emerald Bracer (Legendary) A",
+   "hash_name": "Emerald Bracer (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Eclipse Bracer (Legendary) A": {
+   "name": "Eclipse Bracer (Legendary) A",
+   "hash_name": "Eclipse Bracer (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Ethereal Bracer (Legendary) A": {
+   "name": "Ethereal Bracer (Legendary) A",
+   "hash_name": "Ethereal Bracer (Legendary) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Copper Bracer (Immortal) A": {
+   "name": "Copper Bracer (Immortal) A",
+   "hash_name": "Copper Bracer (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Bronze Bracer (Immortal) A": {
+   "name": "Bronze Bracer (Immortal) A",
+   "hash_name": "Bronze Bracer (Immortal) A",
+   "price_usd": 0.06,
+   "price_text": "$0.06",
+   "listings": null
+  },
+  "Silver Bracer (Immortal) A": {
+   "name": "Silver Bracer (Immortal) A",
+   "hash_name": "Silver Bracer (Immortal) A",
+   "price_usd": 0.04,
+   "price_text": "$0.04",
+   "listings": null
+  },
+  "Gold Bracer (Immortal) A": {
+   "name": "Gold Bracer (Immortal) A",
+   "hash_name": "Gold Bracer (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Platinum Bracer (Immortal) A": {
+   "name": "Platinum Bracer (Immortal) A",
+   "hash_name": "Platinum Bracer (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Obsidian Bracer (Immortal) A": {
+   "name": "Obsidian Bracer (Immortal) A",
+   "hash_name": "Obsidian Bracer (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Crimson Bracer (Immortal) A": {
+   "name": "Crimson Bracer (Immortal) A",
+   "hash_name": "Crimson Bracer (Immortal) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Emerald Bracer (Immortal) A": {
+   "name": "Emerald Bracer (Immortal) A",
+   "hash_name": "Emerald Bracer (Immortal) A",
+   "price_usd": 0.05,
+   "price_text": "$0.05",
+   "listings": null
+  },
+  "Eclipse Bracer (Immortal) A": {
+   "name": "Eclipse Bracer (Immortal) A",
+   "hash_name": "Eclipse Bracer (Immortal) A",
+   "price_usd": 0.04,
+   "price_text": "$0.04",
+   "listings": null
+  },
+  "Ethereal Bracer (Immortal) A": {
+   "name": "Ethereal Bracer (Immortal) A",
+   "hash_name": "Ethereal Bracer (Immortal) A",
+   "price_usd": 0.04,
+   "price_text": "$0.04",
+   "listings": null
+  },
+  "Gold Bracer (Arcana) A": {
+   "name": "Gold Bracer (Arcana) A",
+   "hash_name": "Gold Bracer (Arcana) A",
+   "price_usd": 0.15,
+   "price_text": "$0.15",
+   "listings": null
+  },
+  "Platinum Bracer (Arcana) A": {
+   "name": "Platinum Bracer (Arcana) A",
+   "hash_name": "Platinum Bracer (Arcana) A",
+   "price_usd": 0.77,
+   "price_text": "$0.77",
+   "listings": null
+  },
+  "Obsidian Bracer (Arcana) A": {
+   "name": "Obsidian Bracer (Arcana) A",
+   "hash_name": "Obsidian Bracer (Arcana) A",
+   "price_usd": 0.11,
+   "price_text": "$0.11",
+   "listings": null
+  },
+  "Crimson Bracer (Arcana) A": {
+   "name": "Crimson Bracer (Arcana) A",
+   "hash_name": "Crimson Bracer (Arcana) A",
+   "price_usd": 0.1,
+   "price_text": "$0.10",
+   "listings": null
+  },
+  "Eclipse Bracer (Arcana) A": {
+   "name": "Eclipse Bracer (Arcana) A",
+   "hash_name": "Eclipse Bracer (Arcana) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Ethereal Bracer (Arcana) A": {
+   "name": "Ethereal Bracer (Arcana) A",
+   "hash_name": "Ethereal Bracer (Arcana) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Obsidian Bracer (Beyond) A": {
+   "name": "Obsidian Bracer (Beyond) A",
+   "hash_name": "Obsidian Bracer (Beyond) A",
+   "price_usd": 2.79,
+   "price_text": "$2.79",
+   "listings": null
+  },
+  "Crimson Bracer (Beyond) A": {
+   "name": "Crimson Bracer (Beyond) A",
+   "hash_name": "Crimson Bracer (Beyond) A",
+   "price_usd": 1.52,
+   "price_text": "$1.52",
+   "listings": null
+  },
+  "Emerald Bracer (Beyond) A": {
+   "name": "Emerald Bracer (Beyond) A",
+   "hash_name": "Emerald Bracer (Beyond) A",
+   "price_usd": 0.04,
+   "price_text": "$0.04",
+   "listings": null
+  },
+  "Eclipse Bracer (Beyond) A": {
+   "name": "Eclipse Bracer (Beyond) A",
+   "hash_name": "Eclipse Bracer (Beyond) A",
+   "price_usd": 0.03,
+   "price_text": "$0.03",
+   "listings": null
+  },
+  "Ethereal Bracer (Beyond) A": {
+   "name": "Ethereal Bracer (Beyond) A",
+   "hash_name": "Ethereal Bracer (Beyond) A",
+   "price_usd": 8.88,
+   "price_text": "$8.88",
+   "listings": null
+  }
+ }
+}

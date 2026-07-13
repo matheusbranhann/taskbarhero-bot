@@ -1,0 +1,12 @@
+# Core (panel + engine)
+customtkinter>=5.2.0
+pymem>=1.13.0
+capstone>=5.0.0
+
+# Price overlay (optional feature)
+winsdk>=1.0.0
+pillow>=10.0.0
+numpy>=1.24.0
+
+# Building the standalone .exe (optional)
+pyinstaller>=6.0.0
