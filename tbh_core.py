@@ -191,6 +191,12 @@ def _extract_from_dump(ddir):
     # === MOVE (auto-stash): ra.iw(MoveRequest, Action<...>) — MoveRequest e assinatura distintiva ===
     miw=re.search(r'RVA: (0x[0-9A-Fa-f]+)[^\n]*\n\s*public \w+ \w+\(MoveRequest a, Action<\w+> b\)',src)
     if miw: out["iw"]=int(miw.group(1),16)
+    # nome da CLASSE do move-manager (singleton nq<X>) — ofuscado, muda entre builds (ra@2c43 -> qz@c824).
+    # ancora: ultima 'public class X : nq<X>' ANTES do metodo iw(MoveRequest, Action<>).
+    if miw:
+        before=src[:miw.start()]; rc=None
+        for rc in re.finditer(r'public class (\w+) : nq<\1>',before): pass
+        if rc: out["ra_class"]=rc.group(1)
     # === offsets de inventario/stash em PlayerSaveData (shiftam entre builds) ===
     mio=re.search(r'List<InventorySaveData> \w+; // (0x[0-9A-Fa-f]+)',src)
     if mio: out["inv_slots_off"]=int(mio.group(1),16)
@@ -217,7 +223,7 @@ def _redump():
 
 # simbolos CRITICOS que as automacoes precisam — a extracao so e "boa" se TODOS resolverem.
 # (llm/cmd11 e codigo morto -> nao entra; inv_klass_ti|bau_ti = 1 dos 2 basta)
-_CRIT_SYMS=("gra","upd","llx","iw","ilo","ipu","imx","inf","ili","iog","ioa","ima","iuw","izb","inv_slots_off","stash_off")
+_CRIT_SYMS=("gra","upd","llx","iw","ra_class","ilo","ipu","imx","inf","ili","iog","ioa","ima","iuw","izb","inv_slots_off","stash_off")
 def _offsets_ok(got):
     """True se o dict tem TODOS os simbolos criticos (nao aceita extracao parcial que quebra features)."""
     if not isinstance(got,dict): return False
@@ -1030,7 +1036,7 @@ class Engine:
     def _ra(self):
         c=self.cache.get("ra_inst")
         if c and self.u64(c)==self.cache.get("ra_klass"): return c
-        klass=self._klass_by_name("","ra")
+        klass=self._klass_by_name("", self.sym.get("ra_class") or "ra")   # nome ofuscado muda (ra->qz); usa o extraido
         if not klass: return None
         kp=struct.pack("<Q",klass)
         for base,size in self._mem_regions((0x04,0x40)):
