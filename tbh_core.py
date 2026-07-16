@@ -106,6 +106,28 @@ def dll_hash():
         with open(GA_PATH,"rb") as f: return hashlib.md5(f.read(2_000_000)).hexdigest()[:12]
     except Exception: return None
 
+_GV={}
+def game_version():
+    """Versao do JOGO (bundleVersion do Unity, em globalgamemanagers) — ex '1.00.28'.
+    NAO confundir com a versao da ENGINE (6000.x, que e o que o .exe reporta e fica no header).
+    String do Unity = [int32 len][bytes] -> ancora nesse formato em vez de offset fixo (sobrevive
+    a update do jogo). Cacheado por build."""
+    h=dll_hash() or "x"
+    if h in _GV: return _GV[h]
+    v=None
+    try:
+        with open(os.path.join(GAME_DIR,"TaskBarHero_Data","globalgamemanagers"),"rb") as f:
+            d=f.read(300_000)
+        for m in re.finditer(rb'([\x04-\x14])\x00\x00\x00', d):
+            L=m.group(1)[0]; s=d[m.end():m.end()+L]
+            try: t=s.decode("ascii")
+            except Exception: continue
+            if re.fullmatch(r'\d+\.\d+[\d.]*', t) and not t.startswith("6000."):   # 6000.x = engine
+                v=t; break
+    except Exception: pass
+    _GV[h]=v
+    return v
+
 def _extract_from_dump(ddir):
     """Extrai RVAs por ancoras ESTAVEIS (nomes nao-ofuscados + vtable slots),
     imune a ofuscacao renomear classes/metodos a cada build."""
@@ -413,6 +435,111 @@ class Engine:
         except Exception:
             try: subprocess.Popen([EXE])
             except Exception: pass
+    # ---- POPUP "OFFLINE REWARDS": acha o botao Close por OCR e clica com o MOUSE REAL ----
+    # A janela do jogo e WS_EX_LAYERED|WS_EX_TRANSPARENT (ex-style 0x80028) = CLICK-THROUGH:
+    #  - WindowFromPoint NUNCA devolve o jogo (atravessa p/ a janela de baixo) -> nao serve de gate;
+    #  - PostMessage(WM_LBUTTON*) e IGNORADO (o jogo le mouse por RAW INPUT) -> so mouse_event funciona;
+    #  - ImageGrab pegaria o que estiver POR CIMA -> a captura tem que ser PrintWindow (pega o
+    #    conteudo da janela mesmo ela estando atras). Tudo isso foi medido ao vivo.
+    def _game_hwnd(self):
+        """hwnd da janela principal do jogo (do nosso pid, visivel, com titulo)."""
+        u32=ctypes.windll.user32; out=[]
+        class R(ctypes.Structure): _fields_=[("l",ctypes.c_long),("t",ctypes.c_long),("r",ctypes.c_long),("b",ctypes.c_long)]
+        @ctypes.WINFUNCTYPE(ctypes.c_bool, ctypes.c_void_p, ctypes.c_void_p)
+        def cb(h,_):
+            p=ctypes.c_ulong(); u32.GetWindowThreadProcessId(h,ctypes.byref(p))
+            if p.value==self.pid and u32.IsWindowVisible(h) and u32.GetWindowTextLengthW(h)>0:
+                rc=R(); u32.GetWindowRect(h,ctypes.byref(rc))
+                if (rc.r-rc.l)>200 and (rc.b-rc.t)>200: out.append(h)
+            return True
+        try: u32.EnumWindows(cb,0)
+        except Exception: return None
+        return out[0] if out else None
+    def _win_shot(self, hwnd):
+        """(PIL, (ox,oy)) do conteudo da janela via PrintWindow(PW_RENDERFULLCONTENT)."""
+        from PIL import Image
+        u32=ctypes.windll.user32; gdi=ctypes.windll.gdi32
+        class R(ctypes.Structure): _fields_=[("l",ctypes.c_long),("t",ctypes.c_long),("r",ctypes.c_long),("b",ctypes.c_long)]
+        class BH(ctypes.Structure):
+            _fields_=[("biSize",ctypes.c_uint32),("biWidth",ctypes.c_long),("biHeight",ctypes.c_long),
+                      ("biPlanes",ctypes.c_uint16),("biBitCount",ctypes.c_uint16),("biCompression",ctypes.c_uint32),
+                      ("biSizeImage",ctypes.c_uint32),("biXPelsPerMeter",ctypes.c_long),("biYPelsPerMeter",ctypes.c_long),
+                      ("biClrUsed",ctypes.c_uint32),("biClrImportant",ctypes.c_uint32)]
+        class BI(ctypes.Structure): _fields_=[("bmiHeader",BH),("bmiColors",ctypes.c_uint32*3)]
+        rc=R(); u32.GetWindowRect(hwnd,ctypes.byref(rc)); w,h=rc.r-rc.l, rc.b-rc.t
+        if w<=0 or h<=0: return None,None
+        hdc=u32.GetWindowDC(hwnd); mdc=gdi.CreateCompatibleDC(hdc)
+        bmp=gdi.CreateCompatibleBitmap(hdc,w,h); gdi.SelectObject(mdc,bmp)
+        u32.PrintWindow(hwnd,mdc,2)                                  # 2 = PW_RENDERFULLCONTENT
+        bi=BI(); bi.bmiHeader.biSize=ctypes.sizeof(BH); bi.bmiHeader.biWidth=w
+        bi.bmiHeader.biHeight=-h; bi.bmiHeader.biPlanes=1; bi.bmiHeader.biBitCount=32
+        buf=ctypes.create_string_buffer(w*h*4); gdi.GetDIBits(mdc,bmp,0,h,buf,ctypes.byref(bi),0)
+        gdi.DeleteObject(bmp); gdi.DeleteDC(mdc); u32.ReleaseDC(hwnd,hdc)
+        return Image.frombuffer("RGBA",(w,h),buf,"raw","BGRA",0,1), (rc.l,rc.t)
+    def _ocr_lines(self, pil, sc=2.5):
+        """[(texto,(x0,y0,x1,y1))] via OCR nativo do Windows. Amplia sc x antes (a fonte do jogo e
+        pequena demais no 1:1) e devolve as caixas ja no espaco da imagem original."""
+        import numpy as np, asyncio
+        from winsdk.windows.media.ocr import OcrEngine
+        from winsdk.windows.graphics.imaging import SoftwareBitmap, BitmapPixelFormat
+        from winsdk.windows.storage.streams import DataWriter
+        if not getattr(self,"_ocr_loop",None):
+            self._ocr_loop=asyncio.new_event_loop(); self._ocr_eng=OcrEngine.try_create_from_user_profile_languages()
+        if not self._ocr_eng: return []
+        big=pil.resize((int(pil.size[0]*sc),int(pil.size[1]*sc))).convert("RGBA")
+        a=np.asarray(big,dtype=np.uint8); h,w=a.shape[:2]
+        dw=DataWriter(); dw.write_bytes(a[:,:,[2,1,0,3]].tobytes()); b=dw.detach_buffer()
+        sb=SoftwareBitmap.create_copy_from_buffer(b,BitmapPixelFormat.BGRA8,w,h)
+        res=self._ocr_loop.run_until_complete(self._ocr_eng.recognize_async(sb))
+        out=[]
+        for ln in res.lines:
+            xs=[q.bounding_rect.x for q in ln.words]; ys=[q.bounding_rect.y for q in ln.words]
+            xe=[q.bounding_rect.x+q.bounding_rect.width for q in ln.words]
+            ye=[q.bounding_rect.y+q.bounding_rect.height for q in ln.words]
+            out.append((ln.text,(min(xs)/sc,min(ys)/sc,max(xe)/sc,max(ye)/sc)))
+        return out
+    def _click_real(self, sx, sy):
+        """Clique REAL (mouse_event = raw input, unico que o jogo click-through enxerga).
+        Devolve o mouse pra onde estava."""
+        u32=ctypes.windll.user32
+        class P(ctypes.Structure): _fields_=[("x",ctypes.c_long),("y",ctypes.c_long)]
+        old=P(); u32.GetCursorPos(ctypes.byref(old))
+        u32.SetCursorPos(int(sx),int(sy)); time.sleep(0.08)
+        u32.mouse_event(0x0002,0,0,0,0); time.sleep(0.08); u32.mouse_event(0x0004,0,0,0,0)
+        time.sleep(0.1); u32.SetCursorPos(old.x,old.y)
+    def find_close_button(self):
+        """(x,y) na tela do botao 'Close' do OFFLINE REWARDS, ou None. So devolve se CONFIRMAR o
+        popup (offline/last login/reward) — evita clicar em qualquer 'Close' solto."""
+        try:
+            hw=self._game_hwnd()
+            if not hw: return None
+            img,org=self._win_shot(hw)
+            if img is None: return None
+            lines=self._ocr_lines(img)
+            if not lines: return None
+            txt=" | ".join(t.lower() for t,_ in lines)
+            if not any(k in txt for k in ("offline","last login","reward")): return None   # nao e o popup
+            for t,(x0,y0,x1,y1) in lines:
+                if "close" in t.lower():
+                    return org[0]+int((x0+x1)/2), org[1]+int((y0+y1)/2)
+        except Exception: pass
+        return None
+    def close_offline_popup(self, window=120):
+        """Procura o popup OFFLINE REWARDS por ate 'window' s e fecha clicando no Close.
+        (Aparece ~13s depois do jogo abrir e trava o jogo ate fechar.) True se fechou."""
+        t0=time.time()
+        while time.time()-t0 < window:
+            if not (self.pm and self._proc_alive()): return False
+            pos=self.find_close_button()
+            if pos:
+                self.log("popup OFFLINE REWARDS detectado — fechando (clique em %d,%d)"%pos)
+                self._click_real(*pos); time.sleep(1.5)
+                if not self.find_close_button():
+                    self.log("popup fechado ✔"); return True
+                self._click_real(*pos); time.sleep(1.5)          # 2a tentativa
+                return not self.find_close_button()
+            time.sleep(2)
+        return False
     # ---- WATCHDOG: mantem o jogo aberto (se cair, reabre pela Steam) ----
     def apply_watchdog(self):
         """Sobe a thread do watchdog se o usuario ligou. Precisa ser chamado FORA do tick(), porque o
@@ -445,8 +572,12 @@ class Engine:
                     if not self.want.get("watchdog"): return
                     time.sleep(2)
                     if self.pm and self._proc_alive(): up=True; break
-                self.log("watchdog: jogo aberto — re-aplicando tudo (ACTk/God/Hitkill/stats/automacoes)"
-                         if up else "watchdog: o jogo nao subiu em ~3min — tentando de novo")
+                if up:
+                    self.log("watchdog: jogo aberto — re-aplicando tudo (ACTk/God/Hitkill/stats/automacoes)")
+                    # o OFFLINE REWARDS aparece ~13s depois de abrir e TRAVA o jogo ate fechar
+                    self.close_offline_popup(window=120)
+                else:
+                    self.log("watchdog: o jogo nao subiu em ~3min — tentando de novo")
             except Exception:
                 time.sleep(3)
     # ---- mem helpers ----

@@ -125,7 +125,8 @@ class Panel:
             d=self._boot
             if d.get("ok"):                                                      # render loaded data (fast) behind curtain
                 self._was_conn=True
-                self.conn.configure(text="●  connected   ·   build %s   ·   offsets ✓"%(C.dll_hash() or "?"),text_color=GRN)
+                self.conn.configure(text="●  connected   ·   game v%s   ·   build %s   ·   offsets ✓"%(
+                C.game_version() or "?", (C.dll_hash() or "?")[:6]),text_color=GRN)
                 if d.get("stats"): self._fill_stats(d["stats"])
                 if d.get("stage"): self._fill_stage(d["stage"])
                 self._splash_step("loading inventory…"); self.splash.update()
@@ -487,7 +488,8 @@ class Panel:
         threading.Thread(target=loop,daemon=True).start()
     def _set_conn(self,ok):
         if ok:
-            self.conn.configure(text="●  connected   ·   build %s   ·   offsets ✓"%(C.dll_hash() or "?"),text_color=GRN)
+            self.conn.configure(text="●  connected   ·   game v%s   ·   build %s   ·   offsets ✓"%(
+                C.game_version() or "?", (C.dll_hash() or "?")[:6]),text_color=GRN)
             if not getattr(self,"_was_conn",False):      # RECONNECTED (game reopened) -> refresh everything
                 self.read_stats_ui(); self.read_stage_ui(); self.refresh_inv(); self.log("game detected — panel updated")
             self._was_conn=True
