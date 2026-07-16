@@ -346,7 +346,8 @@ class Engine:
         self.log=log; self.pm=None; self.base=None; self.size=None; self.pid=None
         self.cache={}; self.sym={}; self.lock=threading.RLock()
         # estado desejado (controlado pela GUI)
-        self.want={"actk":False,"god":False,"hitkill":False,"autobox":False,"autoitem":False,"autosynth":False}
+        self.want={"actk":False,"god":False,"hitkill":False,"autobox":False,"autoitem":False,"autosynth":False,
+                   "watchdog":False}   # watchdog = mantem o jogo aberto (reabre pela Steam se fechar)
         self.stats={}       # nome -> valor (float) a forcar (manual)
         self.speed_stats={} # (legado, nao usado)
         self.stage={}       # campo -> int a forcar
@@ -356,6 +357,7 @@ class Engine:
         self._abx_thr=None  # (legado)
         self._itm_thr=None  # (legado)
         self._auto_thr=None # thread UNICA do loop de automacao (caixa->stash->fuse)
+        self._wd_thr=None   # thread do WATCHDOG (mantem o jogo aberto)
         self._disp_lock=threading.RLock()  # serializa comandos no dispatcher
         self._rc_lock=threading.RLock()    # serializa _remote_call (scratch compartilhado)
     # ---- attach ----
@@ -411,6 +413,42 @@ class Engine:
         except Exception:
             try: subprocess.Popen([EXE])
             except Exception: pass
+    # ---- WATCHDOG: mantem o jogo aberto (se cair, reabre pela Steam) ----
+    def apply_watchdog(self):
+        """Sobe a thread do watchdog se o usuario ligou. Precisa ser chamado FORA do tick(), porque o
+        tick retorna cedo quando o jogo esta fechado — que e exatamente quando o watchdog age."""
+        if not self.want.get("watchdog"): return
+        if self._wd_thr and self._wd_thr.is_alive(): return
+        self._wd_thr=threading.Thread(target=self._watchdog_loop,daemon=True); self._wd_thr.start()
+    def _watchdog_loop(self):
+        """Se o jogo fechar: espera GRACE s e reabre pela Steam. NAO re-aplica nada aqui — o tick()
+        do painel re-attacha sozinho (PID novo zera cache/sh/abx) e re-aplica TUDO no ciclo seguinte:
+        ACTk, God, Hitkill, stats, stage, speedhack e as automacoes (auto-box/stash/fuse)."""
+        GRACE=15; STARTUP=90      # 15s de tolerancia; ate ~3min esperando o jogo subir
+        while self.want.get("watchdog"):
+            try:
+                if self.pm and self._proc_alive():
+                    time.sleep(2); continue                       # jogo vivo: so observa
+                self.log("watchdog: jogo fechado — reabrindo em %ds…"%GRACE)
+                back=False
+                for _ in range(GRACE):                            # tolerancia (pode ser restart do proprio user)
+                    if not self.want.get("watchdog"): return
+                    time.sleep(1)
+                    if self.pm and self._proc_alive(): back=True; break   # o tick() re-attachou sozinho
+                if back:
+                    self.log("watchdog: jogo voltou sozinho — re-aplicando"); continue
+                if not self.want.get("watchdog"): return
+                self.launch_game()
+                self.log("watchdog: abrindo o jogo pela Steam…")
+                up=False
+                for _ in range(STARTUP):                          # espera o tick() re-attachar (sem re-lancar)
+                    if not self.want.get("watchdog"): return
+                    time.sleep(2)
+                    if self.pm and self._proc_alive(): up=True; break
+                self.log("watchdog: jogo aberto — re-aplicando tudo (ACTk/God/Hitkill/stats/automacoes)"
+                         if up else "watchdog: o jogo nao subiu em ~3min — tentando de novo")
+            except Exception:
+                time.sleep(3)
     # ---- mem helpers ----
     def rb(self,a,n):
         try: return self.pm.read_bytes(a,n)

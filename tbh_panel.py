@@ -204,15 +204,17 @@ class Panel:
         c1=self.card(wrap," PROTECTION & COMBAT "); c1.pack(fill="x",padx=6,pady=(6,6))
         self.v_actk=tk.BooleanVar(); self.v_god=tk.BooleanVar()
         self.v_autobox=tk.BooleanVar(); self.v_autoitem=tk.BooleanVar(); self.v_autosynth=tk.BooleanVar()
+        self.v_watchdog=tk.BooleanVar()
         r=ctk.CTkFrame(c1,fg_color="transparent"); r.pack(fill="x",padx=16,pady=(2,2))
         r2=ctk.CTkFrame(c1,fg_color="transparent"); r2.pack(fill="x",padx=16,pady=(2,12))
-        rows={0:r,1:r,2:r2,3:r2,4:r2}
+        rows={0:r,1:r,2:r2,3:r2,4:r2,5:r}
         for idx,(txt,var,key,desc) in enumerate([
                 ("ACTk Bypass",self.v_actk,"actk","hide the cheats from the anti-cheat"),
                 ("God Mode",self.v_god,"god","player takes no damage"),
                 ("🎁 Auto-box",self.v_autobox,"autobox","opens boxes as they appear"),
                 ("📦 Auto-stash",self.v_autoitem,"autoitem","sends every item to the stash instantly"),
-                ("⚗️ Auto-fuse",self.v_autosynth,"autosynth","⚠ ONLY works with the CUBE OPEN at Lv.65~80 → fuses 9 same-grade (result Lv.65+)")]):
+                ("⚗️ Auto-fuse",self.v_autosynth,"autosynth","⚠ ONLY works with the CUBE OPEN at Lv.65~80 → fuses 9 same-grade (result Lv.65+)"),
+                ("🛡 Auto-restart",self.v_watchdog,"watchdog","if the game closes, reopens it via Steam in 15s and re-applies everything")]):
                 # Auto-fuse: real, legit synthesis (no forging). SAFE 65-80 mode: the bot only full-fills
                 # (ipu, which respects the Cube's Lv dropdown) and fuses (imx) IF the result level >= 65 —
                 # it never fuses low-level junk. Set the Cube type + "Lv.65~80" yourself; the bot won't
@@ -478,6 +480,9 @@ class Panel:
             while True:
                 try: ok=self.eng.tick()
                 except Exception: ok=False
+                # FORA do tick: o tick retorna cedo com o jogo fechado, e e ai que o watchdog age
+                try: self.eng.apply_watchdog()
+                except Exception: pass
                 self.root.after(0,lambda o=ok:self._set_conn(o)); time.sleep(1.2)
         threading.Thread(target=loop,daemon=True).start()
     def _set_conn(self,ok):
