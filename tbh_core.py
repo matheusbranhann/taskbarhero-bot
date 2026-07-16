@@ -186,7 +186,7 @@ def _extract_from_dump(ddir):
         if cs>=0 and ce>mtw.start():
             seg2=src[cs:ce]
             mm=re.search(r'RVA: (0x[0-9A-Fa-f]+)[^\n]*\n\s*public static int \w+\(EBoxType a\)',seg2)
-            if mm: out["iuw"]=int(mm.group(1),16)
+            if mm: out["iuw"]=int(mm.group(1),16)      # AMBIGUO (12 candidatos) -> so reserva; ver abaixo
     # RECIPE TYPE (obfuscado, muda entre builds: ux@2c43 -> uw@c824). Ancora estavel:
     # 'Dictionary<ERecipeType, List<X>>' com X curto/lowercase = o tipo da recipe.
     mrt=re.search(r'Dictionary<ERecipeType, List<([a-z]{1,4})>>',src)
@@ -224,6 +224,10 @@ def _extract_from_dump(ddir):
     if mio: out["inv_slots_off"]=int(mio.group(1),16)
     mso=re.search(r'List<StashSaveData> \w+; // (0x[0-9A-Fa-f]+)',src)
     if mso: out["stash_off"]=int(mso.group(1),16)
+    # === contador de caixas: resolve pelo CODIGO do llx (a assinatura no dump e ambigua) ===
+    if out.get("llx"):
+        real=_iuw_from_llx(out["llx"])
+        if real: out["iuw"]=real
     return out
 
 def _redump():
@@ -245,6 +249,49 @@ def _redump():
 
 # simbolos CRITICOS que as automacoes precisam — a extracao so e "boa" se TODOS resolverem.
 # (llm/cmd11 e codigo morto -> nao entra; inv_klass_ti|bau_ti = 1 dos 2 basta)
+def _dll_bytes(rva, n):
+    """n bytes ORIGINAIS de um RVA, lidos do GameAssembly.dll NO DISCO (RVA->offset via PE). O arquivo
+    nunca tem os nossos patches, e nao precisa do jogo aberto."""
+    try:
+        with open(GA_PATH,"rb") as f: data=f.read()
+        e=int.from_bytes(data[0x3C:0x40],"little")                       # e_lfanew
+        nsec=int.from_bytes(data[e+6:e+8],"little")
+        secs=e+0x18+int.from_bytes(data[e+0x14:e+0x16],"little")         # +SizeOfOptionalHeader
+        for i in range(nsec):
+            s=secs+i*40
+            vsz=int.from_bytes(data[s+8:s+12],"little")
+            va=int.from_bytes(data[s+12:s+16],"little")
+            raw=int.from_bytes(data[s+20:s+24],"little")
+            if va<=rva<va+max(vsz,1):
+                off=rva-va+raw
+                return data[off:off+n]
+    except Exception: pass
+    return None
+
+def _iuw_from_llx(llx_rva):
+    """RVA do contador REAL de caixas esperando = o call que o proprio llx testa com 'test eax,eax /
+    jle' antes de abrir (llx: `if (count(boxType) <= 0) return;`).
+
+    Ancorar por assinatura no dump NAO serve aqui: a classe uu tem 12 metodos `static int X(EBoxType)`
+    e a extracao pegava o PRIMEIRO (itq) em vez do certo (iuv). itq e outro contador, que nunca zera
+    -> o bot achava que tinha caixa pra sempre e clicava a cada tick eternamente. Ancorar no
+    COMPORTAMENTO do codigo (quem o llx chama) e imune tanto a rename quanto a ambiguidade."""
+    try:
+        from capstone import Cs, CS_ARCH_X86, CS_MODE_64
+        code=_dll_bytes(llx_rva, 320)
+        if not code: return None
+        ins=list(Cs(CS_ARCH_X86, CS_MODE_64).disasm(code, llx_rva))     # addr=RVA -> alvos ja saem em RVA
+        last=None
+        for k,i in enumerate(ins):
+            if i.mnemonic=="call" and i.op_str.startswith("0x"): last=int(i.op_str,16)
+            elif (i.mnemonic=="test" and i.op_str=="eax, eax" and last     # o gate iyd() usa 'test al, al'
+                  and k+1<len(ins) and ins[k+1].mnemonic in ("jle","jg")): # -> nao confunde
+                return last
+    except Exception: pass
+    return None
+
+_EXTRACT_VER=2   # BUMPAR sempre que a extracao mudar: invalida os caches antigos. Sem isso um offset
+                 # errado fica gravado no disco e o fix nao chega em quem ja rodou o painel.
 _CRIT_SYMS=("gra","upd","llx","iw","ra_class","ilo","ipu","imx","inf","ili","iog","ioa","ima","iuw","izb","inv_slots_off","stash_off")
 def _offsets_ok(got):
     """True se o dict tem TODOS os simbolos criticos (nao aceita extracao parcial que quebra features)."""
@@ -271,14 +318,17 @@ def resolve_symbols(log=lambda m:None):
     if os.path.exists(cf):
         try:
             cached=json.load(open(cf))
-            if _offsets_ok(cached): return cached      # so reaproveita cache se estiver COMPLETO
-            log("offsets em cache incompletos (%s) — re-dumpando."%",".join(_missing_syms(cached)))
+            if cached.get("_ver")!=_EXTRACT_VER:       # extrator mudou -> cache velho pode ter offset errado
+                log("cache de offsets e de um extrator antigo — re-dumpando.")
+            elif _offsets_ok(cached): return cached    # so reaproveita cache se estiver COMPLETO
+            else: log("offsets em cache incompletos (%s) — re-dumpando."%",".join(_missing_syms(cached)))
         except Exception: pass
     log("Game updated (build %s) — re-dumping offsets automatically… (~30s)"%h)
     last={}
     for attempt in range(3):                            # retry: falhas transientes do dumper
         got=_redump()
         if _offsets_ok(got):
+            got["_ver"]=_EXTRACT_VER
             try: json.dump(got,open(cf,"w"))
             except Exception: pass
             log("New offsets resolved and saved (build %s)."%h)
@@ -986,16 +1036,32 @@ class Engine:
             kl=self._remote_call(E["il2cpp_class_from_name"],[img,NS,NM])
             if kl: self.cache["sb_klass"]=kl; return kl
         return None
+    def _heap_ptr(self, p):
+        return bool(p) and 0x10000000000<=p<0x7f0000000000
+
+    def _valid_stagebox(self, a, klass):
+        """A StageBox em `a` esta VIVA? O klass ptr sozinho NAO serve: memoria liberada mantem os 8
+        primeiros bytes, entao um objeto MORTO passava na checagem e llx nele FECHA O JOGO (medido:
+        ACTBOSS morta com m_CachedPtr=0xb1330200 enquanto a viva tinha 0x17841f9a4b0).
+        m_CachedPtr (+0x10) = ponteiro nativo do Unity: GameObject destruido -> 0/lixo. E exatamente
+        o que o proprio Unity testa no 'obj == null'."""
+        if self.u64(a)!=klass: return False
+        if not self._heap_ptr(self.u64(a+0x10)): return False              # m_CachedPtr -> DESTRUIDA
+        if self.u32(a+0x38) not in (0,1,2): return False                   # EBoxType
+        btn=self.u64(a+0x58)
+        if not self._heap_ptr(btn) or self.u64(btn)==klass: return False
+        hb=self.rb(a+0x128,1); bz=self.rb(a+0xa0,1)
+        return bool(hb) and hb[0]<=1 and bool(bz) and bz[0]<=1
+
     def _find_stageboxes(self):
-        """{EBoxType: ptr} das instancias REAIS de StageBox (validadas)."""
-        cur=self.cache.get("sb_inst")
-        if cur and all(self.u64(a)==cur["_k"] for a in cur.values() if a!=cur.get("_k")):
-            pass  # (validacao real abaixo)
+        """{EBoxType: ptr} das instancias REAIS **e VIVAS** de StageBox. Caixa e UI transiente: o
+        jogo destroi/recria (restart, troca de Act) e deixa um cadaver no heap com o klass intacto.
+        O cadaver costuma cair num endereco MENOR -> vinha primeiro no scan e ganhava o setdefault
+        (era o crash do auto-box: so a ACTBOSS estava morta -> so quebrava as vezes)."""
         klass=self._stagebox_klass()
         if not klass: return {}
-        # reusa cache se os ponteiros ainda apontam pra klass
-        cc=self.cache.get("sb_inst")
-        if cc and cc.get("_k")==klass and cc.get("map") and all(self.u64(a)==klass for a in cc["map"].values()):
+        cc=self.cache.get("sb_inst")                                       # so reusa cache se AINDA vivas
+        if cc and cc.get("_k")==klass and cc.get("map") and all(self._valid_stagebox(a,klass) for a in cc["map"].values()):
             return cc["map"]
         kp=struct.pack("<Q",klass); found={}
         for base,size in self._mem_regions((0x04,0x40)):
@@ -1003,11 +1069,8 @@ class Engine:
             if not d: continue
             j=d.find(kp)
             while j>=0:
-                if j%8==0:
-                    a=base+j; bt=self.u32(a+0x38); btn=self.u64(a+0x58)
-                    hb=self.rb(a+0x128,1); bz=self.rb(a+0xa0,1)
-                    if bt in (0,1,2) and hb and hb[0]<=1 and bz and bz[0]<=1 and btn and 0x10000000000<=btn<0x7f0000000000 and self.u64(btn)!=klass:
-                        found.setdefault(bt,a)
+                if j%8==0 and self._valid_stagebox(base+j, klass):
+                    found.setdefault(self.u32(base+j+0x38), base+j)
                 j=d.find(kp,j+8)
             if len(found)>=3: break
         self.cache["sb_inst"]={"_k":klass,"map":found}
@@ -1096,22 +1159,8 @@ class Engine:
         return bytes(c)
     def _orig_prologue(self, rva, n=24):
         """Bytes ORIGINAIS de um RVA lidos do GameAssembly.dll NO DISCO — fonte GARANTIDA p/ curar um
-        hook orfao (o arquivo nunca tem os nossos patches), sem depender de cache. RVA->offset via PE."""
-        try:
-            with open(GA_PATH,"rb") as f: data=f.read()
-            e=int.from_bytes(data[0x3C:0x40],"little")                       # e_lfanew
-            nsec=int.from_bytes(data[e+6:e+8],"little")
-            secs=e+0x18+int.from_bytes(data[e+0x14:e+0x16],"little")         # +SizeOfOptionalHeader
-            for i in range(nsec):
-                s=secs+i*40
-                vsz=int.from_bytes(data[s+8:s+12],"little")
-                va=int.from_bytes(data[s+12:s+16],"little")
-                raw=int.from_bytes(data[s+20:s+24],"little")
-                if va<=rva<va+max(vsz,1):
-                    off=rva-va+raw
-                    return data[off:off+n]
-        except Exception: pass
-        return None
+        hook orfao (o arquivo nunca tem os nossos patches), sem depender de cache."""
+        return _dll_bytes(rva, n)
     def _plen_of(self, raw, base_addr, minlen=5, maxlen=8):
         """Instrucoes INTEIRAS cobrindo >=minlen a partir de BYTES (p/ o E9 jmp de 5). None se
         rip-rel/branch (nao da p/ relocar com seguranca)."""
@@ -1338,7 +1387,7 @@ class Engine:
         if not (self.sym.get("iuw") and klass):
             order=[boxes[t] for t in (0,1,2) if t in boxes]                   # fallback cego (sem iuw)
             for tgt in order:
-                if self.u64(tgt)==klass: self._dispatch(1, argP=tgt)
+                if self._valid_stagebox(tgt, klass): self._dispatch(1, argP=tgt)
             return False
         NAMES={0:"NORMAL",1:"BOSS",2:"ACTBOSS"}; opened=False
         for t in (0,1,2):
@@ -1346,7 +1395,10 @@ class Engine:
             if not tgt: continue
             cnt=self._iuw_count(t); guard=0
             while cnt and cnt>0 and guard<15 and self.want.get("autobox") and self.abx:
-                if self.u64(tgt)!=klass: break                               # ponteiro morreu (heap moveu)
+                if not self._valid_stagebox(tgt, klass):                     # morreu no meio -> re-scan
+                    self.cache.pop("sb_inst", None)                          # (nunca clicar em cadaver: crasha)
+                    tgt=self._find_stageboxes().get(t)
+                    if not tgt or not self._valid_stagebox(tgt, klass): break
                 self._dispatch(1, argP=tgt, timeout=1.2)                     # llx main-thread
                 time.sleep(0.15)
                 new=self._iuw_count(t)
