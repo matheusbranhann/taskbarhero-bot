@@ -560,7 +560,7 @@ class Engine:
         self.cache={}; self.sym={}; self.lock=threading.RLock()
         # estado desejado (controlado pela GUI)
         self.want={"actk":False,"god":False,"hitkill":False,"autobox":False,"autoitem":False,"autosynth":False,
-                   "watchdog":False, "autoboss":False}   # watchdog=mantem o jogo aberto; autoboss=usa soulstone no x-10 e volta
+                   "watchdog":False, "autoboss":False, "evolve":False}   # watchdog=mantem o jogo aberto; autoboss=usa soulstone no x-10 e volta
         self.stats={}       # nome -> valor (float) a forcar (manual)
         self.speed_stats={} # (legado, nao usado)
         self.stage={}       # campo -> int a forcar
@@ -1493,7 +1493,7 @@ class Engine:
     # === AUTOMACAO: auto-caixa + auto-item (stash) — compartilham o dispatcher ===
     def apply_automation(self):
         item=self.want.get("autoitem") or self.want.get("autosynth")
-        need=self.want.get("autobox") or item or self.want.get("autoboss")
+        need=self.want.get("autobox") or item or self.want.get("autoboss") or self.want.get("evolve")
         if need:
             # SELF-HEAL: se o abx esta setado mas o hook sumiu do jogo (prologo != E9 - ex: outro
             # processo removeu, ou o jogo reiniciou), descarta o abx fantasma pra RE-INSTALAR sozinho.
@@ -1518,13 +1518,14 @@ class Engine:
         na hora que dropa."""
         used=set()
         W=self.want
-        while (W.get("autobox") or W.get("autoitem") or W.get("autosynth") or W.get("autoboss")) and self.abx and self.pm:
+        while (W.get("autobox") or W.get("autoitem") or W.get("autosynth") or W.get("autoboss") or W.get("evolve")) and self.abx and self.pm:
             try:
                 did=False
                 if W.get("autobox") and self._do_autobox(): did=True          # 1) caixa: prioridade maxima
                 if (W.get("autoitem") or W.get("autosynth")) and self._do_stash_bulk(used): did=True  # 2) stash EM LOTE (rapido)
                 if W.get("autosynth") and not did and self._do_synth(): did=True # 3) fuse (so se nao houve caixa/stash pendente)
                 if W.get("autoboss") and not did and self._do_autoboss(): did=True  # 4) act boss: gasta 1 soulstone e volta
+                if W.get("evolve") and not did and self._do_evolve(): did=True      # 5) evolucao: sempre na fase mais nova
                 if W.get("autoitem") and not did and self._sort_grade_step(2): did=True  # 5) ordena o stash por grade (so quando ocioso)
                 time.sleep(0.12 if did else 0.5)
             except Exception: time.sleep(0.3)
@@ -1597,6 +1598,65 @@ class Engine:
         time.sleep(0.15)
         self._dispatch_call(self.base+self.sym["jgk"], argP=key)   # o que o callback faria
         return True
+    def stage_table(self):
+        """{stageKey:{next,type,ss,lvl}} lido da tabela VIVA do jogo (120 estagios). Cacheado."""
+        c=self.cache.get("stage_tbl")
+        if c: return c
+        ti=self.sym.get("bal_ti"); off=self.sym.get("stage_off")
+        if not (ti and off): return {}
+        klass=self.u64(self.base+ti)
+        if not self.vptr(klass): return {}
+        bal=self.u64(self.u64(klass+0xB8))
+        lst=self.u64(bal+off) if self.vptr(bal) else 0
+        if not self.vptr(lst): return {}
+        arr=self.u64(lst+0x10); n=self.u32(lst+0x18)
+        if not self.vptr(arr) or not n or n>500: return {}
+        t={}
+        for i in range(n):
+            o=self.u64(arr+0x20+i*8)
+            if not self.vptr(o): continue
+            k=self.u32(o+0x30)
+            if k: t[k]={"next":self.u32(o+0xA0),"type":self.u32(o+0x40),"ss":self.u32(o+0x94),"lvl":self.u32(o+0x50)}
+        if len(t)>=100: self.cache["stage_tbl"]=t
+        return t
+    def _boss_run(self, boss):
+        """Entra num x-10, espera o desfecho e deixa o jogo voltar. True se o boss morreu."""
+        volta=self.stage_progress()[1]
+        if not self.enter_boss(boss): self.log("boss: falhou ao entrar em %s"%self.stage_name(boss)); return False
+        ok=self._wait_boss_done(boss, timeout=600)
+        self.log("boss %s: %s"%(self.stage_name(boss), "✅ morto (caixa dropou)" if ok else
+                                ("entrada nao pegou" if ok is None else "saiu sem matar (party morreu)")))
+        if ok:                                        # a volta e do jogo (beyq); so intervenho se travar
+            t0=time.time()
+            while self.stage_progress()[1]==boss and time.time()-t0<15: time.sleep(0.5)
+            if self.stage_progress()[1]==boss and volta: self.goto_stage(volta)
+        return bool(ok)
+    def _do_evolve(self):
+        """MODO EVOLUCAO: mantem voce sempre na fase mais nova liberada, ate o Torment 3-9.
+        Como funciona: nao existe lista de fases liberadas — o progresso e UM int
+        (maxCompletedStage) que E a maior key liberada. Entao 'evoluir' = estar nele.
+        Zerou a fase? o jogo sobe o max sozinho -> o bot te leva pra proxima. Chegou num x-10?
+        entra com a soulstone (matar o boss e o que libera o act/dificuldade seguinte).
+        Nao pula nada: e a mesma corrente NextStageKey que o jogo usa."""
+        ALVO=4309                                     # Torment 3-9 (o 3-10 fica pro switch Auto-boss)
+        mx,cur,_=self.stage_progress()
+        if not mx or not cur: return False
+        alvo=min(mx, ALVO)
+        if cur>=alvo: return False                    # ja esta na fase mais nova -> farmando pra zerar
+        t=self.stage_table()
+        info=t.get(alvo)
+        if not info: return False
+        if info["type"]==1:                           # o alvo e um x-10: so entra com a pedra
+            r=self.stage_can_enter(alvo)
+            if r!=0:
+                if r==2: self.log("📈 evolucao: %s precisa da soulstone %s — farmando ate cair"%(
+                                   self.stage_name(alvo), info["ss"]))
+                else: self.log("📈 evolucao: %s -> %s"%(self.stage_name(alvo), self.ENTER_RESULT.get(r,r)))
+                return False
+            self.log("📈 evolucao: %s liberado — indo pro boss com a soulstone"%self.stage_name(alvo))
+            return self._boss_run(alvo)
+        self.log("📈 evolucao: %s -> %s (nivel %s)"%(self.stage_name(cur), self.stage_name(alvo), info["lvl"]))
+        return self.goto_stage(alvo)
     def _do_autoboss(self):
         """MINIMO, so o basico: se tem soulstone, entra no x-10 daquela dificuldade e DEIXA O JOGO
         VOLTAR sozinho. NAO liga/desliga nenhum cheat — se voce roda com Hitkill, o boss morre; se nao,

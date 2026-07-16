@@ -207,9 +207,13 @@ class Panel:
         self.v_autobox=tk.BooleanVar(); self.v_autoitem=tk.BooleanVar(); self.v_autosynth=tk.BooleanVar()
         self.v_watchdog=tk.BooleanVar()
         self.v_autoboss=tk.BooleanVar()
+        self.v_evolve=tk.BooleanVar()
         r=ctk.CTkFrame(c1,fg_color="transparent"); r.pack(fill="x",padx=16,pady=(2,2))
         r2=ctk.CTkFrame(c1,fg_color="transparent"); r2.pack(fill="x",padx=16,pady=(2,12))
-        rows={0:r,1:r,2:r2,3:r2,4:r2,5:r}
+        # 1 entrada por switch. Faltar uma = KeyError = o painel fecha SEM ERRO NENHUM na tela
+        # (o exe e --windowed) e o --selftest nao pega, porque ele roda headless. Ja aconteceu:
+        # adicionei o 7o switch e esqueci a linha 6 -> v2.6/v2.6.1 nao abriam. Por isso o .get().
+        rows={0:r,1:r,2:r2,3:r2,4:r2,5:r,6:r,7:r2}
         for idx,(txt,var,key,desc) in enumerate([
                 ("ACTk Bypass",self.v_actk,"actk","hide the cheats from the anti-cheat"),
                 ("God Mode",self.v_god,"god","player takes no damage"),
@@ -217,12 +221,13 @@ class Panel:
                 ("📦 Auto-stash",self.v_autoitem,"autoitem","sends every item to the stash instantly"),
                 ("⚗️ Auto-fuse",self.v_autosynth,"autosynth","⚠ ONLY works with the CUBE OPEN at Lv.65~80 → fuses 9 same-grade (result Lv.65+)"),
                 ("🛡 Auto-restart",self.v_watchdog,"watchdog","if the game closes, reopens it via Steam in 15s and re-applies everything"),
-                ("🗡 Auto-boss",self.v_autoboss,"autoboss","uses a soulstone to enter the act boss (x-10), waits for the kill and returns to Torment 3-9")]):
+                ("🗡 Auto-boss",self.v_autoboss,"autoboss","uses a soulstone to enter the act boss (x-10), waits for the kill and returns to Torment 3-9"),
+                ("📈 Evolution",self.v_evolve,"evolve","always keeps you on the newest unlocked stage, 1-1 → Torment 3-9 (uses a soulstone on the x-10 gates)")]):
                 # Auto-fuse: real, legit synthesis (no forging). SAFE 65-80 mode: the bot only full-fills
                 # (ipu, which respects the Cube's Lv dropdown) and fuses (imx) IF the result level >= 65 —
                 # it never fuses low-level junk. Set the Cube type + "Lv.65~80" yourself; the bot won't
                 # touch the type/level (inf/ilo would reset it to 1-10 and burn low-level items).
-            cell=ctk.CTkFrame(rows[idx],fg_color="transparent"); cell.pack(side="left",padx=(0,24))
+            cell=ctk.CTkFrame(rows.get(idx,r2),fg_color="transparent"); cell.pack(side="left",padx=(0,24))
             ctk.CTkSwitch(cell,text=txt,variable=var,onvalue=True,offvalue=False,
                           command=lambda k=key,v=var:self._set_want(k,v),font=F(13,"bold"),
                           progress_color=ACC,button_color="#e5e5e5",button_hover_color="#fff",
