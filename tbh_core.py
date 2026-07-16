@@ -10,7 +10,7 @@ TBH CORE — motor unico do painel TaskBarHero.
 - Precos: indice do Steam Market (market_prices.json) com lookup por nome+grade.
 Nada aqui abre GUI; e importado por tbh_panel.py.
 """
-import os, sys, struct, subprocess, hashlib, json, re, time, ctypes, collections, difflib, threading
+import os, sys, struct, subprocess, hashlib, json, re, time, ctypes, collections, difflib, threading, bisect
 from ctypes import wintypes
 
 class MBI(ctypes.Structure):
@@ -228,6 +228,9 @@ def _extract_from_dump(ddir):
     if out.get("llx"):
         real=_iuw_from_llx(out["llx"])
         if real: out["iuw"]=real
+    # === mapa/navegacao de estagio (ancora StageNode) — opcional: se falhar, o resto do painel segue ===
+    try: out.update(_stage_anchors(ddir))
+    except Exception: pass
     return out
 
 def _redump():
@@ -290,7 +293,145 @@ def _iuw_from_llx(llx_rva):
     except Exception: pass
     return None
 
-_EXTRACT_VER=2   # BUMPAR sempre que a extracao mudar: invalida os caches antigos. Sem isso um offset
+# ================= ANCORAS DE ESTAGIO (mapa + navegacao) =================
+# Regra aprendida na dor (ver o bug do contador de caixas): NUNCA ancorar em nome ofuscado nem em
+# assinatura ambigua. Dentro da classe de estagio ha 15 "static void X(int)", 11 "static bool X(int)"
+# e 5 "(StageCache, Action<bool>)" — assinatura pura seria sorteio.
+# A ancora e a classe StageNode: o Unity NAO pode renomea-la (MonoBehaviour e serializado por nome em
+# cena/prefab), e o handler de clique dela chama EXATAMENTE os 4 alvos, com assinaturas distintas
+# entre si -> desambiguacao total. Cross-checks independentes confirmam cada um.
+class _PE:
+    """GameAssembly.dll do disco, com cache (o resolver disassembla muitas funcoes)."""
+    def __init__(self, path):
+        self.data=open(path,"rb").read()
+        e=struct.unpack_from("<I",self.data,0x3C)[0]
+        nsec=struct.unpack_from("<H",self.data,e+6)[0]; opt=struct.unpack_from("<H",self.data,e+20)[0]
+        self.secs=[]
+        for i in range(nsec):
+            b=e+24+opt+40*i
+            self.secs.append((struct.unpack_from("<I",self.data,b+12)[0], struct.unpack_from("<I",self.data,b+8)[0],
+                              struct.unpack_from("<I",self.data,b+20)[0], struct.unpack_from("<I",self.data,b+16)[0]))
+    def read(self, rva, n):
+        for va,vsz,raw,rsz in self.secs:
+            if va<=rva<va+max(vsz,rsz): return self.data[raw+(rva-va):raw+(rva-va)+n]
+        return b""
+
+class _Klass:
+    __slots__=("name","decl","fields","methods")
+    def __init__(self,name,decl): self.name=name; self.decl=decl; self.fields=[]; self.methods=[]
+
+_A_RVA=re.compile(r'//\s*RVA:\s*0x([0-9A-Fa-f]+)')
+_A_CLS=re.compile(r'^(?:\[.*\]\s*)?(?:public|private|internal|protected)?\s*(?:static\s+|sealed\s+|abstract\s+)*class\s+([^\s:/]+)')
+_A_FLD=re.compile(r'^\s*(?:\[[^\]]*\]\s*)?(?:public|private|internal|protected)\s+(?:static\s+)?(?:readonly\s+)?(.+?)\s+([A-Za-z_<>][\w<>]*);\s*//\s*0x([0-9A-Fa-f]+)')
+_A_MTH=re.compile(r'^\s*(?:\[[^\]]*\]\s*)?(?:public|private|internal|protected)\s+(.*?\S)\s*\{\s*\}\s*$')
+_A_SIG=re.compile(r'^(?:(static)\s+)?(?:(virtual|override|abstract)\s+)?([\w<>,\.\[\]]+)\s+([\w<>\.]+)\(([^)]*)\)$')
+
+def _a_parse_dump(path):
+    classes=[]; cur=None; pend=None
+    with open(path,"r",encoding="utf-8",errors="replace") as fh:
+        for line in fh:
+            m=_A_RVA.search(line)
+            if m and line.lstrip().startswith("//"): pend=int(m.group(1),16); continue
+            s=line.rstrip("\n")
+            if s.startswith(("public ","private ","internal ","protected ")) and " class " in s:
+                cm=_A_CLS.match(s)
+                if cm: cur=_Klass(cm.group(1),s); classes.append(cur); pend=None; continue
+            if cur is None: continue
+            fm=_A_FLD.match(s)
+            if fm and "//" in s and "(" not in fm.group(1):
+                t=fm.group(1).strip()
+                cur.fields.append((t.replace("static ","").strip(), fm.group(2), int(fm.group(3),16),
+                                   "static " in fm.group(1) or " static " in s))
+                continue
+            mm=_A_MTH.match(s)
+            if mm and pend is not None: cur.methods.append((pend,mm.group(1))); pend=None
+    return classes
+
+def _a_sig(sig):
+    m=_A_SIG.match(sig.replace("readonly ","").strip())
+    if not m: return None
+    args=[]; raw=m.group(5).strip()
+    if raw:
+        d=0; cur=""
+        for ch in raw:
+            if ch in "<([": d+=1
+            elif ch in ">)]": d-=1
+            if ch=="," and d==0: args.append(cur.strip()); cur=""
+            else: cur+=ch
+        args.append(cur.strip())
+        args=[re.sub(r'\s*=.*$','',a).rsplit(" ",1)[0].strip() if " " in re.sub(r'\s*=.*$','',a) else re.sub(r'\s*=.*$','',a).strip() for a in args]
+    return (m.group(1)=="static", m.group(3), m.group(4), args)
+
+def _a_extent(addrs, rva):
+    i=bisect.bisect_right(addrs,rva)
+    end=addrs[i] if i<len(addrs) else rva+0x400
+    return max(0x10, min(end-rva, 0x4000))
+
+def _a_dis(pe, addrs, rva):
+    from capstone import Cs, CS_ARCH_X86, CS_MODE_64
+    md=Cs(CS_ARCH_X86,CS_MODE_64); md.detail=False
+    return list(md.disasm(pe.read(rva,_a_extent(addrs,rva)), rva))   # address == RVA
+
+def _a_flow(pe, addrs, rva, kinds=("call","jmp")):
+    return [(i.mnemonic,int(i.op_str,16)) for i in _a_dis(pe,addrs,rva)
+            if i.mnemonic in kinds and re.fullmatch(r'0x[0-9a-f]+', i.op_str or "")]
+
+def _a_pick(callees, ret_want, args_want, label, pe, addrs):
+    """1 hit -> ok. N hits CLONES (mesma forma de codigo) -> qualquer um serve (o ofuscador duplica a
+    mesma impl). N hits DIFERENTES -> erro: melhor falhar que entrar no estagio errado."""
+    hits=[]
+    for rva,sig in callees.items():
+        p=_a_sig(sig)
+        if not p: continue
+        st,ret,nm,args=p
+        if not st or ret!=ret_want or len(args)!=len(args_want): continue
+        if all(re.fullmatch(w,a) for w,a in zip(args_want,args)): hits.append((rva,sig))
+    if len(hits)==1: return hits[0][0]
+    if len(hits)>1:
+        shapes={tuple(i.mnemonic for i in _a_dis(pe,addrs,r)) for r,_ in hits}
+        if len(shapes)==1: return sorted(hits)[0][0]      # clones -> equivalentes
+    raise AssertionError("%s ambiguo (%d)"%(label,len(hits)))
+
+def _stage_anchors(ddir):
+    """{jgk,jgq,jgc,jgd,uo_ti,bal_ti,stage_off,uo_*} resolvidos por ancora estavel. Levanta se ambiguo."""
+    classes=_a_parse_dump(os.path.join(ddir,"dump.cs"))
+    sj=json.load(open(os.path.join(ddir,"script.json"),encoding="utf-8"))
+    pe=_PE(GA_PATH); addrs=sorted(set(sj["Addresses"])); out={}
+    ti=lambda n: next((m["Address"] for m in sj["ScriptMetadata"] if m["Name"]==n), None)
+    # uu.uo = UNICA classe estatica com static List<StageCache> E static Dictionary<int,StageCache>
+    uos=[k for k in classes if " static class " in k.decl
+         and any(re.fullmatch(r'List<[\w\.]*\.?StageCache>',f[0]) for f in k.fields if f[3])
+         and any(re.fullmatch(r'Dictionary<int,\s*[\w\.]*\.?StageCache>',f[0]) for f in k.fields if f[3])]
+    if len(uos)!=1: raise AssertionError("uo ambiguo (%d)"%len(uos))
+    uo=uos[0]; out["uo_ti"]=ti(uo.name+"_TypeInfo")
+    st=[f for f in uo.fields if f[3]]
+    for typ,nm,off,_ in st:
+        if re.fullmatch(r'Dictionary<int,\s*[\w\.]*\.?StageCache>',typ) and "uo_dict" not in out: out["uo_dict"]=off
+        elif re.fullmatch(r'[\w\.]*\.?StageCache',typ) and "uo_cur_cache" not in out: out["uo_cur_cache"]=off
+    obs=[f[2] for f in st if f[0]=="ObscuredInt"]            # ordem: max, cur_key, cur_wave
+    if len(obs)>=3: out["uo_max"],out["uo_cur"],out["uo_wave"]=obs[0],obs[1],obs[2]
+    # bal: o campo 'stageInfoData' NAO e ofuscado (tabela desserializada por nome)
+    bals=[(k,off) for k in classes for typ,nm,off,_ in k.fields if nm=="stageInfoData" and typ=="List<StageInfoData>"]
+    if len(bals)!=1: raise AssertionError("bal ambiguo (%d)"%len(bals))
+    out["bal_ti"]=ti("nq<%s>_TypeInfo"%bals[0][0].name); out["stage_off"]=bals[0][1]
+    # HUB StageNode (nome que o Unity nao renomeia) -> os 4 alvos dentro de uo
+    uom={r:s for r,s in uo.methods}
+    cal={}
+    for k in [x for x in classes if x.name=="StageNode" or x.name.startswith("StageNode.")]:
+        for rva,_ in k.methods:
+            for kind,tgt in _a_flow(pe,addrs,rva):
+                if tgt in uom: cal[tgt]=uom[tgt]
+    SC=r'[\w\.]*\.?StageCache'
+    out["jgk"]=_a_pick(cal,"void",[r'int'],"jgk",pe,addrs)                       # entrar na fase
+    out["jgq"]=_a_pick(cal,"bool",[r'int'],"jgq",pe,addrs)                       # liberado?
+    out["jgc"]=_a_pick(cal,"EStageEnterResultType",[SC],"jgc",pe,addrs)          # validador (soulstone/bau)
+    out["jgd"]=_a_pick(cal,"void",[SC,r'Action<bool>'],"jgd",pe,addrs)           # ACTBOSS (reserva a pedra)
+    # cross-check: jgq tem a constante 1101 (Normal 1-1) hardcoded -> confirma o alvo
+    if not any(i.mnemonic in ("cmp","mov") and (i.op_str or "").endswith("0x44d") for i in _a_dis(pe,addrs,out["jgq"])):
+        raise AssertionError("jgq sem a constante 1101 — ancora suspeita")
+    return out
+
+_EXTRACT_VER=3   # BUMPAR sempre que a extracao mudar: invalida os caches antigos. Sem isso um offset
                  # errado fica gravado no disco e o fix nao chega em quem ja rodou o painel.
 _CRIT_SYMS=("gra","upd","llx","iw","ra_class","ilo","ipu","imx","inf","ili","iog","ioa","ima","iuw","izb","inv_slots_off","stash_off")
 def _offsets_ok(got):
@@ -419,7 +560,7 @@ class Engine:
         self.cache={}; self.sym={}; self.lock=threading.RLock()
         # estado desejado (controlado pela GUI)
         self.want={"actk":False,"god":False,"hitkill":False,"autobox":False,"autoitem":False,"autosynth":False,
-                   "watchdog":False}   # watchdog = mantem o jogo aberto (reabre pela Steam se fechar)
+                   "watchdog":False, "autoboss":False}   # watchdog=mantem o jogo aberto; autoboss=usa soulstone no x-10 e volta
         self.stats={}       # nome -> valor (float) a forcar (manual)
         self.speed_stats={} # (legado, nao usado)
         self.stage={}       # campo -> int a forcar
@@ -1081,7 +1222,7 @@ class Engine:
     #       3=synth ilo(argI) · 4=synth ipu() · 5=synth imx()
     def _dispatch_code(self, cave, back_va, stolen):
         s=self.sym; B=self.base
-        LLX=B+s.get("llx",0); IW=B+s.get("iw",0); ILO=B+s.get("ilo",0); IPU=B+s.get("ipu",0); IMX=B+s.get("imx",0); INF=B+s.get("inf",0); ILI=B+s.get("ili",0); IOG=B+s.get("iog",0); IOA=B+s.get("ioa",0); IMA=B+s.get("ima",0); LLM=B+s.get("llm",0)
+        LLX=B+s.get("llx",0); IW=B+s.get("iw",0); ILO=B+s.get("ilo",0); IPU=B+s.get("ipu",0); IMX=B+s.get("imx",0); INF=B+s.get("inf",0); ILI=B+s.get("ili",0); IOG=B+s.get("iog",0); IOA=B+s.get("ioa",0); IMA=B+s.get("ima",0); LLM=B+s.get("llm",0); JGD=B+s.get("jgd",0)
         D=cave+0x800; D_EN=D+0; D_DO=D+1; D_INOP=D+2; D_CMD=D+4; D_ARGP=D+8; D_ARGI=D+0x10; D_CNT=D+0x14; D_ARG2=D+0x18; D_REQ=D+0x20
         D_FUNC=D+0x38; D_RET=D+0x40    # cmd12 chama [D_FUNC]; retorno de qualquer cmd cai em D_RET (ex EAddCubeResult do ioa)
         FAKE=cave+0x920      # delegate falso (callback p/ iw): [+0x18]=ret -> invoke volta limpo, sem NRE
@@ -1137,10 +1278,19 @@ class Engine:
         c+=b"\x48\xB8"+imm(D_ARGP)+b"\x48\x8B\x08\x48\x85\xC9"; jcc(b"\x0F\x84","done")   # rcx=[argP]=ux; je done
         c+=b"\x48\x83\xEC\x20\x48\xB8"+imm(IMA)+b"\xFF\xD0\x48\x83\xC4\x20"; jmp("done")  # ima(ux)
         # cmd11 llm(argP=box) = StageBox.llm() abrir direto (sem as checagens de clique do llx)
-        L("c11"); c+=b"\x83\xF8\x0B"; jcc(b"\x0F\x85","c12")
+        L("c11"); c+=b"\x83\xF8\x0B"; jcc(b"\x0F\x85","c13")   # corrente: ...c11 -> c13 -> c12 -> done
+                                                               # (pular daqui direto pro c12 deixaria o
+                                                               #  c13 INALCANCAVEL — foi esse o bug)
         c+=b"\x48\xB8"+imm(D_ARGP)+b"\x48\x8B\x08\x48\x85\xC9"; jcc(b"\x0F\x84","done")   # rcx=[argP]=box; je done
         c+=b"\x48\x83\xEC\x20\x48\xB8"+imm(LLM)+b"\xFF\xD0\x48\x83\xC4\x20"; jmp("done")  # llm()
         # cmd12 CALL GENERICO: [D_FUNC](rcx=[argP], edx=[argI]). Retorno em D_RET. P/ clear do cubo (inl/inm) etc.
+        # cmd13 jgd(argP=StageCache, FAKE) = entrar em ACTBOSS pelo caminho do clique (reserva a soulstone).
+        # O callback do clique NAO e cosmetico: ele chama jgk (o passo final que carrega a fase). Por isso
+        # o painel manda cmd13 E DEPOIS jgk — o par equivale ao clique vanilla (so falta o som).
+        L("c13"); c+=b"\x83\xF8\x0D"; jcc(b"\x0F\x85","c12")
+        c+=b"\x48\xB8"+imm(D_ARGP)+b"\x48\x8B\x08\x48\x85\xC9"; jcc(b"\x0F\x84","done")   # rcx=[argP]=cache; je done
+        c+=b"\x48\xBA"+imm(FAKE)                                       # rdx=fake delegate (nao null -> sem NRE)
+        c+=b"\x48\x83\xEC\x20\x48\xB8"+imm(JGD)+b"\xFF\xD0\x48\x83\xC4\x20"; jmp("done")
         L("c12"); c+=b"\x83\xF8\x0C"; jcc(b"\x0F\x85","done")
         c+=b"\x48\xB8"+imm(D_ARGP)+b"\x48\x8B\x08"                     # rcx=[argP]
         c+=b"\x48\xB8"+imm(D_ARGI)+b"\x8B\x10"                         # edx=[argI]
@@ -1343,7 +1493,7 @@ class Engine:
     # === AUTOMACAO: auto-caixa + auto-item (stash) — compartilham o dispatcher ===
     def apply_automation(self):
         item=self.want.get("autoitem") or self.want.get("autosynth")
-        need=self.want.get("autobox") or item
+        need=self.want.get("autobox") or item or self.want.get("autoboss")
         if need:
             # SELF-HEAL: se o abx esta setado mas o hook sumiu do jogo (prologo != E9 - ex: outro
             # processo removeu, ou o jogo reiniciou), descarta o abx fantasma pra RE-INSTALAR sozinho.
@@ -1368,15 +1518,140 @@ class Engine:
         na hora que dropa."""
         used=set()
         W=self.want
-        while (W.get("autobox") or W.get("autoitem") or W.get("autosynth")) and self.abx and self.pm:
+        while (W.get("autobox") or W.get("autoitem") or W.get("autosynth") or W.get("autoboss")) and self.abx and self.pm:
             try:
                 did=False
                 if W.get("autobox") and self._do_autobox(): did=True          # 1) caixa: prioridade maxima
                 if (W.get("autoitem") or W.get("autosynth")) and self._do_stash_bulk(used): did=True  # 2) stash EM LOTE (rapido)
                 if W.get("autosynth") and not did and self._do_synth(): did=True # 3) fuse (so se nao houve caixa/stash pendente)
-                if W.get("autoitem") and not did and self._sort_grade_step(2): did=True  # 4) ordena o stash por grade (so quando ocioso)
+                if W.get("autoboss") and not did and self._do_autoboss(): did=True  # 4) act boss: gasta 1 soulstone e volta
+                if W.get("autoitem") and not did and self._sort_grade_step(2): did=True  # 5) ordena o stash por grade (so quando ocioso)
                 time.sleep(0.12 if did else 0.5)
             except Exception: time.sleep(0.3)
+    # ===================== MAPA / NAVEGACAO DE ESTAGIO =====================
+    # StageKey = (dificuldade+1)*1000 + act*100 + estagio  (validado 120/120 na tabela viva).
+    # NORMAL 1101-1310 · NIGHTMARE 2101-2310 · HELL 3101-3310 · TORMENT 4101-4310.
+    DIFFS=("NORMAL","NIGHTMARE","HELL","TORMENT")
+    @staticmethod
+    def stage_name(k):
+        try: return "%s %d-%d"%(Engine.DIFFS[k//1000-1],(k%1000)//100,k%100)
+        except Exception: return str(k)
+    def _uo_sf(self):
+        """static_fields da classe estatica de estagio (uu.uo)."""
+        ti=self.sym.get("uo_ti")
+        if not ti: return None
+        klass=self.u64(self.base+ti)
+        return self.u64(klass+0xB8) if self.vptr(klass) else None
+    def _obs_int(self, addr):
+        """ObscuredInt (ACTk, 16B): hash@0, hidden@4, key@8, fake@0xC -> ((hidden-key)&0xFFFFFFFF)^key"""
+        raw=self.rb(addr,16)
+        if not raw or len(raw)<16: return None
+        h,hid,k,f=struct.unpack("<iiii",raw)
+        p=((hid-k)&0xFFFFFFFF)^(k&0xFFFFFFFF)
+        return p-0x100000000 if p>=0x80000000 else p
+    def stage_progress(self):
+        """(maxCompletedStage, currentStageKey, wave). max = maior key liberado (regra jgq: key<=max)."""
+        sf=self._uo_sf()
+        if not sf: return (None,None,None)
+        g=lambda o: self._obs_int(sf+o) if o else None
+        return (g(self.sym.get("uo_max")), g(self.sym.get("uo_cur")), g(self.sym.get("uo_wave")))
+    def _stage_cache(self, key):
+        """StageCache do stageKey, pelo Dictionary<int,StageCache> do proprio jogo."""
+        sf=self._uo_sf(); off=self.sym.get("uo_dict")
+        if not sf or not off: return None
+        d=self.u64(sf+off)
+        if not self.vptr(d): return None
+        ent=self.u64(d+0x18); n=self.u32(d+0x20)
+        if not self.vptr(ent) or not n or n>4096: return None
+        for i in range(n):
+            a=ent+0x20+i*0x18
+            if self.u32(a+8)==key: return self.u64(a+0x10)
+        return None
+    def stage_unlocked(self, key):
+        """jgq(key) do proprio jogo (= key <= maxCompletedStage). So le."""
+        f=self.sym.get("jgq")
+        if not f: return None
+        return bool(self._dispatch_call(self.base+f, argP=key))
+    def stage_can_enter(self, key):
+        """jgc(cache) do proprio jogo: 0=Success 1=EndStage 2=NeedSoulStone 3=NeedChestSpace. So le.
+        Melhor que checar inventario na mao: ele tambem confere ESPACO DE BAU."""
+        f=self.sym.get("jgc"); c=self._stage_cache(key)
+        if not f or not c: return None
+        return self._dispatch_call(self.base+f, argP=c)
+    ENTER_RESULT={0:"Success",1:"FailReasonEndStage",2:"FailReasonNeedSoulStone",3:"FailReasonNeedChestSpace",4:"Failed"}
+    def goto_stage(self, key):
+        """Vai pra um estagio NORMAL. jgk e o passo final de entrada dos dois caminhos do jogo."""
+        f=self.sym.get("jgk")
+        if not f: return False
+        if not self._stage_cache(key): return False          # key inexistente -> jgk lanca KeyNotFound
+        self._dispatch_call(self.base+f, argP=key)
+        return True
+    def enter_boss(self, key):
+        """Entra num ACTBOSS (x-10) reproduzindo o CLIQUE: jgd(cache,FAKE) + jgk(key).
+        Por que o par: o Action<bool> que o clique passa NAO e cosmetico — ele chama o jgk. jgd sozinho
+        reservaria a soulstone (beyt) e NAO carregaria a fase (cliente meio-feito)."""
+        if not (self.sym.get("jgd") and self.sym.get("jgk")): return False
+        c=self._stage_cache(key)
+        if not c: return False
+        self._dispatch(13, argP=c, timeout=1.5)      # jgd: marca o retorno (beyq) + reserva a pedra
+        time.sleep(0.15)
+        self._dispatch_call(self.base+self.sym["jgk"], argP=key)   # o que o callback faria
+        return True
+    def _do_autoboss(self):
+        """Sua logica: se tiver soulstone, entra no x-10 daquela dificuldade, espera o boss morrer e
+        VOLTA pro Torment 3-9. A pedra so e cobrada quando o boss morre (o consumo e server-side, via
+        InventoryExchangeRequest, que nasce da morte do boss) -> entrar e reversivel."""
+        VOLTA=4309                                        # Torment 3-9
+        PARES=((190004,4310),(190003,3310))               # Torment primeiro, depois Hell
+        if not self.sym.get("jgd"): self.log("auto-boss: offsets de estagio ausentes"); return False
+        inv=self.read_inventory() or {}
+        for ss,boss in PARES:
+            if inv.get(ss,0)<=0: continue
+            r=self.stage_can_enter(boss)                  # gate do proprio jogo (pedra + espaco de bau)
+            if r!=0:
+                self.log("auto-boss: %s -> %s"%(self.stage_name(boss), self.ENTER_RESULT.get(r,r)))
+                continue
+            if not (self.want.get("hitkill") or self.want.get("god")):
+                # sem cheat a party morre pro act boss em segundos (medido): o boss nao morre, a pedra
+                # nao e cobrada e o loop ficaria tentando de graca. Melhor avisar que rodar em falso.
+                self.log("⚠ auto-boss: ligue o Hitkill (ou God) antes — sem eles a party morre pro boss")
+                return False
+            self.log("🗡 auto-boss: entrando em %s (soulstone %s: %d)"%(self.stage_name(boss),ss,inv[ss]))
+            if not self.enter_boss(boss): self.log("auto-boss: falhou ao entrar"); return False
+            ok=self._wait_boss_done(boss)
+            self.log("auto-boss: %s — voltando pro %s"%(
+                "✅ boss morto (caixa dropou)" if ok else ("entrada falhou" if ok is None else "❌ saiu sem matar"),
+                self.stage_name(VOLTA)))
+            self.goto_stage(VOLTA)                        # forca a volta (o beyq do jogo tb voltaria)
+            return bool(ok)
+        return False
+    def _wait_boss_done(self, boss, timeout=180):
+        """Espera o desfecho da luta. Devolve True (boss morto), False (saiu sem matar = party morreu ou
+        desistiu) ou None (a entrada nem pegou).
+        DUAS FASES, e a 1a e obrigatoria: antes de julgar 'acabou' e preciso CONFIRMAR que a entrada
+        pegou — senao 'fase != boss' e verdade no instante 0 e da falso-positivo imediato (foi o bug do
+        1o teste: reportou 'boss morto' em 5s sem pedra cobrada e sem caixa).
+        Boss morto = a CAIXA de ACTBOSS aparecer. Sair da fase sem caixa = derrota."""
+        sf=self._uo_sf(); co=self.sym.get("uo_cur")
+        if not (sf and co): return None
+        cur=lambda: self._obs_int(sf+co)
+        t0=time.time()
+        while cur()!=boss:                                    # 1) a entrada pegou?
+            if time.time()-t0>8:
+                self.log("auto-boss: a entrada nao pegou (fase=%s)"%cur()); return None
+            time.sleep(0.3)
+        b0=self._iuw_count(2) or 0
+        t0=time.time()
+        while time.time()-t0<timeout:                          # 2) desfecho
+            time.sleep(1.0)
+            if not self.want.get("autoboss"): return False
+            b=self._iuw_count(2)
+            if b is not None and b>b0: return True             # caixa do boss caiu = MATOU
+            if cur()!=boss:                                    # saiu sem caixa = party morreu
+                time.sleep(1.0)
+                b=self._iuw_count(2)
+                return bool(b is not None and b>b0)
+        return False
     def _do_autobox(self):
         """Abre TODAS as caixas esperando (iuw>0). Retorna True se abriu alguma. llx SEMPRE abre se
         iuw>0 && iyf()==0 (provado, ate com o Cubo aberto). A recompensa pode ser ouro/gema -> o
