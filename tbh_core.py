@@ -1598,10 +1598,12 @@ class Engine:
         self._dispatch_call(self.base+self.sym["jgk"], argP=key)   # o que o callback faria
         return True
     def _do_autoboss(self):
-        """Sua logica: se tiver soulstone, entra no x-10 daquela dificuldade, espera o boss morrer e
-        VOLTA pro Torment 3-9. A pedra so e cobrada quando o boss morre (o consumo e server-side, via
-        InventoryExchangeRequest, que nasce da morte do boss) -> entrar e reversivel."""
-        VOLTA=4309                                        # Torment 3-9
+        """MINIMO, so o basico: se tem soulstone, entra no x-10 daquela dificuldade e DEIXA O JOGO
+        VOLTAR sozinho. NAO liga/desliga nenhum cheat — se voce roda com Hitkill, o boss morre; se nao,
+        a party morre e o jogo te devolve igual, sem prejuizo (a pedra so e cobrada quando o boss MORRE,
+        entao entrar e reversivel).
+        A volta e nativa: o jgd grava a fase de onde voce veio como ponto de retorno (beyq) — por isso
+        entrar no 3-10 do Hell vindo do Torment 3-9 devolve pro Torment 3-9."""
         PARES=((190004,4310),(190003,3310))               # Torment primeiro, depois Hell
         if not self.sym.get("jgd"): self.log("auto-boss: offsets de estagio ausentes"); return False
         inv=self.read_inventory() or {}
@@ -1611,18 +1613,21 @@ class Engine:
             if r!=0:
                 self.log("auto-boss: %s -> %s"%(self.stage_name(boss), self.ENTER_RESULT.get(r,r)))
                 continue
-            if not (self.want.get("hitkill") or self.want.get("god")):
-                # sem cheat a party morre pro act boss em segundos (medido): o boss nao morre, a pedra
-                # nao e cobrada e o loop ficaria tentando de graca. Melhor avisar que rodar em falso.
-                self.log("⚠ auto-boss: ligue o Hitkill (ou God) antes — sem eles a party morre pro boss")
-                return False
+            volta=self.stage_progress()[1]                # de onde vim = pra onde o jogo vai me devolver
             self.log("🗡 auto-boss: entrando em %s (soulstone %s: %d)"%(self.stage_name(boss),ss,inv[ss]))
             if not self.enter_boss(boss): self.log("auto-boss: falhou ao entrar"); return False
-            ok=self._wait_boss_done(boss)
-            self.log("auto-boss: %s — voltando pro %s"%(
-                "✅ boss morto (caixa dropou)" if ok else ("entrada falhou" if ok is None else "❌ saiu sem matar"),
-                self.stage_name(VOLTA)))
-            self.goto_stage(VOLTA)                        # forca a volta (o beyq do jogo tb voltaria)
+            # timeout GENEROSO: sem hitkill o act boss leva ~3min (medido: 156s numa rodada, >180s
+            # noutra). Timeout curto fazia o bot ARRANCAR o jogador de uma luta que ia ganhar.
+            ok=self._wait_boss_done(boss, timeout=600)
+            self.log("auto-boss: %s"%("✅ boss morto (caixa dropou)" if ok else
+                                      ("entrada nao pegou" if ok is None else "saiu sem matar (party morreu)")))
+            # A volta e do JOGO (beyq) — nao forco. So intervenho se ele travar DEPOIS de matar.
+            if ok:
+                t0=time.time()
+                while self.stage_progress()[1]==boss and time.time()-t0<15: time.sleep(0.5)
+                if self.stage_progress()[1]==boss and volta:
+                    self.log("auto-boss: o jogo travou no boss — devolvendo pro %s"%self.stage_name(volta))
+                    self.goto_stage(volta)
             return bool(ok)
         return False
     def _wait_boss_done(self, boss, timeout=180):
