@@ -244,6 +244,27 @@ class Panel:
             dcolor=AMBER if key=="autosynth" else SUBTLE   # auto-fuse: aviso do cubo aberto em destaque
             ctk.CTkLabel(cell,text=desc,text_color=dcolor,justify="left",wraplength=360,anchor="w",
                          font=F(10,"bold" if key=="autosynth" else "normal")).pack(anchor="w",padx=(46,0))
+        # --- Auto-fuse: TETO DE GRADE + TIPOS (sincroniza com engine.want -> _do_synth respeita/nao passa do teto) ---
+        self.SYNTH_GRADES=["Common","Uncommon","Rare","Legendary","Immortal","Arcana","Beyond","Celestial","Divine","Cosmic"]
+        af=ctk.CTkFrame(c1,fg_color=CARD2,corner_radius=8); af.pack(fill="x",padx=16,pady=(0,12))
+        r1=ctk.CTkFrame(af,fg_color="transparent"); r1.pack(fill="x",padx=12,pady=(10,2))
+        ctk.CTkLabel(r1,text="⚗️ Auto-fuse — fundir ATÉ o grade:",text_color=FG,font=F(11,"bold")).pack(side="left")
+        self.v_synth_grade=tk.StringVar(value="Rare")
+        ctk.CTkOptionMenu(r1,variable=self.v_synth_grade,values=self.SYNTH_GRADES,width=140,font=F(11),
+                          fg_color=CARD2,button_color=STROKE2,button_hover_color=SUB,
+                          dropdown_fg_color=CARD2,dropdown_hover_color=STROKE,
+                          command=lambda _v:self._sync_synth_opts()).pack(side="left",padx=8)
+        r2=ctk.CTkFrame(af,fg_color="transparent"); r2.pack(fill="x",padx=12,pady=(0,2))
+        ctk.CTkLabel(r2,text="tipos:",text_color=SUB,font=F(11)).pack(side="left",padx=(0,4))
+        self.v_synth_t=[tk.BooleanVar(value=True),tk.BooleanVar(value=True),tk.BooleanVar(value=True)]
+        for i,tn in enumerate(["Equipment","Accessory","Material"]):
+            ctk.CTkCheckBox(r2,text=tn,variable=self.v_synth_t[i],onvalue=True,offvalue=False,
+                            command=self._sync_synth_opts,font=F(11),text_color=FG,fg_color=ACC,
+                            hover_color=ACC_H,checkmark_color=ACC_TXT,border_color=SUBTLE,
+                            corner_radius=4,checkbox_width=18,checkbox_height=18).pack(side="left",padx=6)
+        ctk.CTkLabel(af,text="funde do grade menor ATÉ o escolhido; nunca acima. Ex.: 'Rare' funde common+uncommon+rare (rare→legendary). 'Uncommon' preserva seus rares.",
+                     text_color=SUBTLE,font=F(9),wraplength=430,justify="left").pack(anchor="w",padx=14,pady=(2,10))
+        self._sync_synth_opts(log=False)   # empurra os defaults (Rare + todos os tipos) pro engine.want
         # stats
         c2=self.card(wrap," STATS  ·  tick, type a value (re-applies itself) "); c2.pack(fill="x",padx=6,pady=6)
         tb=ctk.CTkFrame(c2,fg_color="transparent"); tb.pack(fill="x",padx=14,pady=(2,4))
@@ -310,8 +331,21 @@ class Panel:
             if not self.v_autobox.get():
                 self.v_autobox.set(True); self.eng.want["autobox"]=True     # box: open boxes -> generate items
             self.eng.want["synth_lvlgate"]=True
-            self.log("⚗️ Auto-fuse ON: funde common/uncommon/rare no Lv.65~80, ciclando Equipment/Accessory/Material sozinho.")
+            self._sync_synth_opts(log=False)                                # garante teto/tipos no want (caso tenha sido resetado)
+            self.log("⚗️ Auto-fuse ON: funde até o grade/tipos escolhidos no Lv.65~80, ciclando sozinho.")
         self._upd_active()
+    def _sync_synth_opts(self, log=True):
+        """SINCRONIZA a escolha (teto de grade + tipos) do auto-fuse pro engine.want. O _do_synth le
+        want[synth_maxgrade] (0=common..) e want[synth_types] ({0=Equip,1=Acess,2=Mat}) e NUNCA funde
+        acima do teto nem tipo desmarcado. Chamado a cada mudanca dos controles + no build + no load."""
+        try: mg=self.SYNTH_GRADES.index(self.v_synth_grade.get())
+        except (ValueError,AttributeError): mg=2
+        types=set(i for i in range(3) if self.v_synth_t[i].get()) if getattr(self,"v_synth_t",None) else {0,1,2}
+        self.eng.want["synth_maxgrade"]=mg
+        self.eng.want["synth_types"]=types
+        if log:
+            tn=", ".join(["Equip","Acess","Mat"][i] for i in sorted(types)) or "(nenhum → não funde)"
+            self.log("⚗️ Auto-fuse: fundir até %s · tipos: %s"%(self.v_synth_grade.get(),tn))
     def sync_stats(self):
         d={}
         for name,(cvar,evar,cur) in self.stat_vars.items():
@@ -372,6 +406,7 @@ class Panel:
         p=st.get("prot",{})
         self.v_actk.set(p.get("actk",False)); self.v_god.set(p.get("god",False)); self.v_autobox.set(p.get("autobox",False)); self.v_autoitem.set(p.get("autoitem",False)); self.v_autosynth.set(p.get("autosynth",False))
         self.eng.want={"actk":self.v_actk.get(),"god":self.v_god.get(),"hitkill":False,"autobox":self.v_autobox.get(),"autoitem":self.v_autoitem.get(),"autosynth":self.v_autosynth.get()}
+        self._sync_synth_opts(log=False)   # re-empurra teto/tipos do auto-fuse (o reassign acima os apagaria)
         stt=st.get("stats",{})
         for n,(c,e,cur) in self.stat_vars.items():
             s=stt.get(n); c.set(bool(s and s.get("on"))); e.set(s.get("val","") if s else "")

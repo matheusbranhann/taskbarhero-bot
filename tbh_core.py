@@ -632,7 +632,8 @@ class Engine:
         self.cache={}; self.sym={}; self.lock=threading.RLock()
         # estado desejado (controlado pela GUI)
         self.want={"actk":False,"god":False,"hitkill":False,"autobox":False,"autoitem":False,"autosynth":False,
-                   "watchdog":False, "autoboss":False, "evolve":False}   # watchdog=mantem o jogo aberto; autoboss=usa soulstone no x-10 e volta
+                   "watchdog":False, "autoboss":False, "evolve":False,
+                   "synth_maxgrade":2, "synth_types":{0,1,2}}   # auto-fuse: teto de grade (2=rare, default seguro) e tipos (0=Equip/1=Acess/2=Mat)
         self.stats={}       # nome -> valor (float) a forcar (manual)
         self.speed_stats={} # (legado, nao usado)
         self.stage={}       # campo -> int a forcar
@@ -2087,14 +2088,19 @@ class Engine:
         return None   # placeholder: resolvido no teste ao vivo (ler CurrencyManager). read_gold tolera None.
     def _synth_fuseable(self):
         """{(EItemSynthesisType, grade): qtd} dos itens que PODEM ir pra synthesis no Lv.65~80:
-        grade C/U/R (0/1/2, NUNCA legendary+) do tipo Gear/Accessory/Material, e Lv.61+ (o tier 65~80
-        exige; material nao tem nivel). inv+bau (a synthesis usa 'Include Stash')."""
+        grade <= teto do usuario (want[synth_maxgrade], default 2=rare -> NUNCA legendary+ por padrao) do
+        tipo escolhido (want[synth_types], subconj de {0=Gear,1=Accessory,2=Material}), e Lv.61+ (o tier
+        65~80 exige; material nao tem nivel). inv+bau (a synthesis usa 'Include Stash')."""
+        maxg=self.want.get("synth_maxgrade",2)
+        types=self.want.get("synth_types")
+        if types is None: types={0,1,2}                                   # ausente=default todos; set() vazio=NENHUM (nao funde)
         c=collections.Counter()
         for _,key,uid in self._inv_index_items():
             info=self._item_info(key)
             if not info: continue
             _,grade,synth,lvl=info
-            if grade in (0,1,2) and synth in (0,1,2) and (synth==2 or (lvl or 0)>=61):
+            if grade is None or synth is None: continue
+            if 0<=grade<=maxg and synth in types and (synth==2 or (lvl or 0)>=61):
                 c[(synth,grade)]+=1
         return c
     def _do_synth(self):
@@ -2102,16 +2108,22 @@ class Engine:
         Passos: conta os fundiveis; se algum TIPO tem >=9 de um grade C/U/R -> abre o cubo, poe em
         Synthesis+Lv.65~80, seleciona o tipo (Equipment 1o), AUTO-FILL, funde, e FECHA+REABRE (os itens
         voltam pro inv/stash -> o auto-stash cuida). Sem 9 de nada -> nao faz nada (loop so verifica).
-        SEGURANCA (sem risco de legendary): o auto-fill sempre pega o MENOR grade com 9, e C/U/R (<3) sao
-        sempre menores que legendary+; entao disparar so quando um C/U/R tem 9 -> nunca funde legendary
-        como ENTRADA (legendary so pode SURGIR de rare->legendary, que e permitido)."""
+        TETO/TIPOS (escolha do usuario, sincronizados via want): so funde grade <= want[synth_maxgrade] e
+        tipo em want[synth_types]. _synth_fuseable ja filtra por isso; alem disso, DEPOIS do auto-fill leio
+        o grade REALMENTE enchido (berp@sf+0xC8, que o auto-fill seta pro grade que escolheu) e, se passar
+        do teto, NAO fundo (garantia dura de nunca consumir grade acima do escolhido). O auto-fill pega o
+        MENOR grade com 9, entao com _synth_fuseable filtrado ele ja cai <= teto; a checagem do berp e o
+        cinto-de-seguranca. Default teto=rare(2) -> nunca legendary+ (comportamento seguro de antes)."""
         if not all(self.sym.get(k) for k in ("ilo","imx","eby","uimgr_ti")): return False
+        maxg=self.want.get("synth_maxgrade",2)
+        types=self.want.get("synth_types")
+        if types is None: types={0,1,2}                                    # ausente=default todos; set() vazio=NENHUM
         counts=self._synth_fuseable()
-        tgt=None                                                            # 1o tipo com um grade C/U/R >=9
-        for t in (0,1,2):
-            if any(counts.get((t,g),0)>=9 for g in (0,1,2)): tgt=t; break
+        tgt=None                                                            # 1o tipo PERMITIDO com um grade <=teto >=9
+        for t in sorted(types):
+            if any(counts.get((t,g),0)>=9 for g in range(maxg+1)): tgt=t; break
         if tgt is None:
-            return False                                                    # nada pra fundir -> o loop segue so verificando
+            return False                                                    # nada pra fundir (dado o teto/tipos) -> o loop segue so verificando
         if not self._open_cube(): return False
         sf=self._cube_sf()
         # Include-Stash ON (psd+0x60): sem isto o auto-fill so olha o INVENTARIO, e como o auto-stash ja
@@ -2129,12 +2141,17 @@ class Engine:
             self._dispatch(4); time.sleep(0.25)
         n=self._cube_realn(sf)
         if n<9: self._close_cube(); return False                          # nao encheu 9 -> aborta
+        fg=self.u32(sf+0xC8)                                              # berp = grade que o auto-fill enfiou (ele seta o dropdown)
+        if fg is None or fg>maxg:                                          # TETO DE GRADE (seguranca dura): nunca funde acima do escolhido
+            self._close_cube(); return False
+        GN=["common","uncommon","rare","legendary","immortal","arcana","beyond","celestial","divine","cosmic"]
         self._dispatch(5, timeout=2.0)                                     # SYNTHESIS (imx)
-        for _ in range(200):
+        for _ in range(200):                                               # espera a fusao terminar (busg@0x150 limpar = item gerado aparece)
             if not self._synth_busy(): break
             time.sleep(0.05)
-        self.log("⚗️ Synthesis: %s (9 fundidos -> 1 de grade acima)"%["Equipment","Accessory","Material"][tgt])
-        self._close_cube()                                                 # FECHA -> os itens voltam pro inv/stash (auto-stash cuida);
+        self.log("⚗️ Synthesis: %s %s (9 fundidos -> 1 de grade acima)"%(["Equipment","Accessory","Material"][tgt], GN[fg] if 0<=fg<len(GN) else fg))
+        time.sleep(2.0)                                                    # DEIXA o item gerado aparecer e a animacao de cor da UI ASSENTAR antes de fechar;
+        self._close_cube()                                                 # fechar rapido demais aqui bugava as cores (obs. do usuario). FECHA -> itens voltam pro inv/stash.
         return True                                                        # o proximo _do_synth reabre se tiver mais 9 (nao deixa aberto travando o auto-box)
     def _grade_of_key(self, key):
         """Grade REAL do item (via izb/ItemInfoData, cacheado). Fallback: digito da key."""
