@@ -224,7 +224,7 @@ class Panel:
             ("God Mode",self.v_god,"god","player takes no damage"),
             ("🎁 Auto-box",self.v_autobox,"autobox","opens boxes as they appear"),
             ("📦 Auto-stash",self.v_autoitem,"autoitem","sends every item to the stash instantly"),
-            ("⚗️ Auto-fuse",self.v_autosynth,"autosynth","⚠ needs the CUBE OPEN at Lv.65~80 → fuses 9 same-grade"),
+            ("⚗️ Auto-fuse",self.v_autosynth,"autosynth","opens the cube for you → fuses 9 same-grade at Lv.65~80 (set the type/level once)"),
             ("🛡 Auto-restart",self.v_watchdog,"watchdog","game closed? reopens via Steam in 15s + re-applies everything"),
             ("🗡 Auto-boss",self.v_autoboss,"autoboss","spends a soulstone on the act boss (x-10) and comes back"),
             ("📈 Evolution",self.v_evolve,"evolve","always on your newest stage, 1-1 → Torment 3-9")]

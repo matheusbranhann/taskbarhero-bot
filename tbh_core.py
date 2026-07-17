@@ -1882,13 +1882,175 @@ class Engine:
             used.add(slots[k])
         if len(used)>800: used.clear()
         return n
+    # ===================== ALCHEMY (vender equipamento de nivel baixo por ouro) =====================
+    # Alchemy = recipe do cubo que converte item -> OURO (server-side, so uniqueId de item REAL -> seguro,
+    # mesma classe de abrir caixa/soulstone). Fluxo = igual a synthesis: seleciona a recipe ALCHEMY
+    # (inf(beru[0])), adiciona os itens (ioa), dispara (imx). PROCESSA EM LOTE (vende tudo que estiver no cubo).
+    def _cube_recipe(self, rtype):
+        """objeto uw da recipe `rtype` (ERecipeType) via beru @cube_sf+0xF0 = Dictionary<ERecipeType,uw>."""
+        sf=self._cube_sf()
+        if not sf: return None
+        d=self.u64(sf+0xF0)
+        if not self.vptr(d): return None
+        ent=self.u64(d+0x18); n=self.u32(d+0x20)
+        if not self.vptr(ent) or not n or n>64: return None
+        for i in range(n):
+            a=ent+0x20+i*0x18
+            if self.u32(a+8)==rtype: return self.u64(a+0x10)
+        return None
+    def _inv_index_items(self):
+        """[(index, itemKey, uniqueId)] da lista PlayerSaveData.itemSaveDatas (inventario, ESlotType.INVENTORY).
+        O index E o que o ioa(INVENTORY, index) espera."""
+        bau=self._resolve_bau()
+        if not bau: return []
+        po=self.sym.get("inv_psd_off",INV_PSD_OFF); lo=self.sym.get("inv_list_off",INV_LIST_OFF)
+        psd=self.u64(bau+po); lst=self.u64(psd+lo) if psd else 0
+        if not self.vptr(lst): return []
+        arr=self.u64(lst+0x10); size=self.u32(lst+0x18)
+        if not self.vptr(arr) or size is None or not (0<=size<500000): return []
+        out=[]
+        for i in range(size):
+            it=self.u64(arr+0x20+i*8)
+            if not it: continue
+            out.append((i, self.u32(it+ITEMSAVE_KEY_OFF), self.u64(it+0x18)))   # index, itemKey, uniqueId
+        return out
+    def alchemy_candidates(self, level_cap=55):
+        """[(index,key,uniqueId,level,synth)] dos itens VENDAVEIS: so EQUIPAMENTO/ACESSORIO de nivel 1..cap.
+        FILTRO OBRIGATORIO alem do nivel: EItemType==GEAR(2) E EItemSynthesisType in {Gear=0,Accessory=1}.
+        Sem isso 'Level<=55' varreria material/soulstone/caixa (todos leem Level=0)."""
+        out=[]
+        for idx,key,uid in self._inv_index_items():
+            if not key: continue
+            info=self._item_info(key)                       # (EItemType, grade, synthType, Level)
+            if not info: continue
+            itype,grade,synth,lvl=info
+            if itype==2 and synth in (0,1) and lvl and 1<=lvl<=level_cap:
+                out.append((idx,key,uid,lvl,synth))
+        return out
+    def read_gold(self):
+        """Ouro atual (currency key 100001). Read-only. None se nao achar."""
+        try:
+            sf=self._cube_sf()
+            # o ouro fica na CurrencyManager; reuso o mesmo padrao nq<T>. Se nao tiver helper, retorna None
+            return self._currency(100001)
+        except Exception:
+            return None
+    def _uimanager(self):
+        """Instancia singleton nq<UIManager> (via TypeInfo). uimain = [UM+0xA8]."""
+        ti=self.sym.get("uimgr_ti")
+        if not ti: return None
+        klass=self.u64(self.base+ti); sf=self.u64(klass+0xB8) if self.vptr(klass) else 0
+        return self.u64(sf) if self.vptr(sf) else None      # nq<T> instancia = [static_fields+0]
+    def _cube_is_open(self):
+        """cubo aberto = recipe ativa (bese@sf+0x140 != 0)."""
+        sf=self._cube_sf()
+        return bool(sf and self.vptr(self.u64(sf+0x140)))
+    def _open_cube(self, timeout=4.0):
+        """Abre o cubo reproduzindo o clique em button_Cube: eby(uiMain) na main-thread. Client-side,
+        sem call server-side (confirmado). eby tem as guardas do clique real: so abre no MAIN screen sem
+        popup -> se o jogo estiver noutra tela, nao abre (mostra toast)."""
+        if self._cube_is_open(): return True
+        um=self._uimanager()
+        eby=self.sym.get("eby")
+        if not (um and eby): self.log("alchemy: UIManager/eby ausente"); return False
+        uimain=self.u64(um+0xA8)
+        if not self.vptr(uimain): return False
+        # eby so abre no MAIN screen sem popup. Tenta 3x com espera (a UI pode estar em transicao).
+        for attempt in range(3):
+            self._dispatch_call(self.base+eby, argP=uimain)
+            t0=time.time()
+            while time.time()-t0<timeout/3:
+                if self._cube_is_open(): return True
+                time.sleep(0.1)
+            time.sleep(0.4)
+        return False
+    def _close_cube(self):
+        """Fecha o painel aberto (hgr, sem argumento, this=UIManager)."""
+        um=self._uimanager(); hgr=self.sym.get("hgr")
+        if um and hgr: self._dispatch_call(self.base+hgr, argP=um)
+    def _select_recipe(self, rtype):
+        """ilx(ERecipeType): SelectRecipe do jogo (beru.TryGetValue + ine). So pega com o cubo ABERTO e
+        LIMPO (guarda besg@sf+0x150 dirty). ALCHEMY=0."""
+        ilx=self.sym.get("ilx")
+        if not ilx: return False
+        self._dispatch_call(self.base+ilx, argI=rtype); time.sleep(0.2)
+        sf=self._cube_sf()
+        return bool(sf and self.u64(sf+0x140)==self._cube_recipe(rtype))
+    def _do_alchemy(self, level_cap=55, dry=False, max_batch=30, one=False):
+        """Vende (alchemy) equipamento/acessorio de nivel <= level_cap. O BOT ABRE O CUBO sozinho.
+        Sequencia validada: abrir(eby) -> selecionar ALCHEMY(ilx 0) -> ioa(itens) -> imx(vende) -> fechar.
+        SEGURANCA: so mexe em alchemy_candidates (GEAR + synth 0/1 + 1..cap). Antes de DISPARAR confere que
+        o cubo so tem uniqueIds da lista (senao ABORTA sem vender). one=True vende so 1 (teste)."""
+        cands=self.alchemy_candidates(level_cap)
+        if dry:
+            self.log("🧪 alchemy DRY: %d equip/acess <= Lv.%d venderiam"%(len(cands), level_cap))
+            return cands
+        if not cands: return False
+        if not all(self.sym.get(k) for k in ("ioa","imx","ilx","eby","uimgr_ti")):
+            self.log("alchemy: offsets do cubo/UI ausentes"); return False
+        if not self._open_cube(): self.log("alchemy: nao consegui abrir o cubo (tela errada/popup aberto?)"); return False
+        sf=self._cube_sf()
+        if not self._select_recipe(0):                        # cubo tem que estar LIMPO p/ trocar recipe
+            self.log("alchemy: nao consegui selecionar ALCHEMY (cubo ocupado?)"); self._close_cube(); return False
+        sold=0
+        while cands and (self.want.get("alchemy") or one):
+            okuids={uid for _,_,uid,_,_ in cands}
+            batch=cands[:(1 if one else max_batch)]
+            for idx,key,uid,lvl,synth in batch:
+                self._dispatch(9, argI=1, arg2=idx, timeout=1.0)   # ioa(INVENTORY=1, index)
+                time.sleep(0.04)
+            time.sleep(0.15)
+            incube=self._cube_uids(sf)
+            if incube and not incube.issubset(okuids):
+                self.log("⚠ alchemy: cubo tem item fora da lista — ABORTANDO (nada vendido)")
+                self._close_cube(); return sold>0
+            if not incube:
+                self.log("alchemy: nada entrou no cubo — parando"); break
+            g0=self.read_gold()
+            self._dispatch(5, timeout=2.0)                    # imx: vende o lote
+            for _ in range(200):
+                if not self._synth_busy(): break
+                time.sleep(0.05)
+            time.sleep(0.4)
+            g1=self.read_gold()
+            n=len(incube); sold+=n
+            gained=("(+%s ouro)"%(g1-g0)) if (g0 is not None and g1 is not None and g1>g0) else ""
+            self.log("🧪 alchemy: vendeu %d equip/acess %s"%(n, gained))
+            if one: break
+            cands=self.alchemy_candidates(level_cap)          # re-enumera (indices mudaram)
+        self._close_cube()
+        return sold>0
+    def _cube_uids(self, sf):
+        """uniqueIds dos itens ATUALMENTE no cubo (berw = List<CubeInData> @sf+0x100)."""
+        try:
+            lst=self.u64(sf+0x100)
+            if not self.vptr(lst): return set()
+            arr=self.u64(lst+0x10); n=self.u32(lst+0x18)
+            if not self.vptr(arr) or not n or n>500: return set()
+            out=set()
+            for i in range(n):
+                cd=self.u64(arr+0x20+i*8)
+                if cd: out.add(self.u64(cd+0x10))            # CubeInData.uniqueId (confirmar offset no teste)
+            return out
+        except Exception: return set()
+    def _cube_clear(self):
+        """tira tudo do cubo sem disparar (fecha/limpa). ilo/ipu resetam; aqui so re-seleciona uma recipe vazia."""
+        try: self._dispatch(6, argP=self._cube_recipe(1), timeout=1.0)   # volta pra SYNTHESIS (limpa alchemy)
+        except Exception: pass
+    def _currency(self, key):
+        return None   # placeholder: resolvido no teste ao vivo (ler CurrencyManager). read_gold tolera None.
     def _do_synth(self):
         """Uma tentativa de SYNTHESIS 65-80 SEGURA. Retorna True se fundiu. *** NUNCA funde nivel baixo ***.
-        NAO toca inf/ilo (resetariam o nivel pra 1-10 e queimariam itens). O user deixa o Cubo aberto no
-        TIPO + Lv.65~80; o bot so da `ipu` (respeita o dropdown) e `imx` se o resultado for >= 65."""
+        NAO toca inf/ilo (resetariam o nivel pra 1-10 e queimariam itens). O user deixa o Cubo no TIPO +
+        Lv.65~80; o bot ABRE o cubo sozinho se estiver fechado (eby), depois so da `ipu` (respeita o
+        dropdown) e `imx` se o resultado for >= 65 (a trava de nivel protege os itens mesmo apos auto-abrir)."""
         sf=self._cube_sf()
-        if not sf or self._synth_busy(): return False                        # cubo fechado/ocupado
-        if not self.vptr(self.u64(sf+0x140)): return False                   # cubo nao pronto (recipe vazio)
+        if not sf or self._synth_busy(): return False                        # ocupado
+        if not self.vptr(self.u64(sf+0x140)):                                # cubo FECHADO (recipe vazia)
+            if not (self.sym.get("eby") and self.sym.get("uimgr_ti")): return False
+            if not self._open_cube(): return False                           # abre sozinho (main screen)
+            sf=self._cube_sf()
+            if not sf or not self.vptr(self.u64(sf+0x140)): return False
         mn,mx=self._synth_result_lvl(sf)
         if (mx or 0)<SYNTH_MIN_LVL: return False                             # dropdown nao esta em 65-80 -> protege itens
         stype=self.u32(sf+0x254)                                             # besx = tipo aberto
