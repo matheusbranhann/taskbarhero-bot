@@ -57,7 +57,11 @@ def self_launcher():
 class Panel:
     def __init__(self, root):
         self.root=root; root.title("tbh_bot"); root.configure(fg_color=W_BG)
-        root.geometry("880x920"); root.minsize(780,700); root.attributes("-topmost",True)
+        # tamanho pela TELA, nao fixo em 880x920: numa tela alta (ex 1440p) o painel nascia pequeno
+        # e obrigava a rolar/esticar pra ver o que ja cabia. Limita a 96% da area util e nunca passa
+        # do tamanho do conteudo.
+        self._W=920; self._H=max(700, min(1060, root.winfo_screenheight()-140))
+        root.geometry("%dx%d"%(self._W,self._H)); root.minsize(860,700); root.attributes("-topmost",True)
         self.eng=C.Engine(log=self.log); self.prices=C.Prices(); self.overlay_proc=None
         self.stat_vars={}; self.stage_vars={}; self._logbuf=[]
         self._was_conn=False
@@ -69,7 +73,7 @@ class Panel:
         # Full-size CURTAIN over the panel's footprint: it hides the panel while every widget paints
         # behind it, and only lifts once everything is rendered. No black/white flash, no pop-in.
         self.root.withdraw()
-        self._geo=(880,920)
+        self._geo=(self._W,self._H)
         w,h=self._geo; self._pos=((self.root.winfo_screenwidth()-w)//2,(self.root.winfo_screenheight()-h)//2)
         sp=ctk.CTkToplevel(self.root); sp.overrideredirect(True); sp.attributes("-topmost",True)
         sp.configure(fg_color=W_BG)
@@ -208,32 +212,38 @@ class Panel:
         self.v_watchdog=tk.BooleanVar()
         self.v_autoboss=tk.BooleanVar()
         self.v_evolve=tk.BooleanVar()
-        r=ctk.CTkFrame(c1,fg_color="transparent"); r.pack(fill="x",padx=16,pady=(2,2))
-        r2=ctk.CTkFrame(c1,fg_color="transparent"); r2.pack(fill="x",padx=16,pady=(2,12))
-        # 1 entrada por switch. Faltar uma = KeyError = o painel fecha SEM ERRO NENHUM na tela
-        # (o exe e --windowed) e o --selftest nao pega, porque ele roda headless. Ja aconteceu:
-        # adicionei o 7o switch e esqueci a linha 6 -> v2.6/v2.6.1 nao abriam. Por isso o .get().
-        rows={0:r,1:r,2:r2,3:r2,4:r2,5:r,6:r,7:r2}
-        for idx,(txt,var,key,desc) in enumerate([
-                ("ACTk Bypass",self.v_actk,"actk","hide the cheats from the anti-cheat"),
-                ("God Mode",self.v_god,"god","player takes no damage"),
-                ("🎁 Auto-box",self.v_autobox,"autobox","opens boxes as they appear"),
-                ("📦 Auto-stash",self.v_autoitem,"autoitem","sends every item to the stash instantly"),
-                ("⚗️ Auto-fuse",self.v_autosynth,"autosynth","⚠ ONLY works with the CUBE OPEN at Lv.65~80 → fuses 9 same-grade (result Lv.65+)"),
-                ("🛡 Auto-restart",self.v_watchdog,"watchdog","if the game closes, reopens it via Steam in 15s and re-applies everything"),
-                ("🗡 Auto-boss",self.v_autoboss,"autoboss","uses a soulstone to enter the act boss (x-10), waits for the kill and returns to Torment 3-9"),
-                ("📈 Evolution",self.v_evolve,"evolve","always keeps you on the newest unlocked stage, 1-1 → Torment 3-9 (uses a soulstone on the x-10 gates)")]):
-                # Auto-fuse: real, legit synthesis (no forging). SAFE 65-80 mode: the bot only full-fills
-                # (ipu, which respects the Cube's Lv dropdown) and fuses (imx) IF the result level >= 65 —
-                # it never fuses low-level junk. Set the Cube type + "Lv.65~80" yourself; the bot won't
-                # touch the type/level (inf/ilo would reset it to 1-10 and burn low-level items).
-            cell=ctk.CTkFrame(rows.get(idx,r2),fg_color="transparent"); cell.pack(side="left",padx=(0,24))
+        # GRADE 2 colunas x N linhas, em vez de empilhar tudo lado a lado numa linha:
+        # com pack(side="left") o 4o switch de cada linha VAZAVA pra fora da janela (o Auto-boss e o
+        # Evolution so apareciam esticando o painel) e as descricoes eram cortadas no meio. Com grid +
+        # colunas de peso igual + wraplength, cabe sempre e a descricao quebra linha em vez de sumir.
+        # Ao adicionar switch novo: so por na lista — a grade se ajusta sozinha (nao ha mais indice
+        # manual pra esquecer, que foi o KeyError que deixou o painel sem abrir na v2.6).
+        gr=ctk.CTkFrame(c1,fg_color="transparent"); gr.pack(fill="x",padx=16,pady=(2,12))
+        gr.grid_columnconfigure((0,1),weight=1,uniform="sw")
+        SW=[("ACTk Bypass",self.v_actk,"actk","hides the cheats from the anti-cheat"),
+            ("God Mode",self.v_god,"god","player takes no damage"),
+            ("🎁 Auto-box",self.v_autobox,"autobox","opens boxes as they appear"),
+            ("📦 Auto-stash",self.v_autoitem,"autoitem","sends every item to the stash instantly"),
+            ("⚗️ Auto-fuse",self.v_autosynth,"autosynth","⚠ needs the CUBE OPEN at Lv.65~80 → fuses 9 same-grade"),
+            ("🛡 Auto-restart",self.v_watchdog,"watchdog","game closed? reopens via Steam in 15s + re-applies everything"),
+            ("🗡 Auto-boss",self.v_autoboss,"autoboss","spends a soulstone on the act boss (x-10) and comes back"),
+            ("📈 Evolution",self.v_evolve,"evolve","always on your newest stage, 1-1 → Torment 3-9")]
+        # Auto-fuse: real, legit synthesis (no forging). SAFE 65-80 mode: the bot only full-fills
+        # (ipu, which respects the Cube's Lv dropdown) and fuses (imx) IF the result level >= 65 —
+        # it never fuses low-level junk. Set the Cube type + "Lv.65~80" yourself; the bot won't
+        # touch the type/level (inf/ilo would reset it to 1-10 and burn low-level items).
+        for idx,(txt,var,key,desc) in enumerate(SW):
+            # descricao EMBAIXO do switch (nao ao lado): ao lado ela ficava espremida em ~250px e
+            # quebrava no meio da palavra. Embaixo ela usa a coluna inteira e continua legivel.
+            cell=ctk.CTkFrame(gr,fg_color="transparent")
+            cell.grid(row=idx//2,column=idx%2,sticky="ew",padx=(0,16),pady=(3,7))
             ctk.CTkSwitch(cell,text=txt,variable=var,onvalue=True,offvalue=False,
                           command=lambda k=key,v=var:self._set_want(k,v),font=F(13,"bold"),
                           progress_color=ACC,button_color="#e5e5e5",button_hover_color="#fff",
-                          fg_color=CARD2,text_color=FG).pack(side="left")
+                          fg_color=CARD2,text_color=FG).pack(anchor="w")
             dcolor=AMBER if key=="autosynth" else SUBTLE   # auto-fuse: aviso do cubo aberto em destaque
-            ctk.CTkLabel(cell,text=desc,text_color=dcolor,font=F(10,"bold" if key=="autosynth" else "normal")).pack(side="left",padx=(6,0))
+            ctk.CTkLabel(cell,text=desc,text_color=dcolor,justify="left",wraplength=360,anchor="w",
+                         font=F(10,"bold" if key=="autosynth" else "normal")).pack(anchor="w",padx=(46,0))
         # stats
         c2=self.card(wrap," STATS  ·  tick, type a value (re-applies itself) "); c2.pack(fill="x",padx=6,pady=6)
         tb=ctk.CTkFrame(c2,fg_color="transparent"); tb.pack(fill="x",padx=14,pady=(2,4))
@@ -249,7 +259,10 @@ class Panel:
         self.btn(tb,"🗑",self.delete_profile,tcolor=RED,w=38,fs=13).pack(side="left",padx=2)
         self.act_lbl=ctk.CTkLabel(c2,text="",text_color=GRN,font=MONO(11),anchor="w")
         self.act_lbl.pack(fill="x",padx=16,pady=(0,4))
-        sf=ctk.CTkScrollableFrame(c2,fg_color=CARD2,corner_radius=8,height=290)
+        # SEM rolagem propria: a pagina (wrap) ja rola. Antes isto era um CTkScrollableFrame travado
+        # em height=290 -> rolagem DENTRO de rolagem: a lista de stats cortava no meio (so ~9 dos 25
+        # cabiam) e o STAGE ficava espremido. Agora a lista cresce e existe UMA barra so, a da pagina.
+        sf=ctk.CTkFrame(c2,fg_color=CARD2,corner_radius=8)
         sf.pack(fill="both",expand=True,padx=12,pady=(0,12))
         sf.grid_columnconfigure(1,weight=1)
         rr=0
