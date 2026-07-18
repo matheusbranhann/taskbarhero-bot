@@ -14,8 +14,8 @@ import os, sys, struct, subprocess, hashlib, json, re, time, ctypes, collections
 from ctypes import wintypes
 
 # ===================== AUTO-UPDATE (via GitHub Releases) =====================
-VERSION="3.1"                                   # BUMPAR a cada release; o exe compara com a tag do 'releases/latest'
-GITHUB_REPO="matheusbranhann/tbh_bot"
+VERSION="3.2"                                   # BUMPAR a cada release; o exe compara com a tag do 'releases/latest'
+GITHUB_REPO="matheusbranhann/taskbarhero-bot"
 
 def _ver_tuple(s):
     """'v3.1'/'3.10' -> (3,1)/(3,10) pra comparar versao ordinalmente."""
@@ -612,7 +612,7 @@ def resolve_symbols(log=lambda m:None):
     if not _dotnet6_ok():
         log("!! O jogo atualizou (build %s) e esta maquina NAO tem o .NET 6 pra re-extrair os offsets."%h)
         log("!! Baixe a versao mais nova do painel (cada release ja vem com os offsets do build novo):")
-        log("!!   https://github.com/matheusbranhann/tbh_bot/releases")
+        log("!!   https://github.com/matheusbranhann/taskbarhero-bot/releases")
         return {"gra":None,"bau_ti":None,"ynj":[],"error":"needs_dotnet6"}
     log("Game updated (build %s) — re-dumping offsets automatically… (~30s)"%h)
     last={}
