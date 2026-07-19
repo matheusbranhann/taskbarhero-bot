@@ -243,7 +243,7 @@ class Panel:
                                  segmented_button_selected_color=CARD2,segmented_button_selected_hover_color=STROKE,
                                  segmented_button_unselected_color=SURF,text_color=SUB,corner_radius=8,border_width=0)
         self.tabs.pack(fill="both",expand=True,padx=14,pady=2)
-        for t in ("Trainer","Inventory","Market","Runes"): self.tabs.add(t)
+        for t in ("Trainer","Inventory","Market","Runes","Stages"): self.tabs.add(t)
         try: self.tabs._segmented_button.configure(font=MONO(12),text_color=SUB,
                                                     selected_color=CARD2,text_color_disabled=SUBTLE)
         except Exception: pass
@@ -251,6 +251,7 @@ class Panel:
         self._splash_step("building Inventory…"); self._build_inv(self.tabs.tab("Inventory"))
         self._splash_step("building Market…");    self._build_mkt(self.tabs.tab("Market"))
         self._splash_step("building Runes…");     self._build_runes(self.tabs.tab("Runes"))
+        self._splash_step("building Stages…");    self._build_stages(self.tabs.tab("Stages"))
         # bottom bar
         bar=ctk.CTkFrame(self.root,fg_color=SURF,corner_radius=0,height=48); bar.pack(fill="x",side="bottom")
         ctk.CTkFrame(bar,fg_color=STROKE,height=1,corner_radius=0).pack(fill="x",side="top")
@@ -320,8 +321,17 @@ class Panel:
                             hover_color=ACC_H,checkmark_color=ACC_TXT,border_color=SUBTLE,
                             corner_radius=4,checkbox_width=18,checkbox_height=18).pack(side="left",padx=6)
         ctk.CTkLabel(af,text="funde do grade menor ATÉ o escolhido; nunca acima. Ex.: 'Rare' funde common+uncommon+rare (rare→legendary). 'Uncommon' preserva seus rares.",
-                     text_color=SUBTLE,font=F(9),wraplength=430,justify="left").pack(anchor="w",padx=14,pady=(2,10))
+                     text_color=SUBTLE,font=F(9),wraplength=430,justify="left").pack(anchor="w",padx=14,pady=(2,6))
+        # --- Nivel do CUBO: gateia quais recipes aparecem (cubo baixo NAO ve o tier 65~80). So o runtime conta. ---
+        rc=ctk.CTkFrame(af,fg_color="transparent"); rc.pack(fill="x",padx=12,pady=(2,2))
+        ctk.CTkLabel(rc,text="🧊 Nível do cubo:",text_color=FG,font=F(11,"bold")).pack(side="left")
+        self.cube_lvl_lbl=ctk.CTkLabel(rc,text="—",text_color=AMBER,font=MONO(12)); self.cube_lvl_lbl.pack(side="left",padx=(6,10))
+        self.btn(rc,"→ Lv.100 (libera fusão 65+)",self._cube_unlock,color="#7a4a12",hover="#8a5a1a",tcolor="#ffd9a0",fs=11).pack(side="left")
+        self.btn(rc,"↻",self._cube_read,w=34,fs=12).pack(side="left",padx=4)
+        self.cube_lvl_hint=ctk.CTkLabel(af,text="cubo baixo não enxerga as fusões de nível alto — suba o cubo p/ liberar o tier 65~80.",
+                                        text_color=SUBTLE,font=F(9),wraplength=430,justify="left"); self.cube_lvl_hint.pack(anchor="w",padx=14,pady=(0,10))
         self._sync_synth_opts(log=False)   # empurra os defaults (Rare + todos os tipos) pro engine.want
+        self._cube_read()
         # stats
         c2=self.card(wrap," STATS  ·  tick, type a value (re-applies itself) "); c2.pack(fill="x",padx=6,pady=6)
         tb=ctk.CTkFrame(c2,fg_color="transparent"); tb.pack(fill="x",padx=14,pady=(2,4))
@@ -403,6 +413,31 @@ class Panel:
         if log:
             tn=", ".join(["Equip","Acess","Mat"][i] for i in sorted(types)) or "(nenhum → não funde)"
             self.log("⚗️ Auto-fuse: fundir até %s · tipos: %s"%(self.v_synth_grade.get(),tn))
+    def _confirm_close(self,what):
+        """Confirma uma acao que fecha o jogo (~12s, anti-cheat cliente) mas persiste no reload."""
+        from tkinter import messagebox
+        return messagebox.askyesno("Desbloqueio — o jogo vai fechar",
+            "%s\n\nComo é um valor protegido, o jogo FECHA sozinho em ~12s (anti-cheat do cliente).\n"
+            "O valor fica SALVO — é só REABRIR o jogo que já estará desbloqueado.\n\nContinuar?"%what,icon="warning")
+    def _cube_read(self):
+        if not getattr(self,"cube_lvl_lbl",None): return
+        def w():
+            lv=self.eng.cube_level() if self.eng else None
+            self.root.after(0,lambda:self.cube_lvl_lbl.configure(text=("Lv.%d"%lv) if lv is not None else "—"))
+        threading.Thread(target=w,daemon=True).start()
+    def _cube_unlock(self):
+        if not self.eng: self.cube_lvl_hint.configure(text="jogo fechado"); return
+        if not self._confirm_close("Subir o nível do cubo para 100 (libera fundir itens Lv.65+)."): return
+        def w():
+            ok,lv=self.eng.set_cube_level(100)
+            def done():
+                if ok:
+                    self.cube_lvl_lbl.configure(text="Lv.%d"%lv)
+                    self.cube_lvl_hint.configure(text="✔ cubo → Lv.%d. O jogo vai fechar em ~12s — reabra e ABRA O CUBO: as fusões 65~80 estarão liberadas (fica salvo)."%lv)
+                else:
+                    self.cube_lvl_hint.configure(text="falhou — abra o jogo (e o cubo já foi inicializado?) e tente de novo.")
+            self.root.after(0,done)
+        threading.Thread(target=w,daemon=True).start()
     def sync_stats(self):
         d={}
         for name,(cvar,evar,cur) in self.stat_vars.items():
@@ -690,6 +725,106 @@ class Panel:
         c.configure(scrollregion=c.bbox("all"))
         self.rune_status.configure(text="%d/%d desbloqueadas  ·  arraste=mover, clique numa runa = %s"%(unlocked,len(defs),"máx" if self._rune_click_max else "+1"))
 
+    # ================= STAGES (mapa dos 120 estagios) =================
+    STAGE_DIFFCOL={0:"#5cbf6a",1:"#4bb0cc",2:"#e8a13a",3:"#e5564c"}   # Normal/Nightmare/Hell/Torment
+    @staticmethod
+    def _stage_name(k):
+        try: return "%s %d-%d"%(C.Engine.DIFFS[k//1000-1],(k%1000)//100,k%100)
+        except Exception: return str(k)
+
+    def _read_stages_data(self):
+        tbl=self.eng.stage_table() if self.eng else {}
+        mx,cur,_=self.eng.stage_progress() if (self.eng and tbl) else (None,None,None)
+        return tbl,mx,cur
+
+    def refresh_stages(self):
+        def w():
+            tbl,mx,cur=self._read_stages_data()
+            self.root.after(0,lambda:self._render_stages(tbl,mx,cur))
+        threading.Thread(target=w,daemon=True).start()
+
+    def _stage_hover(self,e):
+        if not getattr(self,"_stage_tbl",None): return
+        cx=self.stage_canvas.canvasx(e.x); cy=self.stage_canvas.canvasy(e.y)
+        for it in self.stage_canvas.find_overlapping(cx-2,cy-2,cx+2,cy+2):
+            for t in self.stage_canvas.gettags(it):
+                if t.startswith("stg_"):
+                    k=int(t[4:]); info=self._stage_tbl.get(k,{}); mx=self._stage_max
+                    st=("← ATUAL" if k==self._stage_cur else ("liberado" if (mx is not None and k<=mx) else "bloqueado"))
+                    self.stage_hint.configure(text="%s  ·  Lv.%s  ·  %s%s"%(
+                        self._stage_name(k),info.get("lvl","?"),st,"  ·  ★ boss (custa soulstone)" if k%100==10 else ""))
+                    return
+
+    def _stage_unlock(self,value,label):
+        if not self.eng: self.stage_status.configure(text="jogo fechado"); return
+        if not self._confirm_close("Liberar estágios até %s."%label): return
+        def w():
+            ok,val=self.eng.set_maxstage(value)
+            msg=("✔ liberado até %s (%d)"%(label,val)) if ok else "falhou — jogo fechado?"
+            self.root.after(0,lambda:(self.stage_status.configure(
+                text=msg+"  ·  o jogo vai fechar em ~12s (anti-cheat); reabra: o progresso já está salvo"),
+                self.root.after(500,self.refresh_stages)))
+        threading.Thread(target=w,daemon=True).start()
+
+    def _build_stages(self,f):
+        self._stage_tbl=None; self._stage_max=0; self._stage_cur=None
+        top=ctk.CTkFrame(f,fg_color="transparent"); top.pack(fill="x",padx=8,pady=(10,4))
+        self.abtn(top,"⟳ Refresh",self.refresh_stages).pack(side="right")
+        self.btn(top,"Desbloquear TUDO",lambda:self._stage_unlock(C.Engine.STAGE_MAX_KEY,"TORMENT 3-10"),
+                 color="#7a4a12",hover="#8a5a1a",tcolor="#ffd9a0").pack(side="left",padx=(0,10))
+        for d,nm in enumerate(C.Engine.DIFFS):
+            key=(d+1)*1000+310                                    # x-3-10 = ultima fase da dificuldade
+            self.btn(top,"até "+nm,lambda k=key,n=nm:self._stage_unlock(k,n+" 3-10"),
+                     tcolor=self.STAGE_DIFFCOL[d],fs=11).pack(side="left",padx=2)
+        self.stage_status=ctk.CTkLabel(top,text="",text_color=SUB,font=MONO(11)); self.stage_status.pack(side="left",padx=8)
+        self.stage_hint=ctk.CTkLabel(f,text="passe o mouse sobre uma fase",text_color=SUBTLE,font=MONO(11),anchor="w")
+        self.stage_hint.pack(fill="x",padx=14,pady=(0,2))
+        card=ctk.CTkFrame(f,fg_color=CARD,corner_radius=10,border_width=1,border_color=STROKE); card.pack(fill="both",expand=True,padx=8,pady=(2,8))
+        self.stage_canvas=tk.Canvas(card,bg="#191920",highlightthickness=0,bd=0)
+        vsb=ttk.Scrollbar(card,orient="vertical",command=self.stage_canvas.yview)
+        self.stage_canvas.configure(yscrollcommand=vsb.set)
+        self.stage_canvas.grid(row=0,column=0,sticky="nsew",padx=(8,0),pady=8)
+        vsb.grid(row=0,column=1,sticky="ns",pady=8)
+        card.grid_rowconfigure(0,weight=1); card.grid_columnconfigure(0,weight=1)
+        self.stage_canvas.bind("<Motion>",self._stage_hover)
+        self.stage_canvas.bind("<MouseWheel>",lambda e:self.stage_canvas.yview_scroll(int(-e.delta/120),"units"))
+        self.stage_canvas.create_text(16,16,anchor="nw",fill=SUB,text="carregando… (abra o jogo para as fases aparecerem)",font=("Consolas",13))
+        self.refresh_stages()
+
+    def _render_stages(self,tbl,mx,cur):
+        c=self.stage_canvas; c.delete("all")
+        if not tbl:
+            c.create_text(16,16,anchor="nw",fill=SUB,text="jogo fechado ou resolvendo offsets…",font=("Consolas",13)); return
+        self._stage_tbl=tbl; self._stage_max=(mx or 0); self._stage_cur=cur
+        PAD=16; LX=104; CW=52; CELL=40; RH=48; HH=34; GAP=18
+        y=PAD; unlocked=0
+        for d in range(4):
+            base=(d+1)*1000
+            dcnt=sum(1 for k in tbl if base<=k<base+1000)
+            duc =sum(1 for k in tbl if base<=k<base+1000 and mx is not None and k<=mx)
+            c.create_text(PAD,y+HH/2,anchor="w",text=C.Engine.DIFFS[d],fill=self.STAGE_DIFFCOL[d],font=("Consolas",15,"bold"))
+            c.create_text(LX+9*CW,y+HH/2,anchor="e",text="%d/%d"%(duc,dcnt),fill=SUB,font=("Consolas",11))
+            y+=HH
+            for a in range(1,4):
+                c.create_text(PAD+6,y+CELL/2,anchor="w",text="Ato %d"%a,fill=SUB,font=("Consolas",11))
+                for s in range(1,11):
+                    key=base+a*100+s
+                    if key not in tbl: continue
+                    x=LX+(s-1)*CW
+                    lv=(mx is not None and key<=mx); isc=(cur is not None and key==cur); boss=(s==10)
+                    if lv: unlocked+=1
+                    fill=(ACC if isc else ("#2f2110" if lv else "#141519"))
+                    out =(ACC_H if isc else (AMBER if (boss and lv) else (ACC if lv else "#2b2e34")))
+                    txt =(ACC_TXT if isc else (FG if lv else "#666b74"))
+                    tag=("stg_%d"%key,)
+                    c.create_rectangle(x,y,x+CELL,y+CELL,fill=fill,outline=out,width=(2 if (isc or boss) else 1),tags=tag)
+                    c.create_text(x+CELL/2,y+CELL/2,text=("★" if boss else str(s)),fill=txt,
+                                  font=("Consolas",12,"bold" if (boss or isc) else "normal"),tags=tag)
+                y+=RH
+            y+=GAP
+        c.configure(scrollregion=c.bbox("all"))
+        self.stage_status.configure(text="%d/%d liberados  ·  atual: %s"%(unlocked,len(tbl),self._stage_name(cur) if cur else "—"))
+
     def _build_mkt(self,f):
         bar=ctk.CTkFrame(f,fg_color="transparent"); bar.pack(fill="x",padx=8,pady=(10,4))
         self.mkt_q=ctk.CTkEntry(bar,placeholder_text="🔎  search item…",font=F(11),fg_color=CARD2,border_color=STROKE,corner_radius=8,height=32)
@@ -766,6 +901,8 @@ class Panel:
             if not getattr(self,"_was_conn",False):      # RECONNECTED (game reopened) -> refresh everything
                 self.read_stats_ui(); self.read_stage_ui(); self.refresh_inv()
                 if hasattr(self,"rune_canvas"): self.refresh_runes()
+                if hasattr(self,"stage_canvas"): self.refresh_stages()
+                if hasattr(self,"cube_lvl_lbl"): self._cube_read()
                 self.log("game detected — panel updated")
             self._was_conn=True
         else:

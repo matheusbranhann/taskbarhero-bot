@@ -25,9 +25,10 @@ market price browser, and a set of hands-off automations (open boxes, auto-stash
 | **Inventory** | Lists every item (inventory + stash) with grade, quantity, and **Steam market value**, sorted by worth. |
 | **Market** | Browse/search live Steam Community Market prices for game items. |
 | 🌳 **Runes** | Interactive **rune tree** with the game's real icons and live current/max levels. Unlock or level any rune **without spending coins** — click one (max or +1 per click), a whole **category** (chest-drop, combat, gold…), or **all at once**. Hard-capped at each rune's max, so it can never over-level. |
+| 🗺 **Stages** | Interactive **map of all 120 stages** (4 difficulties × 3 acts × 10), color-coded by your live progress, with each stage's monster level on hover. **Unlock every stage** (or up to a chosen difficulty) in one click. |
 | 🎁 **Auto-box** | Opens boxes automatically the moment they drop (normal / boss / act-boss). |
 | 📦 **Auto-stash** | Moves items from the inventory into the stash automatically. |
-| ⚗️ **Auto-fuse** | Full-fills the cube and fuses **9 of the same grade** — **only when the result is Lv.65+** (never burns low-level items). |
+| ⚗️ **Auto-fuse** | Full-fills the cube and fuses **9 of the same grade** — **only when the result is Lv.65+** (never burns low-level items). Includes a **Cube → Lv.100** button so the Lv.65~80 recipes become selectable (a low-level cube can't see them). |
 | 🏷 **Price overlay** | Optional on-screen overlay that shows an item's Steam price on hover (native Windows OCR). |
 | 🔄 **Auto-offsets** | If the game updates, the panel **re-resolves all memory offsets by itself** (via a bundled Il2CppDumper), so it keeps working across builds. |
 
@@ -107,6 +108,10 @@ Everything is memory-only; no files in the game folder are modified.
 - **Auto-fuse is level-safe:** it never fuses below Lv.65. Keep the **Cube open** at the **Lv.65~80** dropdown
   and set the **type** (Gear / Material / Accessory) yourself — the bot won't change the type automatically
   (doing that in-code resets the level filter and can close the game), so switch types manually to fuse each one.
+- **Stage & Cube unlock reload once:** unlike Runes (which apply live), the stage progress and the cube
+  level are guarded by the game's **client anti-cheat**, so writing them makes the game close itself after
+  ~12s. The new value is **saved first** and reloads clean — just **reopen the game** and the stages / cube
+  level stay unlocked. The panel warns you before each of these.
 - Auto-offsets covers renamed/obfuscated symbols, but a very large game update may need a fresh Il2CppDumper.
 
 ---

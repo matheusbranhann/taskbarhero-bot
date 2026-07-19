@@ -14,7 +14,7 @@ import os, sys, struct, subprocess, hashlib, json, re, time, ctypes, collections
 from ctypes import wintypes
 
 # ===================== AUTO-UPDATE (via GitHub Releases) =====================
-VERSION="3.4"                                   # BUMPAR a cada release; o exe compara com a tag do 'releases/latest'
+VERSION="3.5"                                   # BUMPAR a cada release; o exe compara com a tag do 'releases/latest'
 GITHUB_REPO="matheusbranhann/taskbarhero-bot"
 
 def _ver_tuple(s):
@@ -1958,12 +1958,42 @@ class Engine:
         h,hid,k,f=struct.unpack("<iiii",raw)
         p=((hid-k)&0xFFFFFFFF)^(k&0xFFFFFFFF)
         return p-0x100000000 if p>=0x80000000 else p
+    def _obs_set(self, addr, value):
+        """Escreve `value` num ObscuredInt (ACTk) mexendo SO no hiddenValue@+4 com a key@+8 atual.
+        NAO toca hash@0 / key@8 / fake@0xC -> escrita MINIMA (o encode bate exato com o do jogo:
+        hidden = ((v ^ key) + key) & 0xFFFFFFFF). Deixar fake/key intactos = menor chance de acordar
+        o honeypot do detector. Retorna True se o decode confirma o valor."""
+        raw=self.rb(addr,16)
+        if not raw or len(raw)<16: return False
+        _,_,k,_=struct.unpack("<iiii",raw); k&=0xFFFFFFFF
+        newhid=((int(value)^k)+k)&0xFFFFFFFF
+        self.wb(addr+4, struct.pack("<I", newhid))
+        return self._obs_int(addr)==int(value)
     def stage_progress(self):
         """(maxCompletedStage, currentStageKey, wave). max = maior key liberado (regra jgq: key<=max)."""
         sf=self._uo_sf()
         if not sf: return (None,None,None)
         g=lambda o: self._obs_int(sf+o) if o else None
         return (g(self.sym.get("uo_max")), g(self.sym.get("uo_cur")), g(self.sym.get("uo_wave")))
+    STAGE_MAX_KEY=4310                                 # TORMENT 3-10 = maior key (libera 120/120)
+    def set_maxstage(self, value=None):
+        """Desbloqueia estagios ate `value` (default 4310 = TODOS os 120). Escreve o ObscuredInt
+        RUNTIME uo_max (autoritativo; o save espelha ele) + o int do save (CommonSaveData.maxCompletedStage
+        @ PSD+0x10 -> +off) por consistencia. Retorna (ok_runtime, valor).
+        AVISO (provado ao vivo): escrever o ObscuredInt runtime dispara o honesty-check periodico do ACTk
+        (~12s) -> o jogo FECHA sozinho (Application.Quit). NOPar o ynj NAO impede (o caminho de Quit e outro).
+        MAS o valor PERSISTE (auto-save na janela de ~12s) e recarrega LIMPO -> reabra e esta liberado."""
+        value=self.STAGE_MAX_KEY if value is None else int(value)
+        sf=self._uo_sf(); off=self.sym.get("uo_max")
+        if not (sf and off): return False, value
+        ok=bool(self._obs_set(sf+off, value))
+        try:                                           # espelha no save int (best-effort)
+            psd,_=self._player_psd()
+            if psd:
+                csd=self.u64(psd+0x10)
+                if self.vptr(csd): self.wb(csd+self.sym.get("commonsave_maxstage",0x54), struct.pack("<i", value))
+        except Exception: pass
+        return ok, value
     def _stage_cache(self, key):
         """StageCache do stageKey, pelo Dictionary<int,StageCache> do proprio jogo."""
         sf=self._uo_sf(); off=self.sym.get("uo_dict")
@@ -2584,6 +2614,22 @@ class Engine:
         cs=self.sym.get("cube_slot")
         if not cs: return None
         k=self.u64(self.base+cs); return self.u64(k+STATIC_FIELDS_OFF) if self.vptr(k) else None
+    CUBE_LEVEL_OFF=0x1CC; CUBE_MAX_LEVEL=100          # uw.Cube.bese (ObscuredInt) = nivel RUNTIME do cubo
+    def cube_level(self):
+        """Nivel atual do CUBO (ObscuredInt bese @ _cube_sf()+0x1CC). None se o cubo nao resolveu."""
+        sf=self._cube_sf()
+        return self._obs_int(sf+self.CUBE_LEVEL_OFF) if sf else None
+    def set_cube_level(self, level=None):
+        """Sobe o nivel do CUBO (runtime ObscuredInt bese) p/ liberar a sintese de itens 65~80.
+        O nivel indexa a lista de recipes (bam.mey): cubo baixo NAO enxerga o tier 65+. So o runtime conta —
+        o save int (cubeSaveLevelData) nao tem xref no codigo e re-serializa por cima, entao nao mexo nele.
+        AVISO (provado ao vivo): como qualquer ObscuredInt, o honesty-check periodico do ACTk (~12s) fecha o
+        jogo (Application.Quit; NOPar ynj NAO impede). MAS o valor PERSISTE (auto-save) e recarrega LIMPO —
+        reabra e o cubo estara no nivel novo (validado: 100 carrega liso). Retorna (ok, level)."""
+        level=self.CUBE_MAX_LEVEL if level is None else int(level)
+        sf=self._cube_sf()
+        if not sf: return False, level
+        return self._obs_set(sf+self.CUBE_LEVEL_OFF, level), level
     def _synth_busy(self):
         sf=self._cube_sf()
         if not sf: return True
