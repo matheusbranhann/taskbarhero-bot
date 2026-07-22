@@ -13,6 +13,7 @@ public static class RemoteCall
     private static readonly object _lock = new();
     private static nint _scratch;         // cave RWX reaproveitada (shellcode + RES)
     private static nint _scratchHandle;   // handle do processo DONO do _scratch — se mudar (relançou), re-aloca
+    private static int _scratchPid;       // ...e o PID: valor de handle PODE se repetir entre processos
 
     /// <summary>Resolve um export do GameAssembly.dll por nome (via export table do PE). 0 se ausente.</summary>
     public static long ResolveExport(MemoryAccess mem, string name)
@@ -54,13 +55,16 @@ public static class RemoteCall
         lock (_lock)
         {
             nint h = mem.Target.Handle;
+            int pid = mem.Target.ProcessId;
             // Se o processo mudou (jogo relançou pelo auto-restart), o _scratch antigo aponta pra memória do
-            // processo MORTO — executar shellcode nele crasharia o novo jogo. Re-aloca quando o handle muda.
-            if (_scratch == 0 || _scratchHandle != h)
+            // processo MORTO — executar shellcode nele devolve lixo/derruba o jogo novo. Re-aloca quando
+            // handle OU pid mudam: só o handle não basta, o Windows reaproveita valores de handle.
+            if (_scratch == 0 || _scratchHandle != h || _scratchPid != pid)
             {
                 _scratch = NativeMethods.VirtualAllocEx(h, 0, 0x1000,
                     NativeMethods.MEM_COMMIT | NativeMethods.MEM_RESERVE, NativeMethods.PAGE_EXECUTE_READWRITE);
                 _scratchHandle = _scratch != 0 ? h : 0;
+                _scratchPid = _scratch != 0 ? pid : 0;
             }
             if (_scratch == 0) return 0;
             nint sc = _scratch, RES = sc + 0x100;

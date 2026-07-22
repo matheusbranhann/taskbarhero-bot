@@ -156,6 +156,48 @@ if (args.Contains("--evolve"))
     return;
 }
 
+// Reproduz o cenário do PAINEL: dispatcher instalado + automação concorrente, e aí lê as runas.
+// O CLI sozinho lê 197; o painel mostra "jogo fechado ou resolvendo offsets…". A diferença é ESTA.
+if (args.Contains("--runes-contended"))
+{
+    var re = new TbhBot.Core.Engine();
+    re.Log += m => Console.WriteLine($"  [engine] {m}");
+    if (!re.Attach()) { Console.WriteLine("[x] jogo não aberto"); return; }
+
+    Console.WriteLine("1) leitura LIMPA (sem dispatcher, sem concorrência):");
+    var sw0 = Stopwatch.StartNew();
+    int n0 = re.RuneDefs.Read(force: true).Count;
+    Console.WriteLine($"   defs={n0}  em {sw0.ElapsedMilliseconds}ms");
+
+    Console.WriteLine("2) instalando o dispatcher (o painel mantém ele instalado o tempo todo):");
+    _ = re.Dispatcher.IsReady;                 // instala o hook (idempotente)
+    var sw1 = Stopwatch.StartNew();
+    int n1 = re.RuneDefs.Read(force: true).Count;
+    Console.WriteLine($"   defs={n1}  em {sw1.ElapsedMilliseconds}ms");
+
+    Console.WriteLine("3) com a automação CONCORRENTE martelando RemoteCall (autobox/autostash):");
+    using var rcts = new CancellationTokenSource();
+    var noise = Task.Run(async () =>
+    {
+        while (!rcts.IsCancellationRequested)
+        {
+            try { re.AutoBox.IuwCount(0); re.AutoStash.ResolveRa(); } catch { }
+            await Task.Delay(50);
+        }
+    });
+    await Task.Delay(400);
+    for (int i = 1; i <= 3; i++)
+    {
+        var sw2 = Stopwatch.StartNew();
+        int n2 = re.RuneDefs.Read(force: true).Count;
+        Console.WriteLine($"   tentativa {i}: defs={n2}  em {sw2.ElapsedMilliseconds}ms {(n2 == 0 ? "  <<<< REPRODUZIU a falha do painel" : "")}");
+    }
+    rcts.Cancel();
+    try { await noise; } catch { }
+    Console.WriteLine($"jogo vivo={re.Target.IsAlive()}");
+    return;
+}
+
 // Teste do AUTO-BOX ao vivo: acha StageBox vivas + conta iuw + abre as esperando (llx via dispatcher).
 if (args.Contains("--autobox"))
 {

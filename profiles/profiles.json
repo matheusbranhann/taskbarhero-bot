@@ -1,0 +1,55 @@
+{
+  "speed": {
+    "Switches": {
+      "actk": true,
+      "god": true,
+      "autobox": true,
+      "autostash": true,
+      "autofuse": true,
+      "autoboss": true,
+      "evolve": false,
+      "watchdog": true
+    },
+    "FuseGrade": 2,
+    "FuseTypes": [
+      0,
+      1,
+      2
+    ],
+    "Stats": {
+      "Attack Damage": 100000,
+      "Attack Speed": 850,
+      "Critical Damage": 100000
+    },
+    "Stage": {}
+  },
+  "braia": {
+    "Switches": {
+      "actk": true,
+      "god": true,
+      "autobox": true,
+      "autostash": true,
+      "autofuse": true,
+      "autoboss": true,
+      "evolve": false,
+      "watchdog": true
+    },
+    "FuseGrade": 2,
+    "FuseTypes": [
+      0,
+      1,
+      2
+    ],
+    "Stats": {
+      "Attack Damage": 100000,
+      "Attack Speed": 850,
+      "Critical Chance": 1,
+      "Critical Damage": 100000,
+      "Movement Speed": 400
+    },
+    "Stage": {
+      "WaveAmount": 1,
+      "WaveMonsterAmount": 80
+    }
+  }
+}

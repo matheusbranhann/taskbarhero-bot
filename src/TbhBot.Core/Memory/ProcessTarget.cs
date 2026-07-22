@@ -25,6 +25,9 @@ public sealed class ProcessTarget : IDisposable
         var proc = Process.GetProcessesByName(ProcessName).FirstOrDefault();
         if (proc is null) return false;
 
+        // Fecha o handle da sessao anterior: o re-attach do watchdog acontece toda vez que o jogo
+        // reabre e, sem isso, cada restart vaza um handle do processo morto.
+        if (Handle != 0) { NativeMethods.CloseHandle(Handle); Handle = 0; }
         var handle = NativeMethods.OpenProcess(NativeMethods.ACCESS_RW, false, (uint)proc.Id);
         if (handle == 0) return false;
 

@@ -81,8 +81,18 @@ public sealed class TrainerView : UserControl
         Unloaded += (_, _) => _timer.Stop();
     }
 
+    private int _reading;   // leituras do tick anterior ainda em voo
+
+    /// <summary>
+    /// Tick de 1s. As leituras já são assíncronas; o que faltava era NÃO EMPILHAR: quando o engine
+    /// fica lento (lock global do RemoteCall, que espera até 5s por chamada, disputado com a
+    /// automação), um tick por segundo ia acumulando threads presas no Dispatcher e o painel
+    /// engasgava — era o travamento ao mexer no Neural Overrides.
+    /// </summary>
     private void Tick()
     {
+        if (System.Threading.Volatile.Read(ref _reading) > 0) return;   // tick anterior ainda lendo
+        System.Threading.Interlocked.Exchange(ref _reading, 3);
         RefreshUnlocks();
         ReadStats();
         ReadStage();
@@ -90,6 +100,8 @@ public sealed class TrainerView : UserControl
         if (_switches.TryGetValue("evolve", out var ev) && ev.IsChecked == true && !_svc.Engine.WantEvolve)
             ev.IsChecked = false;
     }
+
+    private void DoneReading() => System.Threading.Interlocked.Decrement(ref _reading);
 
     // ═══════════════ cards ═══════════════
 
@@ -233,8 +245,9 @@ public sealed class TrainerView : UserControl
             Dictionary<string, double> stats;
             try { stats = _svc.IsAttached ? _svc.Engine.Stats.ReadStats() : new(); }
             catch { stats = new(); }
-            Dispatcher.Invoke(() =>
+            Dispatcher.BeginInvoke(new Action(() =>
             {
+                DoneReading();
                 foreach (var (name, row) in _statRows)
                 {
                     if (!stats.TryGetValue(name, out double v)) { row.Current.Text = "--"; continue; }
@@ -243,7 +256,7 @@ public sealed class TrainerView : UserControl
                     // só pré-preenche quando o campo está vazio E NÃO está sendo editado (senão apaga o que você digita)
                     if (string.IsNullOrWhiteSpace(row.Value.Text) && !row.Value.IsKeyboardFocused) row.Value.Text = txt;
                 }
-            });
+            }));
         });
     }
 
@@ -312,8 +325,9 @@ public sealed class TrainerView : UserControl
             Dictionary<string, int> fields;
             try { fields = _svc.IsAttached ? _svc.Engine.Stats.ReadStage() : new(); }
             catch { fields = new(); }
-            Dispatcher.Invoke(() =>
+            Dispatcher.BeginInvoke(new Action(() =>
             {
+                DoneReading();
                 foreach (var (name, row) in _stageRows)
                 {
                     if (!fields.TryGetValue(name, out int v)) { row.Current.Text = "--"; continue; }
@@ -321,7 +335,7 @@ public sealed class TrainerView : UserControl
                     row.Current.Text = txt;
                     if (string.IsNullOrWhiteSpace(row.Value.Text) && !row.Value.IsKeyboardFocused) row.Value.Text = txt;
                 }
-            });
+            }));
         });
     }
 
@@ -356,13 +370,14 @@ public sealed class TrainerView : UserControl
         {
             int? cube = null;
             try { if (_svc.IsAttached) cube = _svc.Engine.Save.CubeLevel(); } catch { }
-            Dispatcher.Invoke(() =>
+            Dispatcher.BeginInvoke(new Action(() =>
             {
+                DoneReading();
                 bool max = cube is >= 100;
                 _cubeLabel.Text = cube is int c ? (max ? $"cubo: Lv.{c} (máximo)" : $"cubo: Lv.{c}") : "cubo: --";
                 _cubeBtn.IsEnabled = cube is int && !max;
                 _cubeBtn.Content = max ? "🧊 Cube já está Lv.100" : "🧊 Cube → Lv.100";
-            });
+            }));
         });
     }
 
@@ -385,7 +400,7 @@ public sealed class TrainerView : UserControl
         bar.Children.Add(Mk("Load", LoadProfile));
         bar.Children.Add(Mk("Delete", DeleteProfile));
         body.Children.Add(bar);
-        body.Children.Add(Hint("Salva switches + filtros do fuse + stats/campos forçados em %APPDATA%/tbh_bot."));
+        body.Children.Add(Hint("Salva switches + filtros do fuse + stats/campos forçados em profiles.json, ao lado do .exe."));
         RefreshProfileCombo(null);
         return GlassCard("💾", Purple, "Memory Profiles", body);
     }

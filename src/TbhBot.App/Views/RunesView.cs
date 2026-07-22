@@ -185,22 +185,36 @@ public sealed class RunesView : UserControl
         Task.Run(() =>
         {
             Dictionary<int, RuneDef>? defs; Dictionary<int, int> levels; Dictionary<int, List<RuneLevelRow>> rows;
+            string why;
             try
             {
                 if (!_svc.IsAttached) return;
                 defs = _svc.Engine.RuneDefs.Read();
                 levels = _svc.Engine.Save.ReadRunes();
                 rows = _svc.Engine.RuneLevels.Read();
+                why = _svc.Engine.RuneDefs.LastError;
             }
-            catch { return; }
-            Dispatcher.Invoke(() => Render(defs, levels, rows));
+            catch (Exception ex)
+            {
+                // Engolir a exceção deixava a tela vazia SEM dizer nada — o motivo tem que aparecer.
+                Dispatcher.BeginInvoke(new Action(() => _status.Text = $"erro lendo as runas: {ex.Message}"));
+                _svc.RaiseLog($"runas: exceção {ex.GetType().Name}: {ex.Message}");
+                return;
+            }
+            // BeginInvoke (não Invoke): Invoke BLOQUEIA esta thread até a UI atender — e se a UI estiver
+            // ocupada num read do engine, os dois ficam se esperando.
+            Dispatcher.BeginInvoke(new Action(() => Render(defs, levels, rows, why)));
         });
     }
 
-    private void Render(Dictionary<int, RuneDef>? defs, Dictionary<int, int> levels, Dictionary<int, List<RuneLevelRow>> rows)
+    private void Render(Dictionary<int, RuneDef>? defs, Dictionary<int, int> levels, Dictionary<int, List<RuneLevelRow>> rows, string why = "")
     {
         _canvas.Children.Clear();
-        if (defs is null || defs.Count == 0) { _status.Text = "jogo fechado ou resolvendo offsets…"; return; }
+        if (defs is null || defs.Count == 0)
+        {
+            _status.Text = why.Length > 0 ? $"runas indisponíveis: {why}" : "jogo fechado ou resolvendo offsets…";
+            return;
+        }
         _defs = defs; _levels = levels; _levelRows = rows;
         _pos = Layout(defs);
 

@@ -36,6 +36,9 @@ public sealed class RuneDefs(MemoryAccess mem, Il2CppApi api, MemoryScanner scan
 
     private Dictionary<int, RuneDef>? _cache;
 
+    /// <summary>Por que a última leitura voltou vazia — a UI mostra isso em vez de "resolvendo offsets…".</summary>
+    public string LastError { get; private set; } = "";
+
     /// <summary>{RuneKey: RuneDef}. Cacheado (estático). Retorna vazio se não resolveu a klass / nada casou.</summary>
     public Dictionary<int, RuneDef> Read(bool force = false)
     {
@@ -43,7 +46,13 @@ public sealed class RuneDefs(MemoryAccess mem, Il2CppApi api, MemoryScanner scan
 
         var defs = new Dictionary<int, RuneDef>();
         long klass = _api.ClassFromName("TaskbarHero.Data", "RuneInfoData");
-        if (klass == 0) return defs;
+        if (klass == 0)
+        {
+            // Quase sempre RemoteCall: CreateRemoteThread falhou/expirou (jogo ainda carregando,
+            // ou outro processo mexendo no mesmo jogo). Dizer isso poupa caçar offset à toa.
+            LastError = "não resolvi a classe RuneInfoData (il2cpp_class_from_name via thread remota falhou)";
+            return defs;
+        }
 
         ulong klassPtr = (ulong)klass;
         foreach (var (regionBase, size) in _scan.Regions(PageReadWrite, PageExecuteReadWrite))
@@ -80,7 +89,8 @@ public sealed class RuneDefs(MemoryAccess mem, Il2CppApi api, MemoryScanner scan
             }
         }
 
-        if (defs.Count > 0) _cache = defs;
+        if (defs.Count > 0) { _cache = defs; LastError = ""; }
+        else LastError = $"classe resolvida (0x{klass:X}) mas nenhuma instância casou no scan de memória";
         return defs;
     }
 
