@@ -66,10 +66,32 @@ public sealed class AutomationLoop(Engine engine)
         engine.Cheats.SetGodmode(engine.WantGodmode);
 
         // Stats/stage forçados: re-aplica TODO tick (o jogo sobrescreve uma escrita única). Snapshot da ref.
+        // O catch NÃO pode ser mudo: era assim que "não aplicou depois do restart" acontecia calado.
         var st = engine.WantStats;
-        if (st.Count > 0) { try { engine.Stats.ApplyStats(st); } catch { } }
+        if (st.Count > 0) { try { WarnBool("stats", engine.Stats.ApplyStats(st), st.Count); } catch (Exception ex) { WarnOnce("stats", ex); } }
         var sg = engine.WantStage;
-        if (sg.Count > 0) { try { engine.Stats.ApplyStage(sg); } catch { } }
+        if (sg.Count > 0) { try { WarnBool("stage", engine.Stats.ApplyStage(sg), sg.Count); } catch (Exception ex) { WarnOnce("stage", ex); } }
+    }
+
+    // Avisa a PRIMEIRA falha de cada tipo (e quando volta a funcionar); sem isso o log viraria spam
+    // de 3 linhas por segundo, com isso o silêncio deixa de esconder o problema.
+    private readonly Dictionary<string, bool> _failing = new();
+
+    private void WarnBool(string what, bool ok, int n)
+    {
+        if (_failing.TryGetValue(what, out bool was) && was == !ok) return;
+        _failing[what] = !ok;
+        Log?.Invoke(ok ? $"✔ {what}: aplicando {n} valor(es)"
+                       : $"⚠ {what}: NAO resolvi o objeto no jogo ({n} valor(es) pendentes) — vou re-escanear");
+    }
+
+    private void WarnOnce(string what, Exception? ex)
+    {
+        bool bad = ex is not null;
+        if (_failing.TryGetValue(what, out bool was) && was == bad) return;
+        _failing[what] = bad;
+        Log?.Invoke(bad ? $"⚠ não consegui aplicar {what}: {ex!.GetType().Name}: {ex.Message}"
+                        : $"✔ {what} voltou a aplicar");
     }
 
     /// <summary>

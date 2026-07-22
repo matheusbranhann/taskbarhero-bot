@@ -91,16 +91,33 @@ public sealed class WatchdogService(EngineService svc)
 
     private static bool GameRunning() => Process.GetProcessesByName(ProcessTarget.ProcessName).Length > 0;
 
+    /// <summary>
+    /// Reentra no estágio. TENTA DE NOVO quando falha: observado ao vivo que um "=False" aqui é seguido
+    /// de perto pelo jogo fechando outra vez — e a sessão entra numa cascata de restarts em que nada
+    /// chega a ser aplicado (é o "não aplicou o stage/os stats depois que o jogo voltou"). Uma falha
+    /// isolada costuma ser só a UI ainda não estar pronta, e a 2ª tentativa pega.
+    /// </summary>
     private void ReEnter(int cur)
     {
-        try
+        for (int attempt = 1; attempt <= 3; attempt++)
         {
-            var tbl = svc.Engine.StageNav.StageTable();
-            bool isBoss = tbl.TryGetValue(cur, out var info) && info.Type == 1;
-            bool ok = isBoss ? svc.Engine.StageNav.EnterBoss(cur) : svc.Engine.StageNav.GoToStage(cur);
-            Emit($"🛡 watchdog: reentrou no estágio {cur} ({(isBoss ? "boss" : "normal")})={ok}");
+            try
+            {
+                if (!svc.IsAttached) { Emit("🛡 watchdog: jogo caiu antes da reentrada"); return; }
+                var tbl = svc.Engine.StageNav.StageTable();
+                bool isBoss = tbl.TryGetValue(cur, out var info) && info.Type == 1;
+                bool ok = isBoss ? svc.Engine.StageNav.EnterBoss(cur) : svc.Engine.StageNav.GoToStage(cur);
+                if (ok || attempt == 3)
+                {
+                    Emit($"🛡 watchdog: reentrou no estágio {cur} ({(isBoss ? "boss" : "normal")})={ok}" +
+                         (ok && attempt > 1 ? $" (na {attempt}ª tentativa)" : ""));
+                    return;
+                }
+                Emit($"🛡 watchdog: reentrada {attempt}/3 no {cur} não pegou — tentando de novo");
+            }
+            catch (Exception ex) { Emit($"🛡 watchdog: reentrar no estágio falhou ({ex.Message})"); return; }
+            Thread.Sleep(2500);                                  // dá tempo da UI do jogo assentar
         }
-        catch (Exception ex) { Emit($"🛡 watchdog: reentrar no estágio falhou ({ex.Message})"); }
     }
 
     // ---------------- popup OFFLINE REWARDS (porte fiel de close_offline_popup) ----------------

@@ -45,18 +45,20 @@ public sealed class StatEditor(MemoryAccess mem, MemoryScanner scan)
         return outd;
     }
 
-    /// <summary>Aplica os stats fornecidos (o merge speed/manual e feito pelo chamador).</summary>
-    public void ApplyStats(IReadOnlyDictionary<string, double> stats)
+    /// <summary>Aplica os stats. Retorna FALSE se o objeto de stats nao resolveu — devolver void
+    /// escondia a falha e o painel ficava "sem aplicar" sem nenhuma pista.</summary>
+    public bool ApplyStats(IReadOnlyDictionary<string, double> stats)
     {
-        if (stats.Count == 0) return;
+        if (stats.Count == 0) return true;
         nint p = StatsObj();
-        if (p == 0) return;
+        if (p == 0) { _statsSlot = 0; return false; }   // zera o cache: proxima tentativa re-escaneia
         foreach (var (name, val) in stats)
         {
             if (!GameConstants.Stats.TryGetValue(name, out var t)) continue;
             if (t.Type == 'd') mem.Write<double>(p + t.Off, val);
             else mem.Write<float>(p + t.Off, (float)val);
         }
+        return true;
     }
 
     // ---------------- STAGE (StageData corrente) ----------------
@@ -120,13 +122,14 @@ public sealed class StatEditor(MemoryAccess mem, MemoryScanner scan)
     }
 
     /// <summary>Escreve os campos de estagio (int32) fornecidos.</summary>
-    public void ApplyStage(IReadOnlyDictionary<string, int> fields)
+    public bool ApplyStage(IReadOnlyDictionary<string, int> fields)
     {
-        if (fields.Count == 0) return;
+        if (fields.Count == 0) return true;
         nint sd = StageObj();
-        if (sd == 0) return;
+        if (sd == 0) { _stageSlot = 0; _stageSlots = null; return false; }   // re-descobre o slot no proximo tick
         foreach (var (k, val) in fields)
             if (GameConstants.StageFields.TryGetValue(k, out int off))
                 mem.Write<int>(sd + off, val);
+        return true;
     }
 }

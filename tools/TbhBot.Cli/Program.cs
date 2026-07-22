@@ -198,6 +198,25 @@ if (args.Contains("--runes-contended"))
     return;
 }
 
+// SOMENTE LEITURA: mostra o que está aplicado no jogo agora. Não instala dispatcher nem patcha nada,
+// então é seguro rodar com o painel aberto (serve pra conferir o re-apply depois do auto-restart).
+if (args.Contains("--peek"))
+{
+    var pe = new TbhBot.Core.Engine();
+    if (!pe.Attach()) { Console.WriteLine("[x] jogo não aberto"); return; }
+    var (mx, cur, wv) = pe.Save.StageProgress();
+    Console.WriteLine($"pid={pe.Target.ProcessId}  stage: max={mx} cur={cur} wave={wv}");
+    var stats = pe.Stats.ReadStats();
+    foreach (var k in new[] { "Movement Speed", "Attack Damage", "Attack Speed", "Critical Chance", "Critical Damage" })
+        Console.WriteLine($"  {k,-18} = {(stats.TryGetValue(k, out var v) ? v.ToString("0.###") : "—")}");
+    var sf = pe.Stats.ReadStage();
+    foreach (var k in new[] { "WaveAmount", "WaveMonsterAmount" })
+        Console.WriteLine($"  {k,-18} = {(sf.TryGetValue(k, out var s) ? s.ToString() : "—")}");
+    var (invUsed, stashFree) = pe.AutoStash.SlotCounts();
+    Console.WriteLine($"  inventário ocupado = {invUsed}   baú livre = {stashFree}");
+    return;
+}
+
 // Teste do AUTO-BOX ao vivo: acha StageBox vivas + conta iuw + abre as esperando (llx via dispatcher).
 if (args.Contains("--autobox"))
 {
