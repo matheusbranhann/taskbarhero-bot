@@ -224,6 +224,9 @@ RUNE_LIST_OFF=0x80          # PlayerSaveData.RuneSaveData (List<RuneSaveData{Run
 SYNTH_MIN_LVL=65; SYNTH_MAX_LVL=80   # LEVEL GATE synthesis: so funde se besu.MaxResultLevel>=65 (dropdown do cubo em ~65-80); nivel baixo nao funde
 
 AOB_GODMODE="57 48 83 EC 50 80 3D ?? ?? ?? ?? ?? 41 0F ?? ?? 48 8B DA"
+# Mesma assinatura SEM o 1o byte: e por ela que _god_site procura, porque ligar o cheat sobrescreve
+# esse 1o byte (57 -> C3) e quebra o proprio padrao. Ver _god_site para o porque.
+AOB_GODMODE_TAIL=AOB_GODMODE.split(" ",1)[1]
 AOB_PSTAT="48 8B 05 ?? ?? ?? ?? 83 B8 E4 00 00 00 00 75 ?? 48 8B C8 E8 ?? ?? ?? ?? 48 8B 05 ?? ?? ?? ?? 48 8B 80 B8 00 00 00 48 8B 48 20 48 85 C9 74 ?? 48 8B 15 ?? ?? ?? ?? E8"
 AOB_STAGE="48 8B 05 ?? ?? ?? ?? 48 8B 80 B8 00 00 00 48 8B 88 88 00 00 00"
 GRA_ORIG=b'\x48\x89\x5c\x24\x08'                # prologo de Monster.gra (hitkill)
@@ -926,6 +929,7 @@ class Engine:
         self._wd_hold=False # True durante o restart: o tick() attacha mas NAO aplica nada (start limpo)
         self._disp_lock=threading.RLock()  # serializa comandos no dispatcher
         self._rc_lock=threading.RLock()    # serializa _remote_call (scratch compartilhado)
+        self._ocr_lock=threading.Lock()    # serializa _ocr_lines (event loop unico, nao reentrante)
     # ---- attach ----
     def attach(self):
         try:
@@ -1035,19 +1039,25 @@ class Engine:
         return Image.frombuffer("RGBA",(w,h),buf,"raw","BGRA",0,1), (rc.l,rc.t)
     def _ocr_lines(self, pil, sc=2.5):
         """[(texto,(x0,y0,x1,y1))] via OCR nativo do Windows. Amplia sc x antes (a fonte do jogo e
-        pequena demais no 1:1) e devolve as caixas ja no espaco da imagem original."""
+        pequena demais no 1:1) e devolve as caixas ja no espaco da imagem original.
+        SERIALIZADO: ha DOIS chamadores em threads diferentes (o popup_guard do autopilot e o
+        close_offline_popup do watchdog) e os dois usavam o MESMO self._ocr_loop -> quando se
+        cruzavam, o asyncio recusava com 'This event loop is already running' e o popup que trava
+        o jogo ficava na tela. Um event loop nao roda reentrante, entao a exclusao aqui e o ponto
+        certo (protege tambem a criacao preguicosa do loop/engine)."""
         import numpy as np, asyncio
         from winsdk.windows.media.ocr import OcrEngine
         from winsdk.windows.graphics.imaging import SoftwareBitmap, BitmapPixelFormat
         from winsdk.windows.storage.streams import DataWriter
-        if not getattr(self,"_ocr_loop",None):
-            self._ocr_loop=asyncio.new_event_loop(); self._ocr_eng=OcrEngine.try_create_from_user_profile_languages()
-        if not self._ocr_eng: return []
-        big=pil.resize((int(pil.size[0]*sc),int(pil.size[1]*sc))).convert("RGBA")
-        a=np.asarray(big,dtype=np.uint8); h,w=a.shape[:2]
-        dw=DataWriter(); dw.write_bytes(a[:,:,[2,1,0,3]].tobytes()); b=dw.detach_buffer()
-        sb=SoftwareBitmap.create_copy_from_buffer(b,BitmapPixelFormat.BGRA8,w,h)
-        res=self._ocr_loop.run_until_complete(self._ocr_eng.recognize_async(sb))
+        with self._ocr_lock:
+            if not getattr(self,"_ocr_loop",None):
+                self._ocr_loop=asyncio.new_event_loop(); self._ocr_eng=OcrEngine.try_create_from_user_profile_languages()
+            if not self._ocr_eng: return []
+            big=pil.resize((int(pil.size[0]*sc),int(pil.size[1]*sc))).convert("RGBA")
+            a=np.asarray(big,dtype=np.uint8); h,w=a.shape[:2]
+            dw=DataWriter(); dw.write_bytes(a[:,:,[2,1,0,3]].tobytes()); b=dw.detach_buffer()
+            sb=SoftwareBitmap.create_copy_from_buffer(b,BitmapPixelFormat.BGRA8,w,h)
+            res=self._ocr_loop.run_until_complete(self._ocr_eng.recognize_async(sb))
         out=[]
         for ln in res.lines:
             xs=[q.bounding_rect.x for q in ln.words]; ys=[q.bounding_rect.y for q in ln.words]
@@ -1204,8 +1214,23 @@ class Engine:
                 if cur!=b'\xC3': orig[rva]=cur; self.wb(a,b'\xC3')
             elif cur==b'\xC3' and rva in orig:
                 self.wb(a,orig[rva])
+    def _god_site(self):
+        """Endereco do prologo do godmode, ESTAVEL com o cheat ligado ou desligado.
+        MEDIDO: essa assinatura casa em 13 lugares do modulo e o patch escreve C3 EM CIMA do 1o byte
+        (57 = push rdi) -- ou seja, destroi a propria assinatura. Buscando o padrao inteiro, um SEGUNDO
+        attach com o godmode ja ligado nao achava mais o alvo certo e casava no PROXIMO da lista;
+        patchar esse outro e o "godmode ligado 2x" (o boneco nao da nem leva dano, so reiniciar resolve).
+        Por isso a busca e pela CAUDA (do 2o byte em diante) aceitando 57 (limpo) OU C3 (ja ligado):
+        o endereco resolvido passa a ser o mesmo nos dois estados."""
+        a=self.cache.get("god")
+        if a: return a
+        for t in (self.aob(AOB_GODMODE_TAIL,None,find_all=True) or []):
+            if self.rb(t-1,1) in (b'\x57',b'\xC3'):     # find_all vem em ordem crescente -> mesmo site de sempre
+                self.cache["god"]=t-1
+                return t-1
+        return None
     def apply_god(self):
-        a=self.aob(AOB_GODMODE,"god")
+        a=self._god_site()
         if not a: return
         cur=self.rb(a,1)
         if self.want["god"]:

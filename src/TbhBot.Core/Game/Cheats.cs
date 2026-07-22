@@ -64,12 +64,37 @@ public sealed class Cheats(MemoryAccess mem, SymbolTable sym, MemoryScanner scan
         return false;
     }
 
-    // Godmode: AOB_GODMODE aponta o prólogo (push rdi=0x57). on -> 0xC3 (ret imediato); off -> restaura 0x57.
-    // Acha o AOB UMA vez e cacheia (o patch quebra o próprio padrão -> re-scan no revert não acharia).
+    /// <summary>
+    /// Endereço do prólogo do godmode, ESTÁVEL com o cheat ligado ou desligado.
+    ///
+    /// Ligar o godmode escreve 0xC3 em cima do 1º byte do prólogo (0x57 = <c>push rdi</c>) — ou seja,
+    /// o patch destrói o primeiro byte da PRÓPRIA assinatura. MEDIDO no build 535f977c07ca: esse padrão
+    /// casa em 14 lugares do módulo. Procurando o padrão inteiro, um attach feito com o godmode já
+    /// ligado não acha mais o site certo (rva 0xc1bfaa) e casa no PRÓXIMO da lista (rva 0xc20aea);
+    /// patchar esse outro é o "godmode ligado 2x" — o personagem não dá nem leva dano e só reiniciar
+    /// o jogo resolve. Como <see cref="Cheats"/> é recriado a cada Attach(), isso acontecia em toda
+    /// reconexão a um jogo que já estava com o cheat ligado.
+    ///
+    /// Por isso a busca é pela CAUDA (do 2º byte em diante) e o prólogo é aceito como 0x57 (limpo) OU
+    /// 0xC3 (já ligado): o endereço resolvido passa a ser o mesmo nos dois estados.
+    /// </summary>
+    private nint GodSite()
+    {
+        if (_godScanned) return _godAddr;
+        _godScanned = true;
+        foreach (nint t in _scan.FindAllAob(GameConstants.AobGodmodeTail))   // vem em ordem crescente
+        {
+            byte[] p = _mem.ReadBytes(t - 1, 1);
+            if (p.Length == 1 && (p[0] == 0x57 || p[0] == 0xC3)) { _godAddr = t - 1; return _godAddr; }
+        }
+        _godAddr = 0;
+        return 0;
+    }
+
+    // Godmode: o prólogo (push rdi=0x57) vira 0xC3 (ret imediato); off -> restaura 0x57.
     public void SetGodmode(bool on)
     {
-        if (!_godScanned) { _godAddr = _scan.FindAob(GameConstants.AobGodmode); _godScanned = true; }
-        nint a = _godAddr;
+        nint a = GodSite();
         if (a == 0) return;
         byte[] cur = _mem.ReadBytes(a, 1);
         if (cur.Length < 1) return;

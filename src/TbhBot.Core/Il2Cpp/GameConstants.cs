@@ -73,6 +73,12 @@ public static class GameConstants
     public const int RuneListOff = 0x80;
 
     public const string AobGodmode = "57 48 83 EC 50 80 3D ?? ?? ?? ?? ?? 41 0F ?? ?? 48 8B DA";
+
+    /// <summary>
+    /// A MESMA assinatura sem o 1º byte. É por ela que <c>Cheats.GodSite()</c> procura, porque ligar
+    /// o godmode escreve 0xC3 em cima desse 1º byte e destrói o próprio padrão. Ver GodSite().
+    /// </summary>
+    public const string AobGodmodeTail = "48 83 EC 50 80 3D ?? ?? ?? ?? ?? 41 0F ?? ?? 48 8B DA";
     public const string AobPstat = "48 8B 05 ?? ?? ?? ?? 83 B8 E4 00 00 00 00 75 ?? 48 8B C8 E8 ?? ?? ?? ?? 48 8B 05 ?? ?? ?? ?? 48 8B 80 B8 00 00 00 48 8B 48 20 48 85 C9 74 ?? 48 8B 15 ?? ?? ?? ?? E8";
     public const string AobStage = "48 8B 05 ?? ?? ?? ?? 48 8B 80 B8 00 00 00 48 8B 88 88 00 00 00";
 

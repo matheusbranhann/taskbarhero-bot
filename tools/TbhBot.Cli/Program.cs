@@ -200,6 +200,31 @@ if (args.Contains("--runes-contended"))
 
 // SOMENTE LEITURA: mostra o que está aplicado no jogo agora. Não instala dispatcher nem patcha nada,
 // então é seguro rodar com o painel aberto (serve pra conferir o re-apply depois do auto-restart).
+// SÓ LEITURA: compara a resolução NOVA do godmode (busca pela cauda, aceita 57/C3) com a ANTIGA
+// (padrão inteiro, exige 57). Com o cheat ligado elas divergem — e patchar a antiga era o "godmode 2x".
+if (args.Contains("--godsite"))
+{
+    var ge = new TbhBot.Core.Engine();
+    if (!ge.Attach()) { Console.WriteLine("[x] jogo não aberto"); return; }
+    nint b = ge.Target.ModuleBase;
+    nint velho = ge.Scanner.FindAob(TbhBot.Core.Il2Cpp.GameConstants.AobGodmode);
+    nint novo = 0;
+    foreach (nint t in ge.Scanner.FindAllAob(TbhBot.Core.Il2Cpp.GameConstants.AobGodmodeTail))
+    {
+        byte[] p = ge.Memory!.ReadBytes(t - 1, 1);
+        if (p.Length == 1 && (p[0] == 0x57 || p[0] == 0xC3)) { novo = t - 1; break; }
+    }
+    string By(nint a) => a == 0 ? "--" : ge.Memory!.ReadBytes(a, 1)[0].ToString("x2");
+    Console.WriteLine($"base={b:x}");
+    Console.WriteLine($"  NOVO  (cauda, 57|C3) = {novo:x}  rva={(long)(novo - b):x}  byte={By(novo)}");
+    Console.WriteLine($"  ANTIGO(padrão, só57) = {velho:x}  rva={(long)(velho - b):x}  byte={By(velho)}");
+    Console.WriteLine(novo == velho
+        ? "  iguais -> o godmode está DESLIGADO agora (o teste não discrimina neste estado)"
+        : "  DIFERENTES -> com o cheat ligado, o código antigo patcharia a função errada");
+    Console.WriteLine("  (nenhum byte foi escrito)");
+    return;
+}
+
 if (args.Contains("--peek"))
 {
     var pe = new TbhBot.Core.Engine();
