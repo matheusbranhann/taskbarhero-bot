@@ -50,3 +50,4 @@ erro salva viraria um cache tóxico que nunca mais seria refeito.
 |---|---|---|
 | `c824ed7a2bb1` | 2026-07-18 | build da v3.5/v4.0 |
 | `535f977c07ca` | 2026-07-22 | update que renomeou a base dos singletons (`nq`→`nr`) e a classe do cubo (`uu.Cube`→`ux.Cube`) |
+| `f2be0e20ad2b` | 2026-07-23 | o jogo anunciou este update com o popup `An update is required / Verify integrity of game files`. Extração limpa (17s, nada faltando); as âncoras todas seguraram. A assinatura do godmode continua casando em 14 lugares, então a busca pela cauda segue necessária |
