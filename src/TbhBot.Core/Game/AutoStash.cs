@@ -25,6 +25,9 @@ public sealed class AutoStash(
 
     // Defs de item são estáticas (o grade de uma itemKey não muda) -> cacheia o resultado do izb.
     private readonly Dictionary<int, (int Type, int Grade, int Synth, int Level)?> _itemInfo = new();
+    // Destinos já despachados: o 'iw' não reflete na hora, então sem isto o MESMO slot livre virava
+    // destino em dois ticks seguidos (o Python evita com o set 'used').
+    private readonly HashSet<int> _usedSlots = new();
 
     private nint Base => _mem.Target.ModuleBase;
 
@@ -87,9 +90,22 @@ public sealed class AutoStash(
         return (inv, stash);
     }
 
-    /// <summary>Move todos os itens do inventário pro baú (até maxn). Retorna quantos moveu.</summary>
+    private bool _parked;                        // baú sem vaga: auto-stash PARADO até liberar espaço
+    private long _parkedRecheckAt;               // enquanto parado, só re-checa de tempos em tempos
+    private const int ParkRecheckMs = 5000;
+
+    /// <summary>
+    /// Move os itens do inventário pro baú (até maxn). Retorna quantos foram REALMENTE despachados.
+    ///
+    /// BAÚ SEM VAGA = PARA. Os itens ficam no inventário até abrir espaço; nada é vendido nem
+    /// descartado (não existe esse caminho no motor). Enquanto parado, só re-checa a cada 5s em vez
+    /// de varrer os ~340 slots a cada tick de 250ms, e avisa UMA vez ao parar e ao retomar — antes
+    /// isso acontecia em silêncio total e não havia como saber que o baú tinha enchido.
+    /// </summary>
     public int MoveAllToStash(Func<bool> keepGoing, int maxn = 150)
     {
+        if (_parked && Environment.TickCount64 < _parkedRecheckAt) return 0;
+
         nint ra = ResolveRa();
         if (ra == 0) return 0;
 
@@ -100,22 +116,47 @@ public sealed class AutoStash(
             if (d.Length < 0x11 || d[0x10] == 0) continue;                    // unlock==0 -> pula
             if (BitConverter.ToUInt64(d, 8) != 0) srcs.Add(BitConverter.ToInt32(d, 0));  // uid!=0 -> ocupado
         }
-        if (srcs.Count == 0) return 0;
+        if (srcs.Count == 0) { _usedSlots.Clear(); return 0; }                // ocioso: nada em voo
 
         var slots = new List<int>();                                          // slots LIVRES do baú (idx)
         foreach (var o in SlotObjs(_sym.Get("stash_off", 0x90)))
         {
             var d = _mem.ReadBytes(o + 0x10, 0x11);
             if (d.Length < 0x11 || d[0x10] == 0) continue;
-            if (BitConverter.ToUInt64(d, 8) == 0) slots.Add(BitConverter.ToInt32(d, 0));  // uid==0 -> livre
+            if (BitConverter.ToUInt64(d, 8) == 0)                             // uid==0 -> livre
+            {
+                int free = BitConverter.ToInt32(d, 0);
+                if (!_usedSlots.Contains(free)) slots.Add(free);              // não reusar destino já despachado
+            }
             if (slots.Count >= srcs.Count) break;
         }
 
-        int n = Math.Min(Math.Min(srcs.Count, slots.Count), maxn);
-        for (int k = 0; k < n && keepGoing(); k++)
-            _disp.CommandStash(ra, [1, srcs[k], 2, slots[k], 1]);            // INVENTORY->STASH
-        if (n > 0) Log?.Invoke($"📦 {n} itens movidos pro baú");
-        return n;
+        if (slots.Count == 0)                                                 // ----- baú cheio -----
+        {
+            _usedSlots.Clear();                                               // nada em voo: marcação velha
+            _parkedRecheckAt = Environment.TickCount64 + ParkRecheckMs;
+            if (!_parked)
+            {
+                _parked = true;
+                Log?.Invoke($"📦 baú sem vaga — auto-stash parado; {srcs.Count} item(ns) ficam no inventário até liberar espaço");
+            }
+            return 0;
+        }
+        if (_parked) { _parked = false; Log?.Invoke("📦 baú com vaga de novo — auto-stash retomado"); }
+
+        // Conta o que foi DESPACHADO, não o que foi planejado: com o dispatcher fora do ar o antigo
+        // 'n' era logado como "movidos" 4x/s e ainda marcava did=true no AutomationLoop, matando de
+        // fome o auto-boss, a evolução e a ordenação do baú.
+        int plan = Math.Min(Math.Min(srcs.Count, slots.Count), maxn), moved = 0;
+        for (int k = 0; k < plan && keepGoing(); k++)
+        {
+            if (!_disp.CommandStash(ra, [1, srcs[k], 2, slots[k], 1])) break; // INVENTORY->STASH
+            _usedSlots.Add(slots[k]); moved++;
+        }
+        if (moved == 0) { _usedSlots.Clear(); return 0; }
+        if (_usedSlots.Count > 800) _usedSlots.Clear();
+        Log?.Invoke($"📦 {moved} itens movidos pro baú");
+        return moved;
     }
 
     // ---------------- ordenação por grade (porta de _sort_grade_step) ----------------

@@ -2364,9 +2364,16 @@ class Engine:
     def _do_stash_bulk(self, used, maxn=150):
         """Move VARIOS itens inv->stash de uma vez: le inv+stash 1x (bulk, 1 read/slot), calcula todos
         os pares (src->slot livre) e dispara em RAJADA — SEM reflect-wait entre cada. ~50x mais rapido
-        que 1-por-vez. Retorna quantos moveu."""
+        que 1-por-vez. Retorna quantos moveu.
+
+        BAU SEM VAGA = PARA. Os itens FICAM no inventario ate abrir espaco (nada e vendido nem
+        descartado por aqui — a alchemy e manual, nao entra no _auto_loop). Enquanto parado, so
+        re-checa a cada 5s em vez de varrer os ~340 slots a cada volta do loop, e avisa UMA vez ao
+        parar e ao retomar: antes isso acontecia em silencio e nao dava pra saber que o bau encheu."""
         ra=self._ra()
         if not ra: return 0
+        if getattr(self,"_stash_parked",False) and time.time()<getattr(self,"_stash_recheck",0):
+            return 0
         _,inv_slots=self._slot_objs(self.sym.get("inv_slots_off",0x88))
         srcs=[]
         for o in inv_slots:                                    # itens ocupados no inventario
@@ -2386,6 +2393,16 @@ class Engine:
                 idx=int.from_bytes(d[0:4],"little")
                 if idx not in used: slots.append(idx)
                 if len(slots)>=len(srcs): break
+        if not slots:                                          # ----- bau cheio: PARA -----
+            used.clear()                                       # nada em voo: a marcacao esta velha
+            self._stash_recheck=time.time()+5
+            if not getattr(self,"_stash_parked",False):
+                self._stash_parked=True
+                self.log("📦 bau sem vaga — auto-stash parado; %d item(ns) ficam no inventario ate liberar espaco"%len(srcs))
+            return 0
+        if getattr(self,"_stash_parked",False):
+            self._stash_parked=False
+            self.log("📦 bau com vaga de novo — auto-stash retomado")
         n=min(len(srcs),len(slots),maxn)
         for k in range(n):                                     # RAJADA: 1 dispatch por item, sem reflect-wait
             self._dispatch(2, argP=ra, req=(1, srcs[k], 2, slots[k], 1))
