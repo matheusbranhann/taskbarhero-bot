@@ -1872,7 +1872,17 @@ class Engine:
         return self._plen_of(self.rb(addr,24), addr, minlen, maxlen)
     def _install_dispatch(self):
         upd=self.sym.get("upd")
-        if not upd or not self.sym.get("llx"): self.log("dispatcher: offset upd/llx missing"); return False
+        if not upd or not self.sym.get("llx"):
+            # RATE-LIMIT (60s). Isto e chamado a cada tick: quando o jogo atualiza e o cache de offsets
+            # fica do build anterior, a condicao vale pra sempre e a linha saia 1x/segundo -- medido
+            # 23.508 linhas num unico log (4 MB), afogando os erros de verdade. Foi parte do motivo de
+            # uma box ficar 2h44 travada sem ninguem notar. A mensagem agora diz o que RESOLVE.
+            t=time.time()
+            if t-getattr(self,"_disp_warn",0)>60:
+                self._disp_warn=t
+                self.log("dispatcher: sem os offsets upd/llx do build %s — auto-box/stash/boss ficam "
+                         "off ate o feed ter esse build (rode o tbh_sync)"%(dll_hash() or "?"))
+            return False
         UPD=self.base+upd
         cachef=os.path.join(CACHE,"upd_prologue_%s.bin"%(dll_hash() or "x"))
         head=self.rb(UPD,1)

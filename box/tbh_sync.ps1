@@ -102,5 +102,16 @@ if ($hash) {
 }
 
 # ---------- 5) deps do python ----------
-python -m pip install --quiet --disable-pip-version-check pymem capstone 2>&1 | Out-Null
+# pymem/capstone = motor. numpy/pillow/winsdk = o popup_guard (captura + OCR nativo do Windows).
+# Faltava as TRES ultimas aqui: numa box sem elas o guard morria no import e logava
+# "No module named 'winsdk'" a cada ciclo -- ou seja, popup que trava o jogo nunca era fechado,
+# e a box parava sem ninguem entender por que. winsdk so existe como PRE-RELEASE, dai o --pre
+# e o nome SEM '>=' (com especificador de versao o pip ignora o pre-release e nao instala nada).
+python -m pip install --quiet --disable-pip-version-check pymem capstone numpy pillow 2>&1 | Out-Null
+python -m pip install --quiet --disable-pip-version-check --pre winsdk 2>&1 | Out-Null
+
+# Confere e AVISA: dependencia faltando aqui vira funcao morta la na frente, entao nao pode passar calado.
+$falta = & python -c "import importlib.util as u; print(' '.join(m for m in ['pymem','capstone','numpy','PIL','winsdk'] if not u.find_spec(m)))" 2>$null
+if ($falta) { Log "AVISO: dependencias AUSENTES: $falta (o popup_guard depende de numpy/PIL/winsdk)" }
+else { Log "deps do python: ok" }
 Log "sync completo"
