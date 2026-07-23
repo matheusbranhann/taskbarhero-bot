@@ -54,7 +54,8 @@ try {
 # core velho (sem o fix do godmode) por dias. Sao arquivos pequenos: baixar todo sync sai de graca.
 foreach ($f in @(
   @{ url = "https://raw.githubusercontent.com/$REPO/main/python_old_project/tbh_core.py"; dst = "$DL\tbh_core.py";   min = 100000 },
-  @{ url = "https://raw.githubusercontent.com/$REPO/main/box/tbh_unlock.py";              dst = "$DL\tbh_unlock.py"; min = 500    }
+  @{ url = "https://raw.githubusercontent.com/$REPO/main/box/tbh_unlock.py";              dst = "$DL\tbh_unlock.py"; min = 500    },
+  @{ url = "https://raw.githubusercontent.com/$REPO/main/box/tbh_autopilot.py";           dst = "$DL\tbh_autopilot.py"; min = 5000 }
 )) {
   try {
     Invoke-WebRequest $f.url -OutFile "$($f.dst).new" -Headers $UA
